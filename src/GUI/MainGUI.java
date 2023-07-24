@@ -25,6 +25,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import data.Joueur;
+import data.properties.TextsProperties;
 import main.Launch;
 
 public class MainGUI extends JFrame {
@@ -110,49 +111,49 @@ public class MainGUI extends JFrame {
 
 		// Actions
 		JPanel boutonsPanel = new JPanel();
-		versLeStockBouton = new JButton("Ajouter au stock");
+		versLeStockBouton = new JButton(TextsProperties.BUTTON_ADD);
 		versLeStockBouton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ajouterJoueursAuStock();
 			}
 		});
-		creerjoueurBouton = new JButton("Créer");
+		creerjoueurBouton = new JButton(TextsProperties.BUTTON_CREATE);
 		creerjoueurBouton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				creerJoueur();
 			}
 		});
-		supprimerjoueurBouton = new JButton("Supprimer");
+		supprimerjoueurBouton = new JButton(TextsProperties.BUTTON_DELETE);
 		supprimerjoueurBouton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				supprimerJoueurs();
 			}
 		});
-		enregistrerBouton = new JButton("Sauvegarder");
+		enregistrerBouton = new JButton(TextsProperties.BUTTON_SAVE);
 		enregistrerBouton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				sauvegarderJoueur();
 			}
 		});
-		inGameBouton = new JButton("Envoyer vers le jeu");
+		inGameBouton = new JButton(TextsProperties.BUTTON_TOGAME);
 		inGameBouton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				envoyerInGame();
 			}
 		});
-		exporterBouton = new JButton("Exporter");
+		exporterBouton = new JButton(TextsProperties.BUTTON_EXPORT);
 		exporterBouton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				exportJoueurs();
 			}
 		});
-		importerBouton = new JButton("Importer");
+		importerBouton = new JButton(TextsProperties.BUTTON_IMPORT);
 		importerBouton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -200,8 +201,8 @@ public class MainGUI extends JFrame {
 		});
 
 		JPanel listesPanel = new JPanel(new GridLayout(1,2));
-		listesPanel.add(getListePanel(inGame, "Joueurs dans le jeu"));
-		listesPanel.add(getListePanel(inStock, "Tous mes joueurs"));
+		listesPanel.add(getListePanel(inGame, TextsProperties.LABEL_LISTINGAME));
+		listesPanel.add(getListePanel(inStock, TextsProperties.LABEL_LISTINSTOCK));
 		getContentPane().add(listesPanel, BorderLayout.WEST);
 
 
@@ -263,11 +264,11 @@ public class MainGUI extends JFrame {
 	}
 
 	public void exportJoueurs() {
-		String message = "Vous allez exporter les joueurs suivants : \n";
+		String message = TextsProperties.MESSAGE_EXPORT1 + "\n";
 		for(Joueur joueur : inStock.getSelectedValuesList()) {
 			message += joueur.getNom() + "\n";
 		}
-		message += "\nIndiquez le nom du fichier";
+		message += "\n" + TextsProperties.MESSAGE_EXPORT2;
 
 		String nom = JOptionPane.showInputDialog(this, message);
 		if (nom != null && ! "".equals(nom)) {
@@ -280,17 +281,17 @@ public class MainGUI extends JFrame {
 		File[] fichiers = dir.listFiles();
 
 		if(fichiers.length == 0) {
-			JOptionPane.showMessageDialog(this, "Aucun fichier disponible pour l'import.");
+			JOptionPane.showMessageDialog(this, TextsProperties.MESSAGE_IMPORTERROR);
 		} else {
 
-			String message = "Sélectionnez le fichier à importer : ";
+			String message = TextsProperties.MESSAGE_IMPORT;
 			String[] nomsFichiers = new String[fichiers.length];
 			for(int i=0;i<nomsFichiers.length;i++) {
 				nomsFichiers[i] = fichiers[i].getName();
 			}
 
 			String nom = JOptionPane.showInputDialog(
-					this, message, "Importer", JOptionPane.PLAIN_MESSAGE, null, nomsFichiers, nomsFichiers[0]).toString();
+					this, message, TextsProperties.BUTTON_IMPORT, JOptionPane.PLAIN_MESSAGE, null, nomsFichiers, nomsFichiers[0]).toString();
 			if (nom != null && ! "".equals(nom)) {
 				Launch.getInstance().importJoueurs(new File("exchange/"+nom).toPath());
 				remplirListesJoueurs(false);
@@ -299,13 +300,13 @@ public class MainGUI extends JFrame {
 	}
 
 	public void supprimerJoueurs() {
-		String message = "Vous allez supprimer les joueurs suivants : \n";
+		String message = TextsProperties.MESSAGE_DELETE + "\n";
 		for(Joueur joueur : inStock.getSelectedValuesList()) {
 			message += joueur.getNom() + "\n";
 		}
-		message += "\nCette action est irréversible, êtes-vous sûr ?";
+		message += "\n" + TextsProperties.MESSAGE_IRREVERSIBLE + " " + TextsProperties.MESSAGE_SURE;
 
-		int res = JOptionPane.showConfirmDialog(this, message, "Supprimer", JOptionPane.YES_NO_OPTION);
+		int res = JOptionPane.showConfirmDialog(this, message, TextsProperties.BUTTON_DELETE, JOptionPane.YES_NO_OPTION);
 		if(res == JOptionPane.YES_OPTION) {
 			for(Joueur j : inStock.getSelectedValuesList()) {
 				Launch.getInstance().getData().supprimerJoueur(j);	
@@ -323,13 +324,13 @@ public class MainGUI extends JFrame {
 	}
 
 	public void ajouterJoueursAuStock() {
-		String message = "Vous allez ajouter les joueurs suivants : \n";
+		String message = TextsProperties.MESSAGE_ADDPLAYERS + "\n";
 		for(Joueur joueur : inGame.getSelectedValuesList()) {
 			message += joueur.getNom() + "\n";
 		}
-		message += "\nEtes-vous sûr ?";
+		message += "\n" + TextsProperties.MESSAGE_SURE;
 
-		int res = JOptionPane.showConfirmDialog(this, message, "Ajouter au stock", JOptionPane.YES_NO_OPTION);
+		int res = JOptionPane.showConfirmDialog(this, message, TextsProperties.BUTTON_ADD, JOptionPane.YES_NO_OPTION);
 		if(res == JOptionPane.YES_OPTION) {
 			for(Joueur joueur : inGame.getSelectedValuesList()) {
 				Launch.getInstance().getData().getJoueurs().add(joueur);					
@@ -348,13 +349,13 @@ public class MainGUI extends JFrame {
 	}
 	
 	public void envoyerInGame() {
-		String message = "Vous allez remplacer dans le jeu, le joueur : \n";
+		String message = TextsProperties.MESSAGE_TOGAME1 + "\n";
 		message += inGame.getSelectedValue().getNom() + "\n";
-		message += "Par le joueur : \n";
+		message += TextsProperties.MESSAGE_TOGAME2 + "\n";
 		message += inStock.getSelectedValue().getNom() + "\n";
-		message += "\nCette action est irréversible, êtes-vous sûr ?";
+		message += "\n" + TextsProperties.MESSAGE_IRREVERSIBLE + " " + TextsProperties.MESSAGE_SURE;
 		
-		int res = JOptionPane.showConfirmDialog(this, message, "Envoyer dans le jeu", JOptionPane.YES_NO_OPTION);
+		int res = JOptionPane.showConfirmDialog(this, message,TextsProperties.BUTTON_TOGAME, JOptionPane.YES_NO_OPTION);
 		if(res == JOptionPane.YES_OPTION) {
 			Launch.getInstance().getData().saveIntoGame(inStock.getSelectedValue(), inGame.getSelectedIndex()+1);
 			Launch.getInstance().getData().loadJoueursFromGame();

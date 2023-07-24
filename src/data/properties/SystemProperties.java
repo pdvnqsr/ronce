@@ -14,6 +14,7 @@ public class SystemProperties {
 	private static Properties PROPS;
 	
 	public static boolean LOG_IN_FILE;
+	public static String LOCALE;
 	public static String PATH;
 	
 	
@@ -24,6 +25,7 @@ public class SystemProperties {
 
             PATH = PROPS.getProperty(PATH_KEY);
             LOG_IN_FILE = "true".equals(PROPS.getProperty("log.file"));
+            LOCALE = PROPS.getProperty("locale");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
