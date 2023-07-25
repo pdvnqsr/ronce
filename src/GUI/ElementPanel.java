@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -79,7 +80,7 @@ public class ElementPanel extends JPanel {
 	public void setEnabled(boolean enabled) {
 		List<Component> comps = getAllComponents(this);
 		for (Component comp : comps) {
-		       comp.setEnabled(enabled);
+			comp.setEnabled(enabled || (comp instanceof JTabbedPane));
 		}
 	}
 }

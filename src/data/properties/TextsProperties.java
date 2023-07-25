@@ -72,6 +72,18 @@ public class TextsProperties {
 	public static String LABEL_HAUT;
 	public static String LABEL_BAS;
 	public static String LABEL_TRIPIECES;
+	public static String LABEL_TENUEJOUEUR;
+	public static String LABEL_TENUEGARDIEN;
+	public static String LABEL_DOMICILE;
+	public static String LABEL_EXTERIEUR;
+	public static String LABEL_MAILLOT;
+	public static String LABEL_COL;
+	public static String LABEL_SHORT;
+	public static String LABEL_MARQUES;
+	public static String LABEL_CHAUSSETTES;
+	public static String LABEL_POLICE;
+	public static String LABEL_BORDURE;
+	public static String LABEL_COULEURBRASSARD;
 	
 	public static String MESSAGE_IRREVERSIBLE;
 	public static String MESSAGE_SURE;
@@ -154,6 +166,18 @@ public class TextsProperties {
 		LABEL_HAUT = texts.getString("label.haut");
 		LABEL_BAS = texts.getString("label.bas");
 		LABEL_TRIPIECES = texts.getString("label.triPieces");
+		LABEL_TENUEJOUEUR = texts.getString("label.tenueJoueur");
+		LABEL_TENUEGARDIEN = texts.getString("label.tenueGardien");
+		LABEL_DOMICILE = texts.getString("label.domicile");
+		LABEL_EXTERIEUR = texts.getString("label.exterieur");
+		LABEL_MAILLOT = texts.getString("label.maillot");
+		LABEL_COL = texts.getString("label.col");
+		LABEL_SHORT = texts.getString("label.short");
+		LABEL_MARQUES = texts.getString("label.marques");
+		LABEL_CHAUSSETTES = texts.getString("label.chaussettes");
+		LABEL_POLICE = texts.getString("label.police");
+		LABEL_BORDURE = texts.getString("label.bordure");
+		LABEL_COULEURBRASSARD = texts.getString("label.BrassardCouleur");
 		
 		MESSAGE_IRREVERSIBLE = texts.getString("message.irreversible");
 		MESSAGE_SURE = texts.getString("message.sure");

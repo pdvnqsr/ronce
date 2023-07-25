@@ -82,6 +82,30 @@ public class DataProperties {
 	public static SelectData EQUIPE_COULEURBAS2;
 	public static MultiSelectData EQUIPE_TRIPIECES;
 	
+	public static SelectData EQUIPE_MAILLOT;
+	public static SelectData EQUIPE_COL;
+	public static SelectData EQUIPE_MAILLOTCOULEUR1;
+	public static SelectData EQUIPE_MAILLOTCOULEUR2;
+	public static SelectData EQUIPE_MAILLOTCOULEUR3;
+	public static SelectData EQUIPE_MAILLOTCOULEUR4;
+	public static SelectData EQUIPE_SHORT;
+	public static SelectData EQUIPE_SHORTMARQUES;
+	public static SelectData EQUIPE_SHORTCOULEUR1;
+	public static SelectData EQUIPE_SHORTCOULEUR2;
+	public static SelectData EQUIPE_SHORTCOULEUR3;
+	public static SelectData EQUIPE_SHORTCOULEUR4;
+	public static SelectData EQUIPE_CHAUSSETTES;
+	public static SelectData EQUIPE_CHAUSSETTESCOULEUR1;
+	public static SelectData EQUIPE_CHAUSSETTESCOULEUR2;
+	public static SelectData EQUIPE_CHAUSSETTESCOULEUR3;
+	public static SelectData EQUIPE_CHAUSSETTESCOULEUR4;
+	public static SelectData EQUIPE_POLICE;
+	public static SelectData EQUIPE_POLICEBORDURE;
+	public static SelectData EQUIPE_POLICECOULEUR1;
+	public static SelectData EQUIPE_POLICECOULEUR2;
+	public static SelectData EQUIPE_POLICECOULEUR3;
+	public static SelectData EQUIPE_POLICECOULEUR4;
+	public static SelectData EQUIPE_BRASSARDCOULEUR;
 	
 	static {
 		try (InputStream input = new FileInputStream("config/data.properties")) {
@@ -173,6 +197,31 @@ public class DataProperties {
         	EQUIPE_COULEURBAS1 = new SelectData(prop, "equipe.emblemeBasCouleur1");
         	EQUIPE_COULEURBAS2 = new SelectData(prop, "equipe.emblemeBasCouleur2");
         	EQUIPE_TRIPIECES = new MultiSelectData(prop, "equipe.emblemeTri");
+        	
+        	EQUIPE_MAILLOT = new SelectData(prop, "equipe.maillot");
+        	EQUIPE_COL = new SelectData(prop, "equipe.col");
+        	EQUIPE_MAILLOTCOULEUR1 = new SelectData(prop, "equipe.maillotCouleur1");
+        	EQUIPE_MAILLOTCOULEUR2 = new SelectData(prop, "equipe.maillotCouleur2");
+        	EQUIPE_MAILLOTCOULEUR3 = new SelectData(prop, "equipe.maillotCouleur3");
+        	EQUIPE_MAILLOTCOULEUR4 = new SelectData(prop, "equipe.maillotCouleur4");
+        	EQUIPE_SHORT = new SelectData(prop, "equipe.short");
+        	EQUIPE_SHORTMARQUES = new SelectData(prop, "equipe.shortMarque");
+        	EQUIPE_SHORTCOULEUR1 = new SelectData(prop, "equipe.shortCouleur1");
+        	EQUIPE_SHORTCOULEUR2 = new SelectData(prop, "equipe.shortCouleur2");
+        	EQUIPE_SHORTCOULEUR3 = new SelectData(prop, "equipe.shortCouleur3");
+        	EQUIPE_SHORTCOULEUR4 = new SelectData(prop, "equipe.shortCouleur4");
+        	EQUIPE_CHAUSSETTES = new SelectData(prop, "equipe.chaussettes");
+        	EQUIPE_CHAUSSETTESCOULEUR1 = new SelectData(prop, "equipe.chaussettesCouleur1");
+        	EQUIPE_CHAUSSETTESCOULEUR2 = new SelectData(prop, "equipe.chaussettesCouleur2");
+        	EQUIPE_CHAUSSETTESCOULEUR3 = new SelectData(prop, "equipe.chaussettesCouleur3");
+        	EQUIPE_CHAUSSETTESCOULEUR4 = new SelectData(prop, "equipe.chaussettesCouleur4");
+        	EQUIPE_POLICE = new SelectData(prop, "equipe.police");
+        	EQUIPE_POLICEBORDURE = new SelectData(prop, "equipe.policeBordure");
+        	EQUIPE_POLICECOULEUR1 = new SelectData(prop, "equipe.policeCouleur1");
+        	EQUIPE_POLICECOULEUR2 = new SelectData(prop, "equipe.policeCouleur2");
+        	EQUIPE_POLICECOULEUR3 = new SelectData(prop, "equipe.policeCouleur3");
+        	EQUIPE_POLICECOULEUR4 = new SelectData(prop, "equipe.policeCouleur4");
+        	EQUIPE_BRASSARDCOULEUR = new SelectData(prop, "equipe.brassardCouleur");
         } catch (IOException ex) {
             ex.printStackTrace();
         }

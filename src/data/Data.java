@@ -235,6 +235,32 @@ public class Data implements Serializable {
 				equipe.setCouleurBas1(getIntFromGame(raf, addr, DataProperties.EQUIPE_COULEURBAS1,0));
 				equipe.setCouleurBas2(getIntFromGame(raf, addr, DataProperties.EQUIPE_COULEURBAS2,0));
 				equipe.setTriPieces(getMultiIntFromGame(raf, addr, DataProperties.EQUIPE_TRIPIECES));
+				for(int j=0;j<equipe.getTenues().length;j++) {
+					equipe.getTenues()[j].setMaillot(getIntFromGame(raf, addr, DataProperties.EQUIPE_MAILLOT,j));
+					equipe.getTenues()[j].setCol(getIntFromGame(raf, addr, DataProperties.EQUIPE_COL,j));
+					equipe.getTenues()[j].setMaillotCouleur1(getIntFromGame(raf, addr, DataProperties.EQUIPE_MAILLOTCOULEUR1,j));
+					equipe.getTenues()[j].setMaillotCouleur2(getIntFromGame(raf, addr, DataProperties.EQUIPE_MAILLOTCOULEUR2,j));
+					equipe.getTenues()[j].setMaillotCouleur3(getIntFromGame(raf, addr, DataProperties.EQUIPE_MAILLOTCOULEUR3,j));
+					equipe.getTenues()[j].setMaillotCouleur4(getIntFromGame(raf, addr, DataProperties.EQUIPE_MAILLOTCOULEUR4,j));
+					equipe.getTenues()[j].setShortModele(getIntFromGame(raf, addr, DataProperties.EQUIPE_SHORT,j));
+					equipe.getTenues()[j].setShortMarques(getIntFromGame(raf, addr, DataProperties.EQUIPE_SHORTMARQUES,j));
+					equipe.getTenues()[j].setShortCouleur1(getIntFromGame(raf, addr, DataProperties.EQUIPE_SHORTCOULEUR1,j));
+					equipe.getTenues()[j].setShortCouleur2(getIntFromGame(raf, addr, DataProperties.EQUIPE_SHORTCOULEUR2,j));
+					equipe.getTenues()[j].setShortCouleur3(getIntFromGame(raf, addr, DataProperties.EQUIPE_SHORTCOULEUR3,j));
+					equipe.getTenues()[j].setShortCouleur4(getIntFromGame(raf, addr, DataProperties.EQUIPE_SHORTCOULEUR4,j));
+					equipe.getTenues()[j].setChaussettes(getIntFromGame(raf, addr, DataProperties.EQUIPE_CHAUSSETTES,j));
+					equipe.getTenues()[j].setChaussettesCouleur1(getIntFromGame(raf, addr, DataProperties.EQUIPE_CHAUSSETTESCOULEUR1,j));
+					equipe.getTenues()[j].setChaussettesCouleur2(getIntFromGame(raf, addr, DataProperties.EQUIPE_CHAUSSETTESCOULEUR2,j));
+					equipe.getTenues()[j].setChaussettesCouleur3(getIntFromGame(raf, addr, DataProperties.EQUIPE_CHAUSSETTESCOULEUR3,j));
+					equipe.getTenues()[j].setChaussettesCouleur4(getIntFromGame(raf, addr, DataProperties.EQUIPE_CHAUSSETTESCOULEUR4,j));
+					equipe.getTenues()[j].setPolice(getIntFromGame(raf, addr, DataProperties.EQUIPE_POLICE,j));
+					equipe.getTenues()[j].setPoliceBordure(getIntFromGame(raf, addr, DataProperties.EQUIPE_POLICEBORDURE,j));
+					equipe.getTenues()[j].setPoliceCouleur1(getIntFromGame(raf, addr, DataProperties.EQUIPE_POLICECOULEUR1,j));
+					equipe.getTenues()[j].setPoliceCouleur2(getIntFromGame(raf, addr, DataProperties.EQUIPE_POLICECOULEUR2,j));
+					equipe.getTenues()[j].setPoliceCouleur3(getIntFromGame(raf, addr, DataProperties.EQUIPE_POLICECOULEUR3,j));
+					equipe.getTenues()[j].setPoliceCouleur4(getIntFromGame(raf, addr, DataProperties.EQUIPE_POLICECOULEUR4,j));
+					equipe.getTenues()[j].setBrassardCouleur(getIntFromGame(raf, addr, DataProperties.EQUIPE_BRASSARDCOULEUR,j));
+				}
 				
 				equipesInGame.add(equipe);
 			}
@@ -247,8 +273,6 @@ public class Data implements Serializable {
 		archiveSavedata();
 		try {
 			Long addr = DataProperties.EQUIPES_ADDRESS.get(inGameIndex)[0];
-			
-			System.out.println(equipe.getFond());
 			
 			RandomAccessFile raf = new RandomAccessFile(SystemProperties.PATH, "rw");
 			writeTextInGame(raf, addr, DataProperties.EQUIPE_NOM, equipe.getNom());
@@ -275,6 +299,32 @@ public class Data implements Serializable {
 			writeIntInGame(raf, addr, DataProperties.EQUIPE_COULEURBAS1,0,equipe.getCouleurBas1());
 			writeIntInGame(raf, addr, DataProperties.EQUIPE_COULEURBAS2,0,equipe.getCouleurBas2());
 			writeMultiIntInGame(raf, addr, DataProperties.EQUIPE_TRIPIECES,equipe.getTriPieces());
+			for(int j=0;j<equipe.getTenues().length;j++) {
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_MAILLOT,j,equipe.getTenues()[j].getMaillot());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_COL,j,equipe.getTenues()[j].getCol());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_MAILLOTCOULEUR1,j,equipe.getTenues()[j].getMaillotCouleur1());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_MAILLOTCOULEUR2,j,equipe.getTenues()[j].getMaillotCouleur2());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_MAILLOTCOULEUR3,j,equipe.getTenues()[j].getMaillotCouleur3());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_MAILLOTCOULEUR4,j,equipe.getTenues()[j].getMaillotCouleur4());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_SHORT,j,equipe.getTenues()[j].getShortModele());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_SHORTMARQUES,j,equipe.getTenues()[j].getShortMarques());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_SHORTCOULEUR1,j,equipe.getTenues()[j].getShortCouleur1());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_SHORTCOULEUR2,j,equipe.getTenues()[j].getShortCouleur2());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_SHORTCOULEUR3,j,equipe.getTenues()[j].getShortCouleur3());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_SHORTCOULEUR4,j,equipe.getTenues()[j].getShortCouleur4());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_CHAUSSETTES,j,equipe.getTenues()[j].getChaussettes());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_CHAUSSETTESCOULEUR1,j,equipe.getTenues()[j].getChaussettesCouleur1());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_CHAUSSETTESCOULEUR2,j,equipe.getTenues()[j].getChaussettesCouleur2());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_CHAUSSETTESCOULEUR3,j,equipe.getTenues()[j].getChaussettesCouleur3());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_CHAUSSETTESCOULEUR4,j,equipe.getTenues()[j].getChaussettesCouleur4());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_POLICE,j,equipe.getTenues()[j].getPolice());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_POLICEBORDURE,j,equipe.getTenues()[j].getPoliceBordure());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_POLICECOULEUR1,j,equipe.getTenues()[j].getPoliceCouleur1());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_POLICECOULEUR2,j,equipe.getTenues()[j].getPoliceCouleur2());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_POLICECOULEUR3,j,equipe.getTenues()[j].getPoliceCouleur3());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_POLICECOULEUR4,j,equipe.getTenues()[j].getPoliceCouleur4());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_BRASSARDCOULEUR,j,equipe.getTenues()[j].getBrassardCouleur());
+			}
 			raf.close();
 		} catch (Exception e) {
 			e.printStackTrace();

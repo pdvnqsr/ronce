@@ -143,7 +143,7 @@ public class Launch {
 	
 	public static void main(String[] args) {
 		Launch.getInstance();
-		//generateVals("couleurLunettes", 60, 0);
+		//generateVals("equipe.short", 60, 0);
 	}
 
 	@SuppressWarnings("unused")

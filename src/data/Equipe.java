@@ -27,6 +27,8 @@ public class Equipe {
 	private int couleurBas2;
 	private int[] triPieces;
 	
+	private Tenue[] tenues;
+	
 	public Equipe(){
 		nom = DataProperties.EQUIPE_NOM.getDefaut();
 		abreviation = DataProperties.EQUIPE_ABREVIATION.getDefaut();
@@ -49,6 +51,12 @@ public class Equipe {
 		couleurBas1 = DataProperties.EQUIPE_COULEURBAS1.getDefaut();
 		couleurBas2 = DataProperties.EQUIPE_COULEURBAS2.getDefaut();
 		triPieces = DataProperties.EQUIPE_TRIPIECES.getDefaut();
+		
+		tenues = new Tenue[4];
+		tenues[0] = new Tenue();
+		tenues[1] = new Tenue();
+		tenues[2] = new Tenue();
+		tenues[3] = new Tenue();
 	}
 
 	public String getNom() {
@@ -217,6 +225,14 @@ public class Equipe {
 
 	public void setTriPieces(int[] triPieces) {
 		this.triPieces = triPieces;
+	}
+	
+	public Tenue[] getTenues() {
+		return tenues;
+	}
+
+	public void setTenues(Tenue[] tenues) {
+		this.tenues = tenues;
 	}
 
 	@Override

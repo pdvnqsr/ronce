@@ -2,10 +2,10 @@ package GUI;
 
 
 import java.awt.GridLayout;
-import java.util.Arrays;
 
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import data.Equipe;
@@ -40,17 +40,31 @@ public class EquipePanel extends ElementPanel {
 	private JComboBox<String> basCouleur2Field;
 	private MultiSelectPanel triElementsField;
 	
+	private TenuePanel[] tenuePanels;
+	
 	public EquipePanel() {
 		setLayout(new GridLayout(1, 3));
+		tenuePanels = new TenuePanel[4];
+		tenuePanels[0] = new TenuePanel();
+		tenuePanels[1] = new TenuePanel();
+		tenuePanels[2] = new TenuePanel();
+		tenuePanels[3] = new TenuePanel();
+		
 		GridLayout layout = new GridLayout(20,1);
 		JPanel infosContainer = new JPanel();
 		JPanel infos = new JPanel(layout);
 		infosContainer.add(infos);
 		add(infosContainer);
+		
+		JTabbedPane tenuesPane = new JTabbedPane(JTabbedPane.LEFT);
+		tenuesPane.addTab(TextsProperties.LABEL_TENUEJOUEUR + "(" + TextsProperties.LABEL_DOMICILE + ")", tenuePanels[0]);
+		tenuesPane.addTab(TextsProperties.LABEL_TENUEJOUEUR + "(" + TextsProperties.LABEL_EXTERIEUR + ")", tenuePanels[1]);
+		tenuesPane.addTab(TextsProperties.LABEL_TENUEGARDIEN + "(" + TextsProperties.LABEL_DOMICILE + ")", tenuePanels[2]);
+		tenuesPane.addTab(TextsProperties.LABEL_TENUEGARDIEN + "(" + TextsProperties.LABEL_EXTERIEUR + ")", tenuePanels[3]);
+		add(tenuesPane);
+		
 		JPanel roster = new JPanel(layout);
 		add(roster);
-		JPanel autres = new JPanel(layout);
-		add(autres);
 		
 		nomField = new JTextField(DataProperties.EQUIPE_NOM.getLongueur());
 		abreviationField = new JTextField(DataProperties.EQUIPE_ABREVIATION.getLongueur());
@@ -96,6 +110,7 @@ public class EquipePanel extends ElementPanel {
 		infos.add(makeFieldPanel(TextsProperties.LABEL_BAS + " : " + TextsProperties.LABEL_COULEUR + " 2", basCouleur2Field));
 		infosContainer.add(makeFieldPanel(TextsProperties.LABEL_TRIPIECES + " : ", triElementsField));
 		
+		
 		setEnabled(false);
 	}
 	
@@ -122,6 +137,10 @@ public class EquipePanel extends ElementPanel {
 			equipeSelectionne.setCouleurBas1(basCouleur1Field.getSelectedIndex());
 			equipeSelectionne.setCouleurBas2(basCouleur2Field.getSelectedIndex());
 			equipeSelectionne.setTriPieces(triElementsField.getVals());
+			tenuePanels[0].save(equipeSelectionne.getTenues()[0]);
+			tenuePanels[1].save(equipeSelectionne.getTenues()[1]);
+			tenuePanels[2].save(equipeSelectionne.getTenues()[2]);
+			tenuePanels[3].save(equipeSelectionne.getTenues()[3]);
 		}
 	}
 	
@@ -150,7 +169,10 @@ public class EquipePanel extends ElementPanel {
 			basCouleur1Field.setSelectedIndex(equipe.getCouleurBas1());
 			basCouleur2Field.setSelectedIndex(equipe.getCouleurBas2());
 			triElementsField.setVals(equipe.getTriPieces());
-			System.out.println(Arrays.toString(DataProperties.EQUIPE_TRIPIECES.getInGameValue(equipe.getTriPieces())));
+			tenuePanels[0].load(equipe.getTenues()[0]);
+			tenuePanels[1].load(equipe.getTenues()[1]);
+			tenuePanels[2].load(equipe.getTenues()[2]);
+			tenuePanels[3].load(equipe.getTenues()[3]);
 		}
 	}
 
