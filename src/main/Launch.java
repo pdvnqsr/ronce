@@ -73,6 +73,7 @@ public class Launch {
 			e.printStackTrace();
 		}
 		data.loadJoueursFromGame();
+		data.loadEquipesFromGame();
 	}
 
 	public void exportJoueurs(List<Joueur> joueurs, Path path) {
@@ -101,6 +102,33 @@ public class Launch {
 			e.printStackTrace();
 		}
 	}
+	
+	/*public void exportEquipess(List<Equipe> equipes, Path path) {
+		ExchangeData exchangeData = new ExchangeData();
+		for(Equipe equipe : equipes) {
+			exchangeData.get().add(equipe);
+		}
+		
+		String json = gson.toJson(exchangeData);
+		try {
+			Files.writeString(path, json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void importJoueurs(Path path) {
+		try {
+			String json = Files.readString(path);
+			ExchangeData exchangeData = gson.fromJson(json, ExchangeData.class);
+			for(Joueur joueur : exchangeData.getJoueurs()) {
+				data.getJoueurs().add(joueur);
+			}
+			saveData();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}*/
 	
 	private void lookForSavedata() {
 		if(!new File(SystemProperties.PATH).exists()) {

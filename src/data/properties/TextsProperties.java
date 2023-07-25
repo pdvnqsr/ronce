@@ -12,6 +12,8 @@ public class TextsProperties {
 	public static String BUTTON_EXPORT;
 	public static String BUTTON_IMPORT;
 	
+	public static String LABEL_JOUEURS;
+	public static String LABEL_EQUIPES;
 	public static String LABEL_LISTINGAME;
 	public static String LABEL_LISTINSTOCK;
 	public static String LABEL_NOM;
@@ -59,6 +61,17 @@ public class TextsProperties {
 	public static String LABEL_BLOCAGE;
 	public static String LABEL_COMPETECECAPITAINE;
 	public static String LABEL_COMPETENCE;
+	public static String LABEL_ABREVIATION;
+	public static String LABEL_EMBLEME;
+	public static String LABEL_FOND;
+	public static String LABEL_PIECE;
+	public static String LABEL_MOTIF;
+	public static String LABEL_COULEUR;
+	public static String LABEL_MILIEU;
+	public static String LABEL_COTE;
+	public static String LABEL_HAUT;
+	public static String LABEL_BAS;
+	public static String LABEL_TRIPIECES;
 	
 	public static String MESSAGE_IRREVERSIBLE;
 	public static String MESSAGE_SURE;
@@ -82,6 +95,8 @@ public class TextsProperties {
 		BUTTON_EXPORT = texts.getString("button.export");
 		BUTTON_IMPORT = texts.getString("button.import");
 		
+		LABEL_JOUEURS = texts.getString("label.joueurs");
+		LABEL_EQUIPES = texts.getString("label.equipes");
 		LABEL_LISTINGAME = texts.getString("label.listInGame");
 		LABEL_LISTINSTOCK = texts.getString("label.listInStock");
 		LABEL_NOM = texts.getString("label.nom");
@@ -128,6 +143,17 @@ public class TextsProperties {
 		LABEL_TACLE = texts.getString("label.table");
 		LABEL_COMPETECECAPITAINE = texts.getString("label.competenceCapitaine");
 		LABEL_COMPETENCE = texts.getString("label.competence");
+		LABEL_ABREVIATION = texts.getString("label.abreviation");
+		LABEL_EMBLEME = texts.getString("label.embleme");
+		LABEL_FOND = texts.getString("label.fond");
+		LABEL_PIECE = texts.getString("label.piece");
+		LABEL_MOTIF = texts.getString("label.motif");
+		LABEL_COULEUR = texts.getString("label.couleur");
+		LABEL_MILIEU = texts.getString("label.milieu");
+		LABEL_COTE = texts.getString("label.cote");
+		LABEL_HAUT = texts.getString("label.haut");
+		LABEL_BAS = texts.getString("label.bas");
+		LABEL_TRIPIECES = texts.getString("label.triPieces");
 		
 		MESSAGE_IRREVERSIBLE = texts.getString("message.irreversible");
 		MESSAGE_SURE = texts.getString("message.sure");

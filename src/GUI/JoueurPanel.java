@@ -1,31 +1,18 @@
 package GUI;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
-
-import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import data.Joueur;
-import data.properties.NumericData;
 import data.properties.DataProperties;
-import data.properties.SelectData;
 import data.properties.TextsProperties;
 
-public class JoueurPanel extends JPanel {
+public class JoueurPanel extends ElementPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -92,7 +79,7 @@ public class JoueurPanel extends JPanel {
 
 	public JoueurPanel() {
 		setLayout(new GridLayout(1, 3));
-		GridLayout layout = new GridLayout(30,1);
+		GridLayout layout = new GridLayout(27,1,0,0);
 		JPanel infos = new JPanel(layout);
 		add(infos);
 		JPanel apparence = new JPanel(layout);
@@ -100,7 +87,7 @@ public class JoueurPanel extends JPanel {
 		JPanel autres = new JPanel(layout);
 		add(autres);
 		
-		nomField = new JTextField(DataProperties.NOM_LONGUEUR);
+		nomField = new JTextField(DataProperties.JOUEUR_NOM.getLongueur());
 		posteField = makeComboboxComponent(DataProperties.POSITION);
 		typeCorpsField = makeComboboxComponent(DataProperties.TYPECORPS);
 		tailleField = makeSliderComponent(DataProperties.TAILLE);
@@ -346,53 +333,5 @@ public class JoueurPanel extends JPanel {
 			joueurSelectionne.setCompetence5(competence5Field.getSelectedIndex());
 			joueurSelectionne.setCompetence6(competence6Field.getSelectedIndex());
 		}
-	}
-
-	private JComboBox<String> makeComboboxComponent(SelectData props) {
-		JComboBox<String> component = new JComboBox<String>();
-		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-		for(int i=0 ; i<props.getVals().size() ; i++) {
-			model.addElement(props.getVals().get(i).getDisplayValue());		}
-		component.setModel(model);
-		AutoCompleteDecorator.decorate(component);
-		return component;
-	}
-
-	private JSlider makeSliderComponent(NumericData props) {
-		JSlider component = new JSlider(props.getMin(), props.getMax(), props.getDefaut());
-		return component;
-	}
-	
-	private JSpinner makeSpinnerComponent(NumericData props) {
-		JSpinner component = new JSpinner(new SpinnerNumberModel(props.getDefaut(), props.getMin(), props.getMax(), 1));
-		return component;
-	}
-
-	private JPanel makeFieldPanel(String nom, JComponent champ) {
-		FlowLayout layout = new FlowLayout(FlowLayout.RIGHT);
-		JPanel panel = new JPanel(layout);
-		JLabel nomLabel = new JLabel(nom);
-		panel.add(nomLabel);
-		panel.add(champ);
-		return panel;
-	}
-	
-	@Override
-	public void setEnabled(boolean enabled) {
-		List<Component> comps = getAllComponents(this);
-		for (Component comp : comps) {
-		       comp.setEnabled(enabled);
-		}
-	}
-	
-	private List<Component> getAllComponents(final Container c) {
-        Component[] comps = c.getComponents();
-        List<Component> compList = new ArrayList<Component>();
-        for (Component comp : comps) {
-            compList.add(comp);
-            if (comp instanceof Container)
-                compList.addAll(getAllComponents((Container) comp));
-        }
-        return compList;
 	}
 }

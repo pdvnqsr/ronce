@@ -8,9 +8,7 @@ import java.util.Properties;
 
 public class DataProperties {
 	public static ArrayList<Long> JOUEURS_ADDRESS;
-	public static long NOM_OFFSET;
-	public static int NOM_LONGUEUR;
-	public static String NOM_DEFAUT;
+	public static TextData JOUEUR_NOM;
 	
 	public static SelectData POSITION;
 	
@@ -60,6 +58,31 @@ public class DataProperties {
 	public static SelectData COMPETENCES;
 	
 	
+	public static ArrayList<Long[]> EQUIPES_ADDRESS;
+	public static TextData EQUIPE_NOM;
+	public static TextData EQUIPE_ABREVIATION;
+	
+	public static SelectData EQUIPE_FOND;
+	public static SelectData EQUIPE_MOTIFFOND;
+	public static SelectData EQUIPE_COULEURFOND1;
+	public static SelectData EQUIPE_COULEURFOND2;
+	public static SelectData EQUIPE_COULEURFOND3;
+	public static SelectData EQUIPE_COULEURFOND4;
+	public static SelectData EQUIPE_MILIEU;
+	public static SelectData EQUIPE_COULEURMILIEU1;
+	public static SelectData EQUIPE_COULEURMILIEU2;
+	public static SelectData EQUIPE_COTE;
+	public static SelectData EQUIPE_COULEURCOTE1;
+	public static SelectData EQUIPE_COULEURCOTE2;
+	public static SelectData EQUIPE_HAUT;
+	public static SelectData EQUIPE_COULEURHAUT1;
+	public static SelectData EQUIPE_COULEURHAUT2;
+	public static SelectData EQUIPE_BAS;
+	public static SelectData EQUIPE_COULEURBAS1;
+	public static SelectData EQUIPE_COULEURBAS2;
+	public static MultiSelectData EQUIPE_TRIPIECES;
+	
+	
 	static {
 		try (InputStream input = new FileInputStream("config/data.properties")) {
             Properties prop = new Properties();
@@ -71,9 +94,7 @@ public class DataProperties {
             	JOUEURS_ADDRESS.add(Long.parseLong(prop.getProperty("joueurs.address."+i), 16));
             }
             		
-            NOM_OFFSET = Long.parseLong(prop.getProperty("nom.offset"));
-            NOM_LONGUEUR = Integer.parseInt(prop.getProperty("nom.longueur"));
-            NOM_DEFAUT = prop.getProperty("nom.defaut");
+            JOUEUR_NOM = new TextData(prop, "nom");
             
             POSITION = new SelectData(prop, "position");
  
@@ -121,6 +142,37 @@ public class DataProperties {
             
             COMPETECESCAPITAINE = new SelectData(prop, "competenceCapitaine");
             COMPETENCES = new SelectData(prop, "competence");
+            
+            
+            EQUIPES_ADDRESS = new ArrayList<Long[]>();
+            EQUIPES_ADDRESS.add(new Long[0]);
+            for(int i=1;i<=5;i++) {
+            	String[] hexAdresses = prop.getProperty("equipe.address."+i).split(",");
+            	Long[] adresses = {Long.parseLong(hexAdresses[0], 16), Long.parseLong(hexAdresses[1], 16), Long.parseLong(hexAdresses[2], 16)};
+            	EQUIPES_ADDRESS.add(adresses);
+            }
+            
+        	EQUIPE_NOM = new TextData(prop, "equipe.nom");
+        	EQUIPE_ABREVIATION = new TextData(prop, "equipe.abreviation");
+        	EQUIPE_FOND = new SelectData(prop, "equipe.emblemeFondPiece");
+        	EQUIPE_MOTIFFOND = new SelectData(prop, "equipe.emblemeFondMotif");
+        	EQUIPE_COULEURFOND1 = new SelectData(prop, "equipe.emblemeFondCouleur1");
+        	EQUIPE_COULEURFOND2 = new SelectData(prop, "equipe.emblemeFondCouleur2");
+        	EQUIPE_COULEURFOND3 = new SelectData(prop, "equipe.emblemeFondCouleur3");
+        	EQUIPE_COULEURFOND4 = new SelectData(prop, "equipe.emblemeFondCouleur4");
+        	EQUIPE_MILIEU = new SelectData(prop, "equipe.emblemeMilieuPiece");
+        	EQUIPE_COULEURMILIEU1 = new SelectData(prop, "equipe.emblemeMilieuCouleur1");
+        	EQUIPE_COULEURMILIEU2 = new SelectData(prop, "equipe.emblemeMilieuCouleur2");
+        	EQUIPE_COTE = new SelectData(prop, "equipe.emblemeCotePiece");
+        	EQUIPE_COULEURCOTE1 = new SelectData(prop, "equipe.emblemeCoteCouleur1");
+        	EQUIPE_COULEURCOTE2 = new SelectData(prop, "equipe.emblemeCoteCouleur2");
+        	EQUIPE_HAUT = new SelectData(prop, "equipe.emblemeHautPiece");
+        	EQUIPE_COULEURHAUT1 = new SelectData(prop, "equipe.emblemeHautCouleur1");
+        	EQUIPE_COULEURHAUT2 = new SelectData(prop, "equipe.emblemeHautCouleur2");
+        	EQUIPE_BAS = new SelectData(prop, "equipe.emblemeBasPiece");
+        	EQUIPE_COULEURBAS1 = new SelectData(prop, "equipe.emblemeBasCouleur1");
+        	EQUIPE_COULEURBAS2 = new SelectData(prop, "equipe.emblemeBasCouleur2");
+        	EQUIPE_TRIPIECES = new MultiSelectData(prop, "equipe.emblemeTri");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
