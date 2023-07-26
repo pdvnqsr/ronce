@@ -1,6 +1,7 @@
 package data;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import data.properties.DataProperties;
 
@@ -8,7 +9,8 @@ public class Joueur implements Serializable {
 
 	private static final long serialVersionUID = -2793262450709560428L;
 
-	
+	private String id;
+	private String description;
 	private String nom;
 	
 	private int position = DataProperties.POSITION.getDefaut();
@@ -69,7 +71,7 @@ public class Joueur implements Serializable {
 	private int passe = DataProperties.PASSES.getDefaut();
 	private int tirCombo1 = DataProperties.TIRSCOMBO1.getDefaut();
 	private int tirCombo2 = DataProperties.TIRSCOMBO2.getDefaut();
-	private int PassesCombo = DataProperties.PASSESCOMBO.getDefaut();
+	private int passesCombo = DataProperties.PASSESCOMBO.getDefaut();
 	private int tacle1 = DataProperties.TACLES.getDefaut();
 	private int tacle2 = DataProperties.TACLES.getDefaut();
 	private int blocage = DataProperties.BLOCAGES.getDefaut();
@@ -87,10 +89,33 @@ public class Joueur implements Serializable {
 	private int celebration3 = DataProperties.CELEBRATION.getDefaut();
 	private int celebration4 = DataProperties.CELEBRATION.getDefaut();
 	
-	public Joueur(String nom) {
+	public Joueur(String nom, boolean withId) {
 		this.nom = nom;
+		if(withId) {
+			id = regenerateId();
+		}
 	}
 	
+	public String regenerateId() {
+		return "J:" + UUID.randomUUID().toString();
+	}
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public String getNom() {
 		return nom;
 	}
@@ -460,11 +485,11 @@ public class Joueur implements Serializable {
 	}
 
 	public int getPassesCombo() {
-		return PassesCombo;
+		return passesCombo;
 	}
 
 	public void setPassesCombo(int passesCombo) {
-		PassesCombo = passesCombo;
+		this.passesCombo = passesCombo;
 	}
 
 	public int getTacle1() {
@@ -583,5 +608,72 @@ public class Joueur implements Serializable {
 	public String toString() {
 		return nom;
 	}
+
+	public void update(Joueur j) {
+		this.id = j.getId();
+		this.description = j.getDescription();
+		this.nom = j.getNom();
+		this.position = j.getPosition();
+		this.titre1 = j.getTitre1();
+		this.titre2 = j.getTitre2();
+		this.titre3 = j.getTitre3();
+		this.typeCorps = j.getTypeCorps();
+		this.taille = j.getTaille();
+		this.tailleTete = j.getTailleTete();
+		this.couleurPeau = j.getCouleurPeau();
+		this.styleManche = j.getStyleManche();
+		this.visage = j.getVisage();
+		this.tailleBouche = j.getTailleBouche();
+		this.commissures = j.getCommissures();
+		this.positionBouche = j.getPositionBouche();
+		this.cheveux = j.getCheveux();
+		this.couleurCheveux = j.getCouleurCheveux();
+		this.yeux = j.getYeux();
+		this.tailleYeux = j.getTailleYeux();
+		this.positionYeux = j.getPositionYeux();
+		this.espacementYeux =  j.getEspacementYeux();
+		this.taillePupilles = j.getTaillePupilles();
+		this.couleurYeux = j.getCouleurYeux();
+		this.sourcils = j.getSourcils();
+		this.couleurSourcils = j.getCouleurSourcils();
+		this.nez = j.getNez();
+		this.positionNez = j.getPositionNez();
+		this.tailleNez = j.getTailleNez();
+		this.crampons = j.getCrampons();
+		this.voix = j.getVoix();
+		this.lunettes = j.getLunettes();
+		this.couleurLunettes = j.getCouleurLunettes();
+		this.attaque = j.getAttaque();
+		this.defense = j.getDefense();
+		this.puissance = j.getPuissance();
+		this.vitesse = j.getVitesse();
+		this.technique = j.getTechnique();
+		this.tir = j.getTir();
+		this.tirAlt = j.getTirAlt();
+		this.tirAerien = j.getTirAerien();
+		this.superTir = j.getSuperTir();
+		this.superTirAlt = j.getSuperTirAlt();
+		this.dribble1 = j.getDribble1();
+		this.dribble2 = j.getDribble2();
+		this.passe = j.getPasse();
+		this.tirCombo1 = j.getTirCombo1();
+		this.tirCombo2 = j.getTirCombo2();
+		this.passesCombo = j.getPassesCombo();
+		this.tacle1 = j.getTacle1();
+		this.tacle2 = j.getTacle2();
+		this.blocage = j.getBlocage();
+		this.competenceCapitaine = j.getCompetenceCapitaine();
+		this.competence1 = j.getCompetence1();
+		this.competence2 = j.getCompetence2();
+		this.competence3 = j.getCompetence3();
+		this.competence4 = j.getCompetence4();
+		this.competence5 = j.getCompetence5();
+		this.competence6 = j.getCompetence6();
+		this.celebration1 = j.getCelebration1();
+		this.celebration2 = j.getCelebration2();
+		this.celebration3 = j.getCelebration3();
+		this.celebration4 = j.getCelebration4();
+	}
+	
 	
 }

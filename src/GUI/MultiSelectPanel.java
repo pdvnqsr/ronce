@@ -2,6 +2,8 @@ package GUI;
 
 
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
@@ -15,6 +17,8 @@ public class MultiSelectPanel extends JPanel {
 
 	private ArrayList<JComboBox<String>> fields;
 	
+	private String deselectedItem;
+	
 	public MultiSelectPanel(ElementPanel parent, MultiSelectData props) {
 		setLayout(new GridLayout(props.getVals().size(),1));
 		fields = new ArrayList<JComboBox<String>>();
@@ -24,7 +28,27 @@ public class MultiSelectPanel extends JPanel {
 			field = parent.makeMultiComboboxComponent(props);
 			fields.add(field);
 			add(parent.makeFieldPanel(""+(i+1), field));
+			field.addItemListener(new ItemListener() {
+				@SuppressWarnings("unchecked")
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					if(e.getStateChange() == ItemEvent.DESELECTED) {
+						deselectedItem = e.getItem().toString();
+					} else {
+						swapSelection((JComboBox<String>)e.getSource(), e.getItem().toString());
+					}
+				}
+			});
 		}
+	}
+	
+	private void swapSelection(JComboBox<String> sourceField, String selected) {
+		for(JComboBox<String> field : fields) {
+			if(!field.equals(sourceField) && selected.equals(field.getSelectedItem())) {
+				field.setSelectedItem(deselectedItem);
+			}
+		}
+		deselectedItem = null;
 	}
 	
 	public int[] getVals() {

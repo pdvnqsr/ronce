@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -164,22 +165,30 @@ public class EquipesGUI extends JPanel {
 	}
 
 	public void export() {
-		//TODO
-		/*String message = TextsProperties.MESSAGE_EXPORT1 + "\n";
-		for(Joueur joueur : inStock.getSelectedValuesList()) {
-			message += joueur.getNom() + "\n";
+		String message = TextsProperties.MESSAGE_EXPORT1 + "\n";
+		for(Equipe e : inStock.getSelectedValuesList()) {
+			message += e.getNom() + "\n";
 		}
 		message += "\n" + TextsProperties.MESSAGE_EXPORT2;
 
 		String nom = JOptionPane.showInputDialog(this, message);
 		if (nom != null && ! "".equals(nom)) {
-			Launch.getInstance().exportJoueurs(inStock.getSelectedValuesList(), new File("exchange/"+nom+".json").toPath());
-		}*/
+			File file = new File("exchange/teams/"+nom+".json");
+			if(file.exists()) {
+				int res = JOptionPane.showConfirmDialog(this, TextsProperties.MESSAGE_FICHIEREXISTANT, TextsProperties.BUTTON_EXPORT, JOptionPane.YES_NO_OPTION);
+				if(res == JOptionPane.YES_OPTION) {
+					Launch.getInstance().exportEquipes(inStock.getSelectedValuesList(), file.toPath());
+				} else {
+					export();
+				}
+			} else {
+				Launch.getInstance().exportEquipes(inStock.getSelectedValuesList(), file.toPath());
+			}
+		}
 	}
 
 	public void importer() {
-		//TODO
-		/*File dir = new File("exchange");
+		File dir = new File("exchange/teams");
 		File[] fichiers = dir.listFiles();
 
 		if(fichiers.length == 0) {
@@ -195,10 +204,10 @@ public class EquipesGUI extends JPanel {
 			String nom = JOptionPane.showInputDialog(
 					this, message, TextsProperties.BUTTON_IMPORT, JOptionPane.PLAIN_MESSAGE, null, nomsFichiers, nomsFichiers[0]).toString();
 			if (nom != null && ! "".equals(nom)) {
-				Launch.getInstance().importJoueurs(new File("exchange/"+nom).toPath());
-				remplirListesJoueurs(false);
+				Launch.getInstance().importEquipes(new File("exchange/teams/"+nom).toPath());
+				remplirListes(false);
 			}
-		}*/
+		}
 	}
 
 	public void supprimer() {
@@ -235,6 +244,7 @@ public class EquipesGUI extends JPanel {
 		int res = JOptionPane.showConfirmDialog(this, message, TextsProperties.BUTTON_ADD, JOptionPane.YES_NO_OPTION);
 		if(res == JOptionPane.YES_OPTION) {
 			for(Equipe e : inGame.getSelectedValuesList()) {
+				e.setId(e.regenerateId());
 				Launch.getInstance().getData().getEquipes().add(e);					
 			}
 			remplirListes(false);

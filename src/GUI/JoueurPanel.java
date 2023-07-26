@@ -18,6 +18,8 @@ public class JoueurPanel extends ElementPanel {
 
 	private Joueur joueurSelectionne = null;
 
+	private JTextField idField;
+	private JTextField descriptionField;
 	private JTextField nomField;
 	private JComboBox<String> posteField;
 	private JComboBox<String> typeCorpsField;
@@ -87,6 +89,9 @@ public class JoueurPanel extends ElementPanel {
 		JPanel autres = new JPanel(layout);
 		add(autres);
 		
+		idField = new JTextField(28);
+		idField.setEditable(false);
+		descriptionField = new JTextField(20);
 		nomField = new JTextField(DataProperties.JOUEUR_NOM.getLongueur());
 		posteField = makeComboboxComponent(DataProperties.POSITION);
 		typeCorpsField = makeComboboxComponent(DataProperties.TYPECORPS);
@@ -204,6 +209,9 @@ public class JoueurPanel extends ElementPanel {
 		infos.add(makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 5", competence5Field));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 6", competence6Field));
 		
+		autres.add(makeFieldPanel(TextsProperties.LABEL_ID, idField));
+		autres.add(makeFieldPanel(TextsProperties.LABEL_DESCRIPTION, descriptionField));
+		
 		setEnabled(false);
 	}
 
@@ -211,6 +219,8 @@ public class JoueurPanel extends ElementPanel {
 		joueurSelectionne = joueur;
 
 		if(joueur != null) {
+			idField.setText(joueur.getId());
+			descriptionField.setText(joueur.getDescription());
 			nomField.setText(joueur.getNom());
 			posteField.setSelectedIndex(joueur.getPosition());
 			typeCorpsField.setSelectedIndex(joueur.getTypeCorps());
@@ -274,6 +284,7 @@ public class JoueurPanel extends ElementPanel {
 
 	public void saveJoueur() {
 		if(joueurSelectionne != null) {
+			joueurSelectionne.setDescription(descriptionField.getText());
 			joueurSelectionne.setNom(nomField.getText());
 			joueurSelectionne.setPosition(posteField.getSelectedIndex());
 			joueurSelectionne.setTypeCorps(typeCorpsField.getSelectedIndex());

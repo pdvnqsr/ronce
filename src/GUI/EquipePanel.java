@@ -1,6 +1,7 @@
 package GUI;
 
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JComboBox;
@@ -17,6 +18,9 @@ public class EquipePanel extends ElementPanel {
 	private static final long serialVersionUID = -3464583622449755160L;
 
 	private Equipe equipeSelectionne = null;
+	
+	private JTextField idField;
+	private JTextField descriptionField;
 	
 	private JTextField nomField;
 	private JTextField abreviationField;
@@ -50,10 +54,10 @@ public class EquipePanel extends ElementPanel {
 		tenuePanels[2] = new TenuePanel();
 		tenuePanels[3] = new TenuePanel();
 		
-		GridLayout layout = new GridLayout(20,1);
-		JPanel infosContainer = new JPanel();
+		GridLayout layout = new GridLayout(22,1,0,0);
+		JPanel infosContainer = new JPanel(new BorderLayout(0,0));
 		JPanel infos = new JPanel(layout);
-		infosContainer.add(infos);
+		infosContainer.add(infos,BorderLayout.CENTER);
 		add(infosContainer);
 		
 		JTabbedPane tenuesPane = new JTabbedPane(JTabbedPane.LEFT);
@@ -65,6 +69,10 @@ public class EquipePanel extends ElementPanel {
 		
 		JPanel roster = new JPanel(layout);
 		add(roster);
+		
+		idField = new JTextField(28);
+		idField.setEditable(false);
+		descriptionField = new JTextField(20);
 		
 		nomField = new JTextField(DataProperties.EQUIPE_NOM.getLongueur());
 		abreviationField = new JTextField(DataProperties.EQUIPE_ABREVIATION.getLongueur());
@@ -88,6 +96,8 @@ public class EquipePanel extends ElementPanel {
 		basCouleur2Field = makeComboboxComponent(DataProperties.EQUIPE_COULEURBAS2);
 		triElementsField = new MultiSelectPanel(this, DataProperties.EQUIPE_TRIPIECES);
 		
+		infos.add(makeFieldPanel(TextsProperties.LABEL_ID, idField));
+		infos.add(makeFieldPanel(TextsProperties.LABEL_DESCRIPTION, descriptionField));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_NOM, nomField));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_ABREVIATION, abreviationField));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_FOND, fondField));
@@ -108,7 +118,7 @@ public class EquipePanel extends ElementPanel {
 		infos.add(makeFieldPanel(TextsProperties.LABEL_BAS, basField));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_BAS + " : " + TextsProperties.LABEL_COULEUR + " 1", basCouleur1Field));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_BAS + " : " + TextsProperties.LABEL_COULEUR + " 2", basCouleur2Field));
-		infosContainer.add(makeFieldPanel(TextsProperties.LABEL_TRIPIECES + " : ", triElementsField));
+		infosContainer.add(makeFieldPanel(TextsProperties.LABEL_TRIPIECES + " : ", triElementsField),BorderLayout.SOUTH);
 		
 		
 		setEnabled(false);
@@ -116,6 +126,7 @@ public class EquipePanel extends ElementPanel {
 	
 	public void save(){
 		if(equipeSelectionne != null) {
+			equipeSelectionne.setDescription(descriptionField.getText());
 			equipeSelectionne.setNom(nomField.getText());
 			equipeSelectionne.setAbreviation(abreviationField.getText());
 			equipeSelectionne.setFond(fondField.getSelectedIndex());
@@ -148,6 +159,8 @@ public class EquipePanel extends ElementPanel {
 		equipeSelectionne = equipe;
 
 		if(equipe != null) {
+			idField.setText(equipe.getId());
+			descriptionField.setText(equipe.getDescription());
 			nomField.setText(equipe.getNom());
 			abreviationField.setText(equipe.getAbreviation());
 			fondField.setSelectedIndex(equipe.getFond());

@@ -43,7 +43,7 @@ public class Data implements Serializable {
 	}
 	
 	public Joueur nouveauJoueur() {
-		Joueur joueur = new Joueur(DataProperties.JOUEUR_NOM.getDefaut());
+		Joueur joueur = new Joueur(DataProperties.JOUEUR_NOM.getDefaut(),true);
 		joueurs.add(joueur);
 		return joueur;
 	}
@@ -53,11 +53,31 @@ public class Data implements Serializable {
 	}
 	
 	public Equipe nouvelleEquipe() {
-		Equipe e = new Equipe();
+		Equipe e = new Equipe(true);
 		equipes.add(e);
 		return e;
 	}
 
+	public Joueur getJoueurParId(String id) {
+		Joueur joueur = null;
+		for(Joueur j : joueurs) {
+			if(id.equals(j.getId())) {
+				joueur = j;
+			}
+		}
+		return joueur;
+	}
+	
+	public Equipe getEquipeParId(String id) {
+		Equipe equipe = null;
+		for(Equipe e : equipes) {
+			if(id.equals(e.getId())) {
+				equipe = e;
+			}
+		}
+		return equipe;
+	}
+	
 	public void loadJoueursFromGame() {
 		try  {
 			RandomAccessFile raf = new RandomAccessFile(SystemProperties.PATH, "rw");
@@ -68,7 +88,7 @@ public class Data implements Serializable {
 			for(int i=1;i<=20;i++) {
 				Long addr = DataProperties.JOUEURS_ADDRESS.get(i);
 				
-				joueur = new Joueur(getTextFromGame(raf, addr, DataProperties.JOUEUR_NOM));
+				joueur = new Joueur(getTextFromGame(raf, addr, DataProperties.JOUEUR_NOM),false);
 				joueur.setPosition(getIntFromGame(raf, addr, DataProperties.POSITION,0));
 				joueur.setTypeCorps(getIntFromGame(raf, addr, DataProperties.TYPECORPS,0));
 				joueur.setTaille(getIntFromGame(raf, addr, DataProperties.TAILLE,0));
@@ -213,7 +233,7 @@ public class Data implements Serializable {
 			for(int i=1;i<=5;i++) {
 				Long addr = DataProperties.EQUIPES_ADDRESS.get(i)[0];
 				
-				equipe = new Equipe();
+				equipe = new Equipe(false);
 				equipe.setNom(getTextFromGame(raf, addr, DataProperties.EQUIPE_NOM));
 				equipe.setAbreviation(getTextFromGame(raf, addr, DataProperties.EQUIPE_ABREVIATION));
 				equipe.setFond(getIntFromGame(raf, addr, DataProperties.EQUIPE_FOND,0));

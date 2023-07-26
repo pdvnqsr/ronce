@@ -1,9 +1,14 @@
 package data;
 
+import java.util.UUID;
+
 import data.properties.DataProperties;
 
 public class Equipe {
 
+	private String id;
+	private String description;
+	
 	private String nom;
 	private String abreviation;
 	
@@ -29,7 +34,10 @@ public class Equipe {
 	
 	private Tenue[] tenues;
 	
-	public Equipe(){
+	public Equipe(boolean withId){
+		if(withId) {
+			id = regenerateId();
+		}
 		nom = DataProperties.EQUIPE_NOM.getDefaut();
 		abreviation = DataProperties.EQUIPE_ABREVIATION.getDefaut();
 		fond = DataProperties.EQUIPE_FOND.getDefaut();
@@ -59,6 +67,26 @@ public class Equipe {
 		tenues[3] = new Tenue();
 	}
 
+	public String regenerateId() {
+		return "E:" + UUID.randomUUID().toString();
+	}
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 	public String getNom() {
 		return nom;
 	}
@@ -234,9 +262,38 @@ public class Equipe {
 	public void setTenues(Tenue[] tenues) {
 		this.tenues = tenues;
 	}
+	
+	public void update(Equipe e) {
+		this.id = e.getId();
+		this.description = e.getDescription();
+		this.nom = e.getNom();
+		this.abreviation = e.getAbreviation();
+		this.fond = e.getFond();
+		this.motifFond = e.getMotifFond();
+		this.couleurFond1 = e.getCouleurFond1();
+		this.couleurFond2 = e.getCouleurFond2();
+		this.couleurFond3 = e.getCouleurFond3();
+		this.couleurFond4 = e.getCouleurFond4();
+		this.milieu = e.getMilieu();
+		this.couleurMilieu1 = e.getCouleurMilieu1();
+		this.couleurMilieu2 = e.getCouleurMilieu2();
+		this.cote = e.getCote();
+		this.couleurCote1 = e.getCouleurCote1();
+		this.couleurCote2 = e.getCouleurCote2();
+		this.haut = e.getHaut();
+		this.couleurHaut1 = e.getCouleurHaut1();
+		this.couleurHaut2 = e.getCouleurHaut2();
+		this.bas = e.getBas();
+		this.couleurBas1 = e.getCouleurBas1();
+		this.couleurBas2 = e.getCouleurBas2();
+		this.triPieces = e.getTriPieces();
+		this.tenues = e.getTenues();
+	}
 
 	@Override
 	public String toString() {
 		return nom;
 	}
+	
+	
 }

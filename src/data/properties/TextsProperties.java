@@ -12,6 +12,8 @@ public class TextsProperties {
 	public static String BUTTON_EXPORT;
 	public static String BUTTON_IMPORT;
 	
+	public static String LABEL_ID;
+	public static String LABEL_DESCRIPTION;	
 	public static String LABEL_JOUEURS;
 	public static String LABEL_EQUIPES;
 	public static String LABEL_LISTINGAME;
@@ -95,6 +97,9 @@ public class TextsProperties {
 	public static String MESSAGE_ADDPLAYERS;
 	public static String MESSAGE_TOGAME1;
 	public static String MESSAGE_TOGAME2;
+	public static String MESSAGE_FICHIEREXISTANT;
+	public static String MESSAGE_IDEXISTANT1;
+	public static String MESSAGE_IDEXISTANT2;
 	
 	
 	static {
@@ -107,6 +112,8 @@ public class TextsProperties {
 		BUTTON_EXPORT = texts.getString("button.export");
 		BUTTON_IMPORT = texts.getString("button.import");
 		
+		LABEL_ID = texts.getString("label.id");
+		LABEL_DESCRIPTION = texts.getString("label.description");
 		LABEL_JOUEURS = texts.getString("label.joueurs");
 		LABEL_EQUIPES = texts.getString("label.equipes");
 		LABEL_LISTINGAME = texts.getString("label.listInGame");
@@ -189,5 +196,8 @@ public class TextsProperties {
 		MESSAGE_ADDPLAYERS = texts.getString("message.addPlayers");
 		MESSAGE_TOGAME1 = texts.getString("message.toGame1");
 		MESSAGE_TOGAME2 = texts.getString("message.toGame2");
+		MESSAGE_FICHIEREXISTANT = texts.getString("message.fichierExistant");
+		MESSAGE_IDEXISTANT1 = texts.getString("message.idExistant1");
+		MESSAGE_IDEXISTANT2 = texts.getString("message.idExistant2");
 	}
 }

@@ -174,18 +174,27 @@ public class JoueursGUI extends JPanel {
 
 		String nom = JOptionPane.showInputDialog(this, message);
 		if (nom != null && ! "".equals(nom)) {
-			Launch.getInstance().exportJoueurs(inStock.getSelectedValuesList(), new File("exchange/"+nom+".json").toPath());
+			File file = new File("exchange/players/"+nom+".json");
+			if(file.exists()) {
+				int res = JOptionPane.showConfirmDialog(this, TextsProperties.MESSAGE_FICHIEREXISTANT, TextsProperties.BUTTON_EXPORT, JOptionPane.YES_NO_OPTION);
+				if(res == JOptionPane.YES_OPTION) {
+					Launch.getInstance().exportJoueurs(inStock.getSelectedValuesList(), file.toPath());
+				} else {
+					exportJoueurs();
+				}
+			} else {
+				Launch.getInstance().exportJoueurs(inStock.getSelectedValuesList(), file.toPath());
+			}
 		}
 	}
 
 	public void importJoueurs() {
-		File dir = new File("exchange");
+		File dir = new File("exchange/players");
 		File[] fichiers = dir.listFiles();
 
 		if(fichiers.length == 0) {
 			JOptionPane.showMessageDialog(this, TextsProperties.MESSAGE_IMPORTERROR);
 		} else {
-
 			String message = TextsProperties.MESSAGE_IMPORT;
 			String[] nomsFichiers = new String[fichiers.length];
 			for(int i=0;i<nomsFichiers.length;i++) {
@@ -195,7 +204,7 @@ public class JoueursGUI extends JPanel {
 			String nom = JOptionPane.showInputDialog(
 					this, message, TextsProperties.BUTTON_IMPORT, JOptionPane.PLAIN_MESSAGE, null, nomsFichiers, nomsFichiers[0]).toString();
 			if (nom != null && ! "".equals(nom)) {
-				Launch.getInstance().importJoueurs(new File("exchange/"+nom).toPath());
+				Launch.getInstance().importJoueurs(new File("exchange/players/"+nom).toPath());
 				remplirListesJoueurs(false);
 			}
 		}
@@ -235,6 +244,7 @@ public class JoueursGUI extends JPanel {
 		int res = JOptionPane.showConfirmDialog(this, message, TextsProperties.BUTTON_ADD, JOptionPane.YES_NO_OPTION);
 		if(res == JOptionPane.YES_OPTION) {
 			for(Joueur joueur : inGame.getSelectedValuesList()) {
+				joueur.setId(joueur.regenerateId());
 				Launch.getInstance().getData().getJoueurs().add(joueur);					
 			}
 			remplirListesJoueurs(false);

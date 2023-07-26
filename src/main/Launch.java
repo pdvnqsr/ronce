@@ -11,15 +11,19 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import GUI.MainGUI;
 import data.Data;
-import data.ExchangeData;
+import data.Equipe;
+import data.EquipeExchangeData;
+import data.JoueursExchangeData;
 import data.Joueur;
 import data.properties.SystemProperties;
+import data.properties.TextsProperties;
 
 public class Launch {
 	private static Launch instance = null;
@@ -77,7 +81,7 @@ public class Launch {
 	}
 
 	public void exportJoueurs(List<Joueur> joueurs, Path path) {
-		ExchangeData exchangeData = new ExchangeData();
+		JoueursExchangeData exchangeData = new JoueursExchangeData();
 		for(Joueur joueur : joueurs) {
 			exchangeData.getJoueurs().add(joueur);
 		}
@@ -93,9 +97,25 @@ public class Launch {
 	public void importJoueurs(Path path) {
 		try {
 			String json = Files.readString(path);
-			ExchangeData exchangeData = gson.fromJson(json, ExchangeData.class);
+			JoueursExchangeData exchangeData = gson.fromJson(json, JoueursExchangeData.class);
+			Joueur existant = null;
 			for(Joueur joueur : exchangeData.getJoueurs()) {
-				data.getJoueurs().add(joueur);
+				if(joueur.getId() == null || joueur.getId().equals("")) {
+					joueur.setId(joueur.regenerateId());
+				}
+				existant = data.getJoueurParId(joueur.getId()); 
+				if(existant != null) {
+					int res = JOptionPane.showConfirmDialog(gui, TextsProperties.MESSAGE_IDEXISTANT1 + " : \n" + existant.getNom() + "\n" + TextsProperties.MESSAGE_IDEXISTANT2);
+					if(res == JOptionPane.YES_NO_OPTION) {
+						existant.update(joueur);
+					} else if(res == JOptionPane.NO_OPTION) {
+						joueur.setId(joueur.regenerateId());
+						data.getJoueurs().add(joueur);
+					}
+				} else {
+					data.getJoueurs().add(joueur);
+				}
+				existant = null;
 			}
 			saveData();
 		} catch (IOException e) {
@@ -103,11 +123,13 @@ public class Launch {
 		}
 	}
 	
-	/*public void exportEquipess(List<Equipe> equipes, Path path) {
-		ExchangeData exchangeData = new ExchangeData();
+	public void exportEquipes(List<Equipe> equipes, Path path) {
+		EquipeExchangeData exchangeData = new EquipeExchangeData();
 		for(Equipe equipe : equipes) {
-			exchangeData.get().add(equipe);
+			exchangeData.getEquipes().add(equipe);
 		}
+		
+		//TODO ajouter les joueurs custom
 		
 		String json = gson.toJson(exchangeData);
 		try {
@@ -117,18 +139,35 @@ public class Launch {
 		}
 	}
 	
-	public void importJoueurs(Path path) {
+	public void importEquipes(Path path) {
 		try {
 			String json = Files.readString(path);
-			ExchangeData exchangeData = gson.fromJson(json, ExchangeData.class);
-			for(Joueur joueur : exchangeData.getJoueurs()) {
-				data.getJoueurs().add(joueur);
+			EquipeExchangeData exchangeData = gson.fromJson(json, EquipeExchangeData.class);
+			Equipe existant = null;
+			for(Equipe equipe : exchangeData.getEquipes()) {
+				if(equipe.getId() == null || equipe.getId().equals("")) {
+					equipe.setId(equipe.regenerateId());
+				}
+				existant = data.getEquipeParId(equipe.getId()); 
+				if(existant != null) {
+					int res = JOptionPane.showConfirmDialog(gui, TextsProperties.MESSAGE_IDEXISTANT1 + " : \n" + existant.getNom() + "\n" + TextsProperties.MESSAGE_IDEXISTANT2);
+					if(res == JOptionPane.YES_NO_OPTION) {
+						existant.update(equipe);
+					} else if(res == JOptionPane.NO_OPTION) {
+						equipe.setId(equipe.regenerateId());
+						data.getEquipes().add(equipe);
+					}
+				} else {
+					data.getEquipes().add(equipe);
+				}
+				//TODO ajouter joueurs custom
+				existant = null;
 			}
 			saveData();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 	
 	private void lookForSavedata() {
 		if(!new File(SystemProperties.PATH).exists()) {
