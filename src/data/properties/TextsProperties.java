@@ -86,6 +86,10 @@ public class TextsProperties {
 	public static String LABEL_POLICE;
 	public static String LABEL_BORDURE;
 	public static String LABEL_COULEURBRASSARD;
+	public static String LABEL_FORMATION;
+	public static String LABEL_CAPITAINE;
+	public static String LABEL_TIREURCORNER;
+	public static String LABEL_TACTIQUE;
 	
 	public static String MESSAGE_IRREVERSIBLE;
 	public static String MESSAGE_SURE;
@@ -185,6 +189,10 @@ public class TextsProperties {
 		LABEL_POLICE = texts.getString("label.police");
 		LABEL_BORDURE = texts.getString("label.bordure");
 		LABEL_COULEURBRASSARD = texts.getString("label.BrassardCouleur");
+		LABEL_FORMATION = texts.getString("label.formation");
+		LABEL_CAPITAINE = texts.getString("label.capitaine");
+		LABEL_TIREURCORNER = texts.getString("label.tireurCorner");
+		LABEL_TACTIQUE = texts.getString("label.tactique");
 		
 		MESSAGE_IRREVERSIBLE = texts.getString("message.irreversible");
 		MESSAGE_SURE = texts.getString("message.sure");

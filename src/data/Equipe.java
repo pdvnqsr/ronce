@@ -34,6 +34,12 @@ public class Equipe {
 	
 	private Tenue[] tenues;
 	
+	private int formation;
+	private int capitaine;
+	private int tireurCorner;
+	
+	private Tactique[] tactiques;
+	
 	public Equipe(boolean withId){
 		if(withId) {
 			id = regenerateId();
@@ -65,6 +71,16 @@ public class Equipe {
 		tenues[1] = new Tenue();
 		tenues[2] = new Tenue();
 		tenues[3] = new Tenue();
+		
+		formation = DataProperties.EQUIPE_FORMATION.getDefaut();
+		capitaine = DataProperties.EQUIPE_CAPITAINE.getDefaut();
+		tireurCorner = DataProperties.EQUIPE_TIREURCORNER.getDefaut();
+		
+		tactiques = new Tactique[4];
+		tactiques[0] = new Tactique();
+		tactiques[1] = new Tactique();
+		tactiques[2] = new Tactique();
+		tactiques[3] = new Tactique();
 	}
 
 	public String regenerateId() {
@@ -263,6 +279,45 @@ public class Equipe {
 		this.tenues = tenues;
 	}
 	
+	public int getFormation() {
+		return formation;
+	}
+
+	public void setFormation(int formation) {
+		this.formation = formation;
+	}
+
+	public int getCapitaine() {
+		return capitaine;
+	}
+
+	public void setCapitaine(int capitaine) {
+		this.capitaine = capitaine;
+	}
+
+	public int getTireurCorner() {
+		return tireurCorner;
+	}
+
+	public void setTireurCorner(int tireurCorner) {
+		this.tireurCorner = tireurCorner;
+	}
+	
+	public Tactique[] getTactiques() {
+		if(tactiques == null) {
+			tactiques = new Tactique[4];
+			tactiques[0] = new Tactique();
+			tactiques[1] = new Tactique();
+			tactiques[2] = new Tactique();
+			tactiques[3] = new Tactique();
+		}
+		return tactiques;
+	}
+
+	public void setTactiques(Tactique[] tactiques) {
+		this.tactiques = tactiques;
+	}
+
 	public void update(Equipe e) {
 		this.id = e.getId();
 		this.description = e.getDescription();
@@ -288,6 +343,7 @@ public class Equipe {
 		this.couleurBas2 = e.getCouleurBas2();
 		this.triPieces = e.getTriPieces();
 		this.tenues = e.getTenues();
+		this.tactiques = e.getTactiques();
 	}
 
 	@Override

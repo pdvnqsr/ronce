@@ -43,8 +43,12 @@ public class EquipePanel extends ElementPanel {
 	private JComboBox<String> basCouleur1Field;
 	private JComboBox<String> basCouleur2Field;
 	private MultiSelectPanel triElementsField;
+	private JComboBox<String> formationField;
+	private JComboBox<String> capitaineField;
+	private JComboBox<String> tireurCornerField;
 	
 	private TenuePanel[] tenuePanels;
+	private TactiquePanel[] tactiquePanels;
 	
 	public EquipePanel() {
 		setLayout(new GridLayout(1, 3));
@@ -53,6 +57,12 @@ public class EquipePanel extends ElementPanel {
 		tenuePanels[1] = new TenuePanel();
 		tenuePanels[2] = new TenuePanel();
 		tenuePanels[3] = new TenuePanel();
+		
+		tactiquePanels = new TactiquePanel[4];
+		tactiquePanels[0] = new TactiquePanel(1);
+		tactiquePanels[1] = new TactiquePanel(2);
+		tactiquePanels[2] = new TactiquePanel(3);
+		tactiquePanels[3] = new TactiquePanel(4);
 		
 		GridLayout layout = new GridLayout(22,1,0,0);
 		JPanel infosContainer = new JPanel(new BorderLayout(0,0));
@@ -95,6 +105,9 @@ public class EquipePanel extends ElementPanel {
 		basCouleur1Field = makeComboboxComponent(DataProperties.EQUIPE_COULEURBAS1);
 		basCouleur2Field = makeComboboxComponent(DataProperties.EQUIPE_COULEURBAS2);
 		triElementsField = new MultiSelectPanel(this, DataProperties.EQUIPE_TRIPIECES);
+		formationField = makeComboboxComponent(DataProperties.EQUIPE_FORMATION);
+		capitaineField = makeComboboxComponent(DataProperties.EQUIPE_CAPITAINE);
+		tireurCornerField = makeComboboxComponent(DataProperties.EQUIPE_TIREURCORNER);
 		
 		infos.add(makeFieldPanel(TextsProperties.LABEL_ID, idField));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_DESCRIPTION, descriptionField));
@@ -120,6 +133,13 @@ public class EquipePanel extends ElementPanel {
 		infos.add(makeFieldPanel(TextsProperties.LABEL_BAS + " : " + TextsProperties.LABEL_COULEUR + " 2", basCouleur2Field));
 		infosContainer.add(makeFieldPanel(TextsProperties.LABEL_TRIPIECES + " : ", triElementsField),BorderLayout.SOUTH);
 		
+		roster.add(makeFieldPanel(TextsProperties.LABEL_FORMATION, formationField));
+		roster.add(makeFieldPanel(TextsProperties.LABEL_CAPITAINE, capitaineField));
+		roster.add(makeFieldPanel(TextsProperties.LABEL_TIREURCORNER, tireurCornerField));
+		roster.add(tactiquePanels[0]);
+		roster.add(tactiquePanels[1]);
+		roster.add(tactiquePanels[2]);
+		roster.add(tactiquePanels[3]);
 		
 		setEnabled(false);
 	}
@@ -152,6 +172,13 @@ public class EquipePanel extends ElementPanel {
 			tenuePanels[1].save(equipeSelectionne.getTenues()[1]);
 			tenuePanels[2].save(equipeSelectionne.getTenues()[2]);
 			tenuePanels[3].save(equipeSelectionne.getTenues()[3]);
+			equipeSelectionne.setFormation(formationField.getSelectedIndex());
+			equipeSelectionne.setCapitaine(capitaineField.getSelectedIndex());
+			equipeSelectionne.setTireurCorner(tireurCornerField.getSelectedIndex());
+			tactiquePanels[0].save(equipeSelectionne.getTactiques()[0]);
+			tactiquePanels[1].save(equipeSelectionne.getTactiques()[1]);
+			tactiquePanels[2].save(equipeSelectionne.getTactiques()[2]);
+			tactiquePanels[3].save(equipeSelectionne.getTactiques()[3]);
 		}
 	}
 	
@@ -186,6 +213,13 @@ public class EquipePanel extends ElementPanel {
 			tenuePanels[1].load(equipe.getTenues()[1]);
 			tenuePanels[2].load(equipe.getTenues()[2]);
 			tenuePanels[3].load(equipe.getTenues()[3]);
+			formationField.setSelectedIndex(equipe.getFormation());
+			capitaineField.setSelectedIndex(equipe.getCapitaine());
+			tireurCornerField.setSelectedIndex(equipe.getTireurCorner());
+			tactiquePanels[0].load(equipe.getTactiques()[0]);
+			tactiquePanels[1].load(equipe.getTactiques()[1]);
+			tactiquePanels[2].load(equipe.getTactiques()[2]);
+			tactiquePanels[3].load(equipe.getTactiques()[3]);				
 		}
 	}
 

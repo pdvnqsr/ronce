@@ -70,7 +70,7 @@ public class ElementPanel extends JPanel {
         List<Component> compList = new ArrayList<Component>();
         for (Component comp : comps) {
             compList.add(comp);
-            if (comp instanceof Container)
+            if (comp instanceof Container && !(comp instanceof TactiquePanel))
                 compList.addAll(getAllComponents((Container) comp));
         }
         return compList;

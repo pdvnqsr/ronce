@@ -107,6 +107,16 @@ public class DataProperties {
 	public static SelectData EQUIPE_POLICECOULEUR4;
 	public static SelectData EQUIPE_BRASSARDCOULEUR;
 	
+	public static SelectData EQUIPE_FORMATION;
+	public static SelectData EQUIPE_CAPITAINE;
+	public static SelectData EQUIPE_TIREURCORNER;
+	public static SelectData EQUIPE_TACTIQUE;
+	public static SelectData EQUIPE_TACTIQUEJOUEUR1;
+	public static SelectData EQUIPE_TACTIQUEJOUEUR2;
+	public static SelectData EQUIPE_TACTIQUEJOUEUR3;
+	public static SelectData EQUIPE_TACTIQUEJOUEUR4;
+	public static SideData EQUIPE_TACTIQUENBJOUEURS;
+	
 	static {
 		try (InputStream input = new FileInputStream("config/data.properties")) {
             Properties prop = new Properties();
@@ -222,6 +232,16 @@ public class DataProperties {
         	EQUIPE_POLICECOULEUR3 = new SelectData(prop, "equipe.policeCouleur3");
         	EQUIPE_POLICECOULEUR4 = new SelectData(prop, "equipe.policeCouleur4");
         	EQUIPE_BRASSARDCOULEUR = new SelectData(prop, "equipe.brassardCouleur");
+        	
+        	EQUIPE_FORMATION = new SelectData(prop, "equipe.formation");
+        	EQUIPE_CAPITAINE = new SelectData(prop, "equipe.capitaine");
+        	EQUIPE_TIREURCORNER = new SelectData(prop, "equipe.tireurCorner");
+        	EQUIPE_TACTIQUE = new SelectData(prop, "equipe.tactique");
+        	EQUIPE_TACTIQUEJOUEUR1 = new SelectData(prop, "equipe.tactiqueJoueur1");
+        	EQUIPE_TACTIQUEJOUEUR2 = new SelectData(prop, "equipe.tactiqueJoueur2");
+        	EQUIPE_TACTIQUEJOUEUR3 = new SelectData(prop, "equipe.tactiqueJoueur3");
+        	EQUIPE_TACTIQUEJOUEUR4 = new SelectData(prop, "equipe.tactiqueJoueur4");
+        	EQUIPE_TACTIQUENBJOUEURS = new SideData(prop, "equipe.tactiqueNbJoueurs");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
