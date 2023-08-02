@@ -26,4 +26,9 @@ public class ValueMapping {
 	public void setDisplayValue(String displayValue) {
 		this.displayValue = displayValue;
 	}
+	
+	@Override
+	public String toString() {
+		return displayValue;
+	}
 }

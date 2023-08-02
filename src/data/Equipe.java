@@ -40,6 +40,9 @@ public class Equipe {
 	
 	private Tactique[] tactiques;
 	
+	private String[] joueurs;
+	private int[] numeros;
+	
 	public Equipe(boolean withId){
 		if(withId) {
 			id = regenerateId();
@@ -81,6 +84,9 @@ public class Equipe {
 		tactiques[1] = new Tactique();
 		tactiques[2] = new Tactique();
 		tactiques[3] = new Tactique();
+		
+		joueurs = new String[DataProperties.EQUIPE_JOUEURS.getOffsets().length];
+		numeros = new int[DataProperties.EQUIPE_NUMEROS.getOffsets().length];
 	}
 
 	public String regenerateId() {
@@ -318,6 +324,22 @@ public class Equipe {
 		this.tactiques = tactiques;
 	}
 
+	public String[] getJoueurs() {
+		return joueurs;
+	}
+
+	public void setJoueurs(String[] joueurs) {
+		this.joueurs = joueurs;
+	}
+
+	public int[] getNumeros() {
+		return numeros;
+	}
+
+	public void setNumeros(int[] numeros) {
+		this.numeros = numeros;
+	}
+
 	public void update(Equipe e) {
 		this.id = e.getId();
 		this.description = e.getDescription();
@@ -344,6 +366,8 @@ public class Equipe {
 		this.triPieces = e.getTriPieces();
 		this.tenues = e.getTenues();
 		this.tactiques = e.getTactiques();
+		this.joueurs = e.getJoueurs();
+		this.numeros = e.getNumeros();
 	}
 
 	@Override

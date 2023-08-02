@@ -81,7 +81,7 @@ public class JoueurPanel extends ElementPanel {
 
 	public JoueurPanel() {
 		setLayout(new GridLayout(1, 3));
-		GridLayout layout = new GridLayout(27,1,0,0);
+		GridLayout layout = new GridLayout(28,1,0,0);
 		JPanel infos = new JPanel(layout);
 		add(infos);
 		JPanel apparence = new JPanel(layout);
@@ -201,6 +201,7 @@ public class JoueurPanel extends ElementPanel {
 		infos.add(makeFieldPanel(TextsProperties.LABEL_PASSESCOMBO, passesComboField));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_TACLE + " 1", tacle1Field));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_TACLE + " 2", tacle2Field));
+		infos.add(makeFieldPanel(TextsProperties.LABEL_BLOCAGE, blocageField));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_COMPETECECAPITAINE, competenceCapitaineField));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 1", competence1Field));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 2", competence2Field));

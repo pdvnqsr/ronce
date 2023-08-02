@@ -18,9 +18,14 @@ import javax.swing.SpinnerNumberModel;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
+import data.Joueur;
+import data.properties.DataProperties;
+import data.properties.IncrementalData;
+import data.properties.JoueurMapping;
 import data.properties.MultiSelectData;
 import data.properties.NumericData;
 import data.properties.SelectData;
+import main.Launch;
 
 public class ElementPanel extends JPanel {
 
@@ -41,6 +46,32 @@ public class ElementPanel extends JPanel {
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 		for(int i=0 ; i<props.getVals().size() ; i++) {
 			model.addElement(props.getVals().get(i).getDisplayValue());		}
+		component.setModel(model);
+		AutoCompleteDecorator.decorate(component);
+		return component;
+	}
+	
+	public JComboBox<JoueurMapping> makeJoueursComboboxComponent() {
+		JComboBox<JoueurMapping> component = new JComboBox<JoueurMapping>();
+		DefaultComboBoxModel<JoueurMapping> model = new DefaultComboBoxModel<JoueurMapping>();
+		// Joueurs de base
+		IncrementalData props = DataProperties.JOUEURSBASE;
+		for(int i=0 ; i<props.getVals().size() ; i++) {
+			model.addElement(props.getVals().get(i));
+		}
+		// Joueurs du stock
+		for(Joueur j : Launch.getInstance().getData().getJoueurs()) {
+			model.addElement(new JoueurMapping(j.getId(), j.getNom()));
+		}
+		Joueur j;
+		// Joueurs du jeu non présents dans le stock
+		for(int i=0 ; i<DataProperties.JOUEURSCUSTOM.getNombre() ; i++) {
+			j = Launch.getInstance().getData().getJoueursInGame().get(i);
+			if(!Launch.getInstance().getData().getJoueurs().contains(j)) {
+				model.addElement(new JoueurMapping("" + DataProperties.JOUEURSCUSTOM.getVals().get(i).getInGameValue(), j.getNom()));
+			}
+		}
+		
 		component.setModel(model);
 		AutoCompleteDecorator.decorate(component);
 		return component;

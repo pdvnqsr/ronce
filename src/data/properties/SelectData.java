@@ -16,16 +16,22 @@ public class SelectData {
 		for(int i=0;i<temp.length;i++) {
 			this.offsets[i] = Integer.parseInt(temp[i]);
 		}
-		this.vals = new ArrayList<ValueMapping>();
 		this.defaut = Integer.parseInt(props.getProperty(key+".defaut"));
+		
+		this.vals = new ArrayList<ValueMapping>();
+		String valsKey = key;
+		if(props.containsKey(key+".vals")) {
+			valsKey = props.getProperty(valsKey+".vals");
+		}
+		
 		boolean go = true;
 		int i=0;
 		String[] valContent;
 		while(go) {
-			valContent = props.getProperty(key+".vals."+i).split(":");
+			valContent = props.getProperty(valsKey+".vals."+i).split(":");
 			this.vals.add(new ValueMapping( Integer.parseInt(valContent[0]),valContent[1]));
 			i++;
-			go = props.containsKey(key+".vals."+i);
+			go = props.containsKey(valsKey+".vals."+i);
 		}
 	}
 

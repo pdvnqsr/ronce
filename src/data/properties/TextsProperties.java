@@ -13,7 +13,8 @@ public class TextsProperties {
 	public static String BUTTON_IMPORT;
 	
 	public static String LABEL_ID;
-	public static String LABEL_DESCRIPTION;	
+	public static String LABEL_DESCRIPTION;
+	public static String LABEL_JOUEUR;
 	public static String LABEL_JOUEURS;
 	public static String LABEL_EQUIPES;
 	public static String LABEL_LISTINGAME;
@@ -90,6 +91,7 @@ public class TextsProperties {
 	public static String LABEL_CAPITAINE;
 	public static String LABEL_TIREURCORNER;
 	public static String LABEL_TACTIQUE;
+	public static String LABEL_NUMERO;
 	
 	public static String MESSAGE_IRREVERSIBLE;
 	public static String MESSAGE_SURE;
@@ -104,6 +106,9 @@ public class TextsProperties {
 	public static String MESSAGE_FICHIEREXISTANT;
 	public static String MESSAGE_IDEXISTANT1;
 	public static String MESSAGE_IDEXISTANT2;
+	public static String MESSAGE_ELEMENTEXISTANT;
+	public static String MESSAGE_FORCEAJOUT;
+	public static String MESSAGE_JOUEURSMANQUANTS;
 	
 	
 	static {
@@ -118,6 +123,7 @@ public class TextsProperties {
 		
 		LABEL_ID = texts.getString("label.id");
 		LABEL_DESCRIPTION = texts.getString("label.description");
+		LABEL_JOUEUR = texts.getString("label.joueur");
 		LABEL_JOUEURS = texts.getString("label.joueurs");
 		LABEL_EQUIPES = texts.getString("label.equipes");
 		LABEL_LISTINGAME = texts.getString("label.listInGame");
@@ -164,6 +170,7 @@ public class TextsProperties {
 		LABEL_TIRSCOMBOS = texts.getString("label.tirCombos");
 		LABEL_PASSESCOMBO = texts.getString("label.passesCombo");
 		LABEL_TACLE = texts.getString("label.table");
+		LABEL_BLOCAGE = texts.getString("label.blocage");
 		LABEL_COMPETECECAPITAINE = texts.getString("label.competenceCapitaine");
 		LABEL_COMPETENCE = texts.getString("label.competence");
 		LABEL_ABREVIATION = texts.getString("label.abreviation");
@@ -193,6 +200,7 @@ public class TextsProperties {
 		LABEL_CAPITAINE = texts.getString("label.capitaine");
 		LABEL_TIREURCORNER = texts.getString("label.tireurCorner");
 		LABEL_TACTIQUE = texts.getString("label.tactique");
+		LABEL_NUMERO = texts.getString("label.numero");
 		
 		MESSAGE_IRREVERSIBLE = texts.getString("message.irreversible");
 		MESSAGE_SURE = texts.getString("message.sure");
@@ -207,5 +215,8 @@ public class TextsProperties {
 		MESSAGE_FICHIEREXISTANT = texts.getString("message.fichierExistant");
 		MESSAGE_IDEXISTANT1 = texts.getString("message.idExistant1");
 		MESSAGE_IDEXISTANT2 = texts.getString("message.idExistant2");
+		MESSAGE_ELEMENTEXISTANT = texts.getString("message.elementExistant");
+		MESSAGE_FORCEAJOUT = texts.getString("message.forceAjout");
+		MESSAGE_JOUEURSMANQUANTS = texts.getString("message.joueursManquants");
 	}
 }

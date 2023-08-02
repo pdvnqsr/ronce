@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 public class DataProperties {
-	public static ArrayList<Long> JOUEURS_ADDRESS;
 	public static TextData JOUEUR_NOM;
 	
 	public static SelectData POSITION;
@@ -117,16 +116,17 @@ public class DataProperties {
 	public static SelectData EQUIPE_TACTIQUEJOUEUR4;
 	public static SideData EQUIPE_TACTIQUENBJOUEURS;
 	
+	public static SelectData EQUIPE_NUMEROS;
+	public static SelectData EQUIPE_JOUEURS;
+	
+	public static IncrementalData JOUEURSBASE;
+	public static IncrementalData EQUIPESBASE;
+	public static IncrementalData JOUEURSCUSTOM;
+	
 	static {
 		try (InputStream input = new FileInputStream("config/data.properties")) {
             Properties prop = new Properties();
             prop.load(input);
-
-            JOUEURS_ADDRESS = new ArrayList<Long>();
-            JOUEURS_ADDRESS.add((long)0);
-            for(int i=1;i<=20;i++) {
-            	JOUEURS_ADDRESS.add(Long.parseLong(prop.getProperty("joueurs.address."+i), 16));
-            }
             		
             JOUEUR_NOM = new TextData(prop, "nom");
             
@@ -242,6 +242,13 @@ public class DataProperties {
         	EQUIPE_TACTIQUEJOUEUR3 = new SelectData(prop, "equipe.tactiqueJoueur3");
         	EQUIPE_TACTIQUEJOUEUR4 = new SelectData(prop, "equipe.tactiqueJoueur4");
         	EQUIPE_TACTIQUENBJOUEURS = new SideData(prop, "equipe.tactiqueNbJoueurs");
+        	
+        	EQUIPE_NUMEROS = new SelectData(prop, "equipe.numeros");
+        	EQUIPE_JOUEURS = new SelectData(prop, "equipe.joueurs");
+        	
+        	EQUIPESBASE = new IncrementalData(prop, "equipesBase");
+        	JOUEURSBASE = new IncrementalData(prop, "joueursBase");
+        	JOUEURSCUSTOM = new IncrementalData(prop, "joueursCustom");
         } catch (IOException ex) {
             ex.printStackTrace();
         }

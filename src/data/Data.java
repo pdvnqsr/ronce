@@ -18,6 +18,7 @@ import data.properties.NumericData;
 import data.properties.SelectData;
 import data.properties.SystemProperties;
 import data.properties.TextData;
+import main.Launch;
 
 public class Data implements Serializable {
 
@@ -26,14 +27,14 @@ public class Data implements Serializable {
 
 	private ArrayList<Joueur> joueurs;
 	private transient ArrayList<Joueur> joueursInGame;
-	
+
 	private ArrayList<Equipe> equipes;
 	private transient ArrayList<Equipe> equipesInGame;
 
 	public Data() {
 		joueurs = new ArrayList<Joueur>();
 		joueursInGame = new ArrayList<Joueur>();
-		
+
 		equipes = new ArrayList<Equipe>();
 		equipesInGame = new ArrayList<Equipe>();
 	}
@@ -41,17 +42,17 @@ public class Data implements Serializable {
 	public void supprimerJoueur(Joueur j) {
 		joueurs.remove(j);
 	}
-	
+
 	public Joueur nouveauJoueur() {
 		Joueur joueur = new Joueur(DataProperties.JOUEUR_NOM.getDefaut(),true);
 		joueurs.add(joueur);
 		return joueur;
 	}
-	
+
 	public void supprimerEquipe(Equipe e) {
 		equipes.remove(e);
 	}
-	
+
 	public Equipe nouvelleEquipe() {
 		Equipe e = new Equipe(true);
 		equipes.add(e);
@@ -67,7 +68,7 @@ public class Data implements Serializable {
 		}
 		return joueur;
 	}
-	
+
 	public Equipe getEquipeParId(String id) {
 		Equipe equipe = null;
 		for(Equipe e : equipes) {
@@ -77,17 +78,29 @@ public class Data implements Serializable {
 		}
 		return equipe;
 	}
-	
+
+	public ArrayList<String> ajouterJoueursAuStock(ArrayList<Joueur> joueurs) {
+		ArrayList<String> idAjoutes = new ArrayList<String>();
+		for(Joueur joueur : joueurs) {
+			joueur.setId(joueur.regenerateId());
+			getJoueurs().add(joueur);
+			idAjoutes.add(joueur.getId());
+		}
+		Launch.getInstance().getGui().getJoueursGUI().remplirListesJoueurs(false);
+		Launch.getInstance().saveData();
+		return idAjoutes;
+	}
+
 	public void loadJoueursFromGame() {
 		try  {
 			RandomAccessFile raf = new RandomAccessFile(SystemProperties.PATH, "rw");
-			
+
 			joueursInGame.clear();
-			
+
 			Joueur joueur;
-			for(int i=1;i<=20;i++) {
-				Long addr = DataProperties.JOUEURS_ADDRESS.get(i);
-				
+			for(int i=0;i<DataProperties.JOUEURSCUSTOM.getNombre();i++) {
+				Long addr = DataProperties.JOUEURSCUSTOM.getAdresse(i);
+
 				joueur = new Joueur(getTextFromGame(raf, addr, DataProperties.JOUEUR_NOM),false);
 				joueur.setPosition(getIntFromGame(raf, addr, DataProperties.POSITION,0));
 				joueur.setTypeCorps(getIntFromGame(raf, addr, DataProperties.TYPECORPS,0));
@@ -156,8 +169,8 @@ public class Data implements Serializable {
 	public void saveIntoGame(Joueur joueur, int inGameIndex) {
 		archiveSavedata();
 		try {
-			Long addr = DataProperties.JOUEURS_ADDRESS.get(inGameIndex);
-			
+			Long addr = DataProperties.JOUEURSCUSTOM.getAdresse(inGameIndex-1);
+
 			RandomAccessFile raf = new RandomAccessFile(SystemProperties.PATH, "rw");
 			writeTextInGame(raf, addr, DataProperties.JOUEUR_NOM, joueur.getNom());
 			writeIntInGame(raf, addr, DataProperties.POSITION,0,joueur.getPosition());
@@ -222,17 +235,17 @@ public class Data implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void loadEquipesFromGame() {
 		try  {
 			RandomAccessFile raf = new RandomAccessFile(SystemProperties.PATH, "rw");
-			
+
 			equipesInGame.clear();
-			
+
 			Equipe equipe;
 			for(int i=1;i<=5;i++) {
 				Long addr = DataProperties.EQUIPES_ADDRESS.get(i)[0];
-				
+
 				equipe = new Equipe(false);
 				equipe.setNom(getTextFromGame(raf, addr, DataProperties.EQUIPE_NOM));
 				equipe.setAbreviation(getTextFromGame(raf, addr, DataProperties.EQUIPE_ABREVIATION));
@@ -281,13 +294,13 @@ public class Data implements Serializable {
 					equipe.getTenues()[j].setPoliceCouleur4(getIntFromGame(raf, addr, DataProperties.EQUIPE_POLICECOULEUR4,j));
 					equipe.getTenues()[j].setBrassardCouleur(getIntFromGame(raf, addr, DataProperties.EQUIPE_BRASSARDCOULEUR,j));
 				}
-				
+
 				addr = DataProperties.EQUIPES_ADDRESS.get(i)[1];
-				
+
 				equipe.setFormation(getByteFromGame(raf, addr, DataProperties.EQUIPE_FORMATION, 0));
 				equipe.setCapitaine(getByteFromGame(raf, addr, DataProperties.EQUIPE_CAPITAINE,0));
 				equipe.setTireurCorner(getByteFromGame(raf, addr, DataProperties.EQUIPE_TIREURCORNER,0));
-				
+
 				for(int j=0;j<equipe.getTactiques().length;j++) {
 					equipe.getTactiques()[j].setTactique(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUE,j));
 					equipe.getTactiques()[j].setJoueur1(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR1,j));
@@ -295,7 +308,15 @@ public class Data implements Serializable {
 					equipe.getTactiques()[j].setJoueur3(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR3,j));
 					equipe.getTactiques()[j].setJoueur3(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR4,j));
 				}
-				
+
+				for(int j=0;j<equipe.getJoueurs().length;j++) {
+					equipe.getJoueurs()[j] = "" + getJoueurIdFromGame(raf, addr, j);
+				}
+
+				for(int j=0;j<equipe.getNumeros().length;j++) {
+					equipe.getNumeros()[j] = getByteFromGame(raf, addr, DataProperties.EQUIPE_NUMEROS,j);
+				}
+
 				equipesInGame.add(equipe);
 			}
 		}catch (Exception e) {
@@ -307,7 +328,7 @@ public class Data implements Serializable {
 		archiveSavedata();
 		try {
 			Long addr = DataProperties.EQUIPES_ADDRESS.get(inGameIndex)[0];
-			
+
 			RandomAccessFile raf = new RandomAccessFile(SystemProperties.PATH, "rw");
 			writeTextInGame(raf, addr, DataProperties.EQUIPE_NOM, equipe.getNom());
 			writeTextInGame(raf, addr, DataProperties.EQUIPE_ABREVIATION, equipe.getAbreviation());
@@ -359,13 +380,13 @@ public class Data implements Serializable {
 				writeIntInGame(raf, addr, DataProperties.EQUIPE_POLICECOULEUR4,j,equipe.getTenues()[j].getPoliceCouleur4());
 				writeIntInGame(raf, addr, DataProperties.EQUIPE_BRASSARDCOULEUR,j,equipe.getTenues()[j].getBrassardCouleur());
 			}
-			
+
 			addr = DataProperties.EQUIPES_ADDRESS.get(inGameIndex)[1];
-			
+
 			writeByteInGame(raf, addr, DataProperties.EQUIPE_FORMATION,0,equipe.getFormation());
 			writeByteInGame(raf, addr, DataProperties.EQUIPE_CAPITAINE,0,equipe.getCapitaine());
 			writeByteInGame(raf, addr, DataProperties.EQUIPE_TIREURCORNER,0,equipe.getTireurCorner());
-			
+
 			for(int j=0;j<equipe.getTactiques().length;j++) {
 				writeIntInGame(raf, addr, DataProperties.EQUIPE_TACTIQUE,j,equipe.getTactiques()[j].getTactique());
 				writeIntInGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR1,j,equipe.getTactiques()[j].getJoueur1());
@@ -373,13 +394,52 @@ public class Data implements Serializable {
 				writeIntInGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR3,j,equipe.getTactiques()[j].getJoueur3());
 				writeIntInGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR4,j,equipe.getTactiques()[j].getJoueur4());
 			}
-			
+
+			//TODO Joueurs et numéros
+
 			raf.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public void loadCompositionsFromGame() {
+		try  {
+			RandomAccessFile raf = new RandomAccessFile(SystemProperties.PATH, "rw");
+
+			Composition Composition;
+			for(int i=0;i<DataProperties.EQUIPESBASE.getNombre();i++) {
+				Long addr = DataProperties.EQUIPESBASE.getAdresse(i);
+
+				Composition = new Composition(false);
+				Composition.setNom(getTextFromGame(raf, addr, DataProperties.EQUIPE_NOM));
+
+				Composition.setFormation(getByteFromGame(raf, addr, DataProperties.EQUIPE_FORMATION, 0));
+				Composition.setCapitaine(getByteFromGame(raf, addr, DataProperties.EQUIPE_CAPITAINE,0));
+				Composition.setTireurCorner(getByteFromGame(raf, addr, DataProperties.EQUIPE_TIREURCORNER,0));
+
+				for(int j=0;j<Composition.getTactiques().length;j++) {
+					Composition.getTactiques()[j].setTactique(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUE,j));
+					Composition.getTactiques()[j].setJoueur1(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR1,j));
+					Composition.getTactiques()[j].setJoueur2(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR2,j));
+					Composition.getTactiques()[j].setJoueur3(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR3,j));
+					Composition.getTactiques()[j].setJoueur3(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR4,j));
+				}
+
+				for(int j=0;j<Composition.getJoueurs().length;j++) {
+					Composition.getJoueurs()[j] = getJoueurIdFromGame(raf, addr, j);
+				}
+
+				for(int j=0;j<Composition.getNumeros().length;j++) {
+					Composition.getNumeros()[j] = getByteFromGame(raf, addr, DataProperties.EQUIPE_NUMEROS,j);
+				}
+
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private String getTextFromGame(RandomAccessFile raf, long addr, TextData props) throws Exception {
 		String text = "";
 		boolean stop = false;
@@ -394,17 +454,37 @@ public class Data implements Serializable {
 		}
 		return text;
 	}
-	
+
 	private int getIntFromGame(RandomAccessFile raf, long addr, SelectData props, int offsetIdex) throws Exception {
 		int i = getIntFromGame(raf, addr, props.getOffsets()[offsetIdex]);
 		return props.getIndexFromInGameValue(i, props.getDefaut());
 	}
-	
+
 	private int getIntFromGame(RandomAccessFile raf, long addr, NumericData props, int offsetIdex) throws Exception {
 		int i = getIntFromGame(raf, addr, props.getOffsets()[offsetIdex]);
 		return i;
 	}
-	
+
+	private String getJoueurIdFromGame(RandomAccessFile raf, long addr, int offsetIdex) throws Exception {
+		int i = getIntFromGame(raf, addr, DataProperties.EQUIPE_JOUEURS.getOffsets()[offsetIdex]);
+		int val = DataProperties.JOUEURSBASE.getIndexFromInGameValue(""+i, -1);
+		String res = null;
+		if(val == -1) {
+			i = DataProperties.JOUEURSCUSTOM.getIndexFromInGameValue(""+i, DataProperties.EQUIPE_JOUEURS.getDefaut());
+			Joueur j = getJoueursInGame().get(i);
+			int indexInStock = Launch.getInstance().getData().getJoueurs().indexOf(j);
+			if(indexInStock == -1) {
+				res = "NH-" + i; 
+			} else {
+				j = Launch.getInstance().getData().getJoueurs().get(indexInStock);
+				res = j.getId();
+			}
+		} else {
+			res = "" + val;
+		}
+		return res;
+	}
+
 	private int getIntFromGame(RandomAccessFile raf, Long address, int offset) throws Exception {
 		raf.seek(address + offset);
 		byte[] bytesVal = new byte[2];
@@ -413,7 +493,7 @@ public class Data implements Serializable {
 		ByteBuffer wrapped = ByteBuffer.wrap(bytesVal);
 		return Short.toUnsignedInt(wrapped.getShort());
 	}
-	
+
 	private int[] getMultiIntFromGame(RandomAccessFile raf, Long address, MultiSelectData props) throws Exception {
 		int[] inGameVals = new int[props.getOffsets().length];
 		byte[] bytesVal;
@@ -444,7 +524,7 @@ public class Data implements Serializable {
 		}
 		return vals;
 	}
-	
+
 	private int getByteFromGame(RandomAccessFile raf, long addr, SelectData props, int offsetIdex) throws Exception {
 		raf.seek(addr + props.getOffsets()[offsetIdex]);
 		byte[] bytesVal = new byte[2];
@@ -453,7 +533,7 @@ public class Data implements Serializable {
 		ByteBuffer wrapped = ByteBuffer.wrap(bytesVal);
 		return props.getIndexFromInGameValue(Short.toUnsignedInt(wrapped.getShort()), props.getDefaut());
 	}
-	
+
 	private void writeTextInGame(RandomAccessFile raf, long addr, TextData props, String text) throws Exception {
 		raf.seek(addr + props.getOffset());
 		for(int i=0;i<props.getLongueur();i++) {
@@ -464,15 +544,15 @@ public class Data implements Serializable {
 			}
 		}
 	}
-	
+
 	private void writeIntInGame(RandomAccessFile raf, long addr, SelectData props, int offsetIdex, int value) throws Exception {
 		writeIntInGame(raf, addr, props.getOffsets()[offsetIdex], props.getVals().get(value).getInGameValue());
 	}
-	
+
 	private void writeIntInGame(RandomAccessFile raf, long addr, NumericData props, int offsetIdex, int value) throws Exception {
 		writeIntInGame(raf, addr, props.getOffsets()[offsetIdex], value);
 	}
-	
+
 	private void writeIntInGame(RandomAccessFile raf, Long address, int offset, int value) throws Exception {
 		raf.seek(address + offset);
 		ByteBuffer bb = ByteBuffer.allocate(4);
@@ -480,7 +560,7 @@ public class Data implements Serializable {
 		byte[] bytesValue = {bb.array()[3], bb.array()[2]};
 		raf.write(bytesValue);
 	}
-	
+
 	private void writeMultiIntInGame(RandomAccessFile raf, Long address, MultiSelectData props, int[] value) throws Exception {
 		int[] toWrite = props.getInGameValue(value);
 		for(int i=0;i<props.getOffsets().length;i++) {
@@ -491,25 +571,24 @@ public class Data implements Serializable {
 			raf.write(bytesValue);
 		}
 	}
-	
+
 	private void writeByteInGame(RandomAccessFile raf, long addr, SelectData props, int offsetIdex, int value) throws Exception {
 		raf.seek(addr + props.getOffsets()[offsetIdex]);
 		ByteBuffer bb = ByteBuffer.allocate(4);
 		bb.putInt(value);
 		raf.write(bb.array()[3]);
 	}
-	
+
 	private void archiveSavedata() {
-	    try {
-	    	Path copied = Paths.get("backup/savedata_" + new Date().toString().replace(":", "-"));
-	    	Path originalPath = Paths.get(SystemProperties.PATH);
+		try {
+			Path copied = Paths.get("backup/savedata_" + new Date().toString().replace(":", "-"));
+			Path originalPath = Paths.get(SystemProperties.PATH);
 			Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	public ArrayList<Joueur> getJoueurs() {
 		return joueurs;
 	}
@@ -517,7 +596,7 @@ public class Data implements Serializable {
 	public ArrayList<Joueur> getJoueursInGame() {
 		return joueursInGame;
 	}
-	
+
 	public ArrayList<Equipe> getEquipes() {
 		return equipes;
 	}

@@ -17,6 +17,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import data.Equipe;
+import data.Joueur;
 import data.properties.TextsProperties;
 import main.Launch;
 
@@ -236,17 +237,48 @@ public class EquipesGUI extends JPanel {
 
 	public void ajouterAuStock() {
 		String message = TextsProperties.MESSAGE_ADDPLAYERS + "\n";
+		ArrayList<Joueur> joueursToImport = new ArrayList<Joueur>();
+		ArrayList<String> idToReplace = new ArrayList<String>();
+		String id;
+		Joueur j;
+		String listeJoueurs = "";
+		
 		for(Equipe e : inGame.getSelectedValuesList()) {
 			message += e.getNom() + "\n";
+			
+			for(int i=0;i<e.getJoueurs().length;i++) {
+				id = e.getJoueurs()[i];
+				if(id.startsWith("NH-")) {
+					j = Launch.getInstance().getData().getJoueursInGame().get(Integer.parseInt(id.split("-")[1]));
+					if(!joueursToImport.contains(j)) {						
+						joueursToImport.add(j);
+						idToReplace.add(id);
+						listeJoueurs += "\n" + j.getNom();
+					}
+				}
+			}
 		}
+		
+		if(!"".equals(listeJoueurs)) {
+			message += "\n" + TextsProperties.MESSAGE_ADDPLAYERS + listeJoueurs + "\n";
+		}
+		
 		message += "\n" + TextsProperties.MESSAGE_SURE;
 
 		int res = JOptionPane.showConfirmDialog(this, message, TextsProperties.BUTTON_ADD, JOptionPane.YES_NO_OPTION);
 		if(res == JOptionPane.YES_OPTION) {
+			ArrayList<String> idAjoutes= Launch.getInstance().getData().ajouterJoueursAuStock(joueursToImport);
+			
 			for(Equipe e : inGame.getSelectedValuesList()) {
 				e.setId(e.regenerateId());
+				for(int i=0;i<e.getJoueurs().length;i++) {
+					if(idToReplace.contains(e.getJoueurs()[i])) {
+						e.getJoueurs()[i] = idAjoutes.get(idToReplace.indexOf(e.getJoueurs()[i]));
+					}
+				}
 				Launch.getInstance().getData().getEquipes().add(e);					
 			}
+			
 			remplirListes(false);
 			Launch.getInstance().saveData();
 		}

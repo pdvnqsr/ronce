@@ -243,12 +243,7 @@ public class JoueursGUI extends JPanel {
 
 		int res = JOptionPane.showConfirmDialog(this, message, TextsProperties.BUTTON_ADD, JOptionPane.YES_NO_OPTION);
 		if(res == JOptionPane.YES_OPTION) {
-			for(Joueur joueur : inGame.getSelectedValuesList()) {
-				joueur.setId(joueur.regenerateId());
-				Launch.getInstance().getData().getJoueurs().add(joueur);					
-			}
-			remplirListesJoueurs(false);
-			Launch.getInstance().saveData();
+			Launch.getInstance().getData().ajouterJoueursAuStock((ArrayList<Joueur>)inGame.getSelectedValuesList());
 		}
 	}
 	

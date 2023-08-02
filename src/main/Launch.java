@@ -78,6 +78,7 @@ public class Launch {
 		}
 		data.loadJoueursFromGame();
 		data.loadEquipesFromGame();
+		data.loadCompositionsFromGame();
 	}
 
 	public void exportJoueurs(List<Joueur> joueurs, Path path) {
@@ -182,7 +183,7 @@ public class Launch {
 	
 	public static void main(String[] args) {
 		Launch.getInstance();
-		//generateVals("equipe.capitaine", 11, 0);
+		//generateVals("joueursBase", 371, 0);
 	}
 
 	@SuppressWarnings("unused")
