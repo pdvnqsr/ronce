@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -207,6 +208,7 @@ public class EquipesGUI extends JPanel {
 			if (nom != null && ! "".equals(nom)) {
 				Launch.getInstance().importEquipes(new File("exchange/teams/"+nom).toPath());
 				remplirListes(false);
+				Launch.getInstance().getGui().getJoueursGUI().remplirListesJoueurs(false);
 			}
 		}
 	}
@@ -236,7 +238,7 @@ public class EquipesGUI extends JPanel {
 	}
 
 	public void ajouterAuStock() {
-		String message = TextsProperties.MESSAGE_ADDPLAYERS + "\n";
+		String message = TextsProperties.MESSAGE_ADDELEMENTS + "\n";
 		ArrayList<Joueur> joueursToImport = new ArrayList<Joueur>();
 		ArrayList<String> idToReplace = new ArrayList<String>();
 		String id;
@@ -260,7 +262,7 @@ public class EquipesGUI extends JPanel {
 		}
 		
 		if(!"".equals(listeJoueurs)) {
-			message += "\n" + TextsProperties.MESSAGE_ADDPLAYERS + listeJoueurs + "\n";
+			message += "\n" + TextsProperties.MESSAGE_JOUEURSMANQUANTS + listeJoueurs + "\n";
 		}
 		
 		message += "\n" + TextsProperties.MESSAGE_SURE;
@@ -301,9 +303,54 @@ public class EquipesGUI extends JPanel {
 		
 		int res = JOptionPane.showConfirmDialog(this, message,TextsProperties.BUTTON_TOGAME, JOptionPane.YES_NO_OPTION);
 		if(res == JOptionPane.YES_OPTION) {
-			Launch.getInstance().getData().saveEquipeIntoGame(inStock.getSelectedValue(), inGame.getSelectedIndex()+1);
-			Launch.getInstance().getData().loadEquipesFromGame();
-			remplirListes(true);
+			ArrayList<Joueur> choix = new ArrayList<Joueur>(Launch.getInstance().getData().getJoueursInGame());
+			HashMap<Joueur, Integer> joueursAEdit = new HashMap<Joueur, Integer>();
+			String id;
+			Joueur j;
+			Equipe equipe = new Equipe(false); 
+			equipe.update(inStock.getSelectedValue());
+			for(int i=0;i<equipe.getJoueurs().length;i++) {
+				id = equipe.getJoueurs()[i];
+				j = Launch.getInstance().getData().getJoueurParId(id);
+				if(j != null) {
+					if(choix.contains(j)) {
+						equipe.getJoueurs()[i] = "NH-" + Launch.getInstance().getData().getJoueursInGame().indexOf(j);
+						choix.remove(j);
+					}
+					 else {
+						joueursAEdit.put(j, i);
+					}
+				}
+			}
+			
+			int envoyer = JOptionPane.OK_OPTION;
+			
+			if(joueursAEdit.size()>0) {
+				JoueursToGameDialog dialog = new JoueursToGameDialog(joueursAEdit, choix);
+				envoyer = dialog.getRes();
+				
+				if(envoyer == JOptionPane.OK_OPTION) {
+					ArrayList<Integer> selection = dialog.getSelection();
+					int i=0;
+					int indexInGame;
+					for(Joueur joueur : joueursAEdit.keySet()) {
+						j = choix.get(selection.get(i));
+						indexInGame = Launch.getInstance().getData().getJoueursInGame().indexOf(j);
+						System.out.println(joueur.getNom() + " -> " + j.getNom() + " : " + indexInGame);
+						equipe.getJoueurs()[joueursAEdit.get(joueur)] = "NH-" + indexInGame;
+						Launch.getInstance().getData().saveIntoGame(joueur, indexInGame);
+						i++;
+					}
+					Launch.getInstance().getData().loadJoueursFromGame();
+					Launch.getInstance().getGui().getJoueursGUI().remplirListesJoueurs(true);
+				}
+			}
+			
+			if(envoyer == JOptionPane.OK_OPTION) {
+				Launch.getInstance().getData().saveEquipeIntoGame(equipe, inGame.getSelectedIndex()+1);
+				Launch.getInstance().getData().loadEquipesFromGame();
+				remplirListes(true);
+			}
 		}
 	}
 }

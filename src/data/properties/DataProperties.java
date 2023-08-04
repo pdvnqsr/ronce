@@ -118,6 +118,7 @@ public class DataProperties {
 	
 	public static SelectData EQUIPE_NUMEROS;
 	public static SelectData EQUIPE_JOUEURS;
+	public static String[] EQUIPE_JOUEURSDEFAUT;
 	
 	public static IncrementalData JOUEURSBASE;
 	public static IncrementalData EQUIPESBASE;
@@ -245,6 +246,7 @@ public class DataProperties {
         	
         	EQUIPE_NUMEROS = new SelectData(prop, "equipe.numeros");
         	EQUIPE_JOUEURS = new SelectData(prop, "equipe.joueurs");
+        	EQUIPE_JOUEURSDEFAUT = prop.getProperty("equipe.JoueursDefaut").split(",");
         	
         	EQUIPESBASE = new IncrementalData(prop, "equipesBase");
         	JOUEURSBASE = new IncrementalData(prop, "joueursBase");

@@ -1,6 +1,8 @@
 package GUI;
 
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
@@ -19,6 +21,8 @@ public class RosterPanel extends ElementPanel {
 
 	private ArrayList<JComboBox<JoueurMapping>> joueurFields;
 	private ArrayList<JComboBox<String>> numeroFields;
+	
+	private String deselectedItem;
 
 	public RosterPanel() {
 		setLayout(new GridLayout(18, 2));
@@ -30,15 +34,27 @@ public class RosterPanel extends ElementPanel {
 			joueurFields.add(makeJoueursComboboxComponent());
 		}
 
+		JComboBox<String> field;
 		for(int i=0;i<DataProperties.EQUIPE_NUMEROS.getOffsets().length;i++) {
-			numeroFields.add(makeComboboxComponent(DataProperties.EQUIPE_NUMEROS));
+			field = makeComboboxComponent(DataProperties.EQUIPE_NUMEROS);
+			numeroFields.add(field);
+			field.addItemListener(new ItemListener() {
+				@SuppressWarnings("unchecked")
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					if(e.getStateChange() == ItemEvent.DESELECTED) {
+						deselectedItem = e.getItem().toString();
+					} else {
+						swapSelection((JComboBox<String>)e.getSource(), e.getItem().toString());
+					}
+				}
+			});
 		}
 
 		for(int i=0;i<joueurFields.size();i++) {
 			add(makeFieldPanel(TextsProperties.LABEL_JOUEUR + " " + (i+1), joueurFields.get(i)));
 			add(makeFieldPanel(TextsProperties.LABEL_NUMERO, numeroFields.get(i)));
 		}
-
 	}
 
 	public void load(Equipe e) {
@@ -62,11 +78,12 @@ public class RosterPanel extends ElementPanel {
 					}
 				} else {
 					try {
-						indexInGame = Integer.parseInt(id);
-						joueurFields.get(i).setSelectedItem(DataProperties.JOUEURSBASE.getVals().get(indexInGame));
+						joueurFields.get(i).setSelectedItem(DataProperties.JOUEURSBASE.getVals().get(Integer.parseInt(id)));
 					} catch (Exception ex) {
 						j = Launch.getInstance().getData().getJoueurParId(id);
-						joueurFields.get(i).setSelectedItem(new JoueurMapping(j.getId(), j.getNom()));
+						if(j != null) {
+							joueurFields.get(i).setSelectedItem(new JoueurMapping(j.getId(), j.getNom()));
+						}
 					}
 				}
 			}
@@ -86,19 +103,20 @@ public class RosterPanel extends ElementPanel {
 		ArrayList<Integer> indexesToSave = new ArrayList<Integer>();
 		for(int i=0;i<e.getJoueurs().length;i++) {
 			id = ((JoueurMapping)joueurFields.get(i).getSelectedItem()).getInGameValue();
+			try {
+				val = Integer.parseInt(id);
+				id = Launch.getInstance().getData().getJoueurId(val);
+			} catch (Exception ex) {}
+			
 			if(id.startsWith("NH-")) {
 				joueursToImport.add(Launch.getInstance().getData().getJoueursInGame().get(Integer.parseInt(id.split("-")[1])));
 				indexesToSave.add(i);
 				e.getJoueurs()[i] = id;
 			} else {
-				val = DataProperties.JOUEURSBASE.getIndexFromInGameValue(id, -1);
-				if(val != -1) {
-					e.getJoueurs()[i] = "" + val; 
-				} else {
-					e.getJoueurs()[i] = id;
-				}
+				e.getJoueurs()[i] = id;
 			}
 		}
+		
 		if(joueursToImport.size() > 0) {
 			ArrayList<String> idAjoutes = ajouterJoueursAuStock(joueursToImport);
 			for(int i=0;i<idAjoutes.size();i++) {
@@ -114,16 +132,22 @@ public class RosterPanel extends ElementPanel {
 	private ArrayList<String> ajouterJoueursAuStock(ArrayList<Joueur> joueurs) {
 		ArrayList<String> idAjoutes = new ArrayList<String>();
 		
-		String message = TextsProperties.MESSAGE_ADDPLAYERS + "\n";
+		String message = TextsProperties.MESSAGE_JOUEURSMANQUANTS + "\n";
 		for(Joueur joueur : joueurs) {
 			message += joueur.getNom() + "\n";
 		}
-		message += "\n" + TextsProperties.MESSAGE_SURE;
 
-		int res = JOptionPane.showConfirmDialog(Launch.getInstance().getGui(), message, TextsProperties.BUTTON_ADD, JOptionPane.YES_NO_OPTION);
-		if(res == JOptionPane.YES_OPTION) {
-			idAjoutes = Launch.getInstance().getData().ajouterJoueursAuStock(joueurs);
-		}
+		JOptionPane.showMessageDialog(Launch.getInstance().getGui(), message);
+		idAjoutes = Launch.getInstance().getData().ajouterJoueursAuStock(joueurs);
 		return idAjoutes;
+	}
+	
+	private void swapSelection(JComboBox<String> sourceField, String selected) {
+		for(JComboBox<String> field : numeroFields) {
+			if(!field.equals(sourceField) && selected.equals(field.getSelectedItem())) {
+				field.setSelectedItem(deselectedItem);
+			}
+		}
+		deselectedItem = null;
 	}
 }

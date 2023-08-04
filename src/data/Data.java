@@ -169,7 +169,7 @@ public class Data implements Serializable {
 	public void saveIntoGame(Joueur joueur, int inGameIndex) {
 		archiveSavedata();
 		try {
-			Long addr = DataProperties.JOUEURSCUSTOM.getAdresse(inGameIndex-1);
+			Long addr = DataProperties.JOUEURSCUSTOM.getAdresse(inGameIndex);
 
 			RandomAccessFile raf = new RandomAccessFile(SystemProperties.PATH, "rw");
 			writeTextInGame(raf, addr, DataProperties.JOUEUR_NOM, joueur.getNom());
@@ -395,7 +395,13 @@ public class Data implements Serializable {
 				writeIntInGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR4,j,equipe.getTactiques()[j].getJoueur4());
 			}
 
-			//TODO Joueurs et numéros
+			for(int j=0;j<equipe.getJoueurs().length;j++) {
+				writeJoueurIdInGame(raf, addr, j, equipe.getJoueurs()[j]);
+			}
+			
+			for(int j=0;j<equipe.getNumeros().length;j++) {
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_NUMEROS,j,equipe.getNumeros()[j]);
+			}
 
 			raf.close();
 		} catch (Exception e) {
@@ -467,6 +473,10 @@ public class Data implements Serializable {
 
 	private String getJoueurIdFromGame(RandomAccessFile raf, long addr, int offsetIdex) throws Exception {
 		int i = getIntFromGame(raf, addr, DataProperties.EQUIPE_JOUEURS.getOffsets()[offsetIdex]);
+		return getJoueurId(i);
+	}
+
+	public String getJoueurId(int i) {
 		int val = DataProperties.JOUEURSBASE.getIndexFromInGameValue(""+i, -1);
 		String res = null;
 		if(val == -1) {
@@ -484,7 +494,7 @@ public class Data implements Serializable {
 		}
 		return res;
 	}
-
+	
 	private int getIntFromGame(RandomAccessFile raf, Long address, int offset) throws Exception {
 		raf.seek(address + offset);
 		byte[] bytesVal = new byte[2];
@@ -553,6 +563,19 @@ public class Data implements Serializable {
 		writeIntInGame(raf, addr, props.getOffsets()[offsetIdex], value);
 	}
 
+	private void writeJoueurIdInGame(RandomAccessFile raf, long addr, int offsetIdex, String value) throws Exception {
+		int index;
+		int intValue;
+		if(value.startsWith("NH-")) {
+			index = Integer.parseInt(value.split("-")[1]);
+			intValue = Integer.parseInt(DataProperties.JOUEURSCUSTOM.getVals().get(index).getInGameValue());
+		} else {
+			index = Integer.parseInt(value);
+			intValue = Integer.parseInt(DataProperties.JOUEURSBASE.getVals().get(index).getInGameValue());
+		}
+		writeIntInGame(raf, addr, DataProperties.EQUIPE_JOUEURS.getOffsets()[offsetIdex], intValue);
+	}
+	
 	private void writeIntInGame(RandomAccessFile raf, Long address, int offset, int value) throws Exception {
 		raf.seek(address + offset);
 		ByteBuffer bb = ByteBuffer.allocate(4);

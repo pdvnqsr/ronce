@@ -8,6 +8,8 @@ import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JFileChooser;
@@ -27,13 +29,13 @@ import data.properties.TextsProperties;
 
 public class Launch {
 	private static Launch instance = null;
-	
+
 	private static final Path savePath = Paths.get("data.json");
 	private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	
+
 	private Data data;
 	private MainGUI gui;
-	
+
 	private void init(){
 		try {
 			if(SystemProperties.LOG_IN_FILE) {
@@ -49,7 +51,7 @@ public class Launch {
 		loadData();
 		gui = new MainGUI();
 	}
-	
+
 	public static Launch getInstance() {
 		if(instance == null) {
 			instance = new Launch();
@@ -57,9 +59,9 @@ public class Launch {
 		}
 		return instance;
 	}
-	
+
 	private Launch() {}
-	
+
 	public void saveData() {
 		String json = gson.toJson(data);
 		try {
@@ -68,7 +70,7 @@ public class Launch {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void loadData() {
 		try {
 			String json = Files.readString(savePath);
@@ -86,7 +88,7 @@ public class Launch {
 		for(Joueur joueur : joueurs) {
 			exchangeData.getJoueurs().add(joueur);
 		}
-		
+
 		String json = gson.toJson(exchangeData);
 		try {
 			Files.writeString(path, json);
@@ -94,44 +96,61 @@ public class Launch {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void importJoueurs(Path path) {
 		try {
 			String json = Files.readString(path);
 			JoueursExchangeData exchangeData = gson.fromJson(json, JoueursExchangeData.class);
-			Joueur existant = null;
-			for(Joueur joueur : exchangeData.getJoueurs()) {
-				if(joueur.getId() == null || joueur.getId().equals("")) {
-					joueur.setId(joueur.regenerateId());
-				}
-				existant = data.getJoueurParId(joueur.getId()); 
-				if(existant != null) {
-					int res = JOptionPane.showConfirmDialog(gui, TextsProperties.MESSAGE_IDEXISTANT1 + " : \n" + existant.getNom() + "\n" + TextsProperties.MESSAGE_IDEXISTANT2);
-					if(res == JOptionPane.YES_NO_OPTION) {
-						existant.update(joueur);
-					} else if(res == JOptionPane.NO_OPTION) {
-						joueur.setId(joueur.regenerateId());
-						data.getJoueurs().add(joueur);
-					}
-				} else {
-					data.getJoueurs().add(joueur);
-				}
-				existant = null;
-			}
-			saveData();
+			importerJoueurs(exchangeData.getJoueurs());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+	private HashMap<String, String> importerJoueurs(ArrayList<Joueur> joueurs) {
+		HashMap<String, String> idToReplace = new HashMap<String, String>();
+		Joueur existant = null;
+		String newId;
+		for(Joueur joueur : joueurs) {
+			if(joueur.getId() == null || joueur.getId().equals("")) {
+				joueur.setId(joueur.regenerateId());
+			}
+			existant = data.getJoueurParId(joueur.getId()); 
+			if(existant != null) {
+				if(!joueur.equals(existant)) {
+					int res = JOptionPane.showConfirmDialog(gui, TextsProperties.MESSAGE_IDEXISTANT1 + " : \n" + existant.getNom() + "\n" + TextsProperties.MESSAGE_IDEXISTANT2);
+					if(res == JOptionPane.YES_NO_OPTION) {
+						existant.update(joueur);
+					} else if(res == JOptionPane.NO_OPTION) {
+						newId = joueur.regenerateId();
+						idToReplace.put(joueur.getId(), newId);
+						joueur.setId(newId);
+						data.getJoueurs().add(joueur);
+					}
+				}
+			} else {
+				data.getJoueurs().add(joueur);
+			}
+			existant = null;
+		}
+		saveData();
+		return idToReplace;
+	}
+
 	public void exportEquipes(List<Equipe> equipes, Path path) {
 		EquipeExchangeData exchangeData = new EquipeExchangeData();
+		Joueur j;
 		for(Equipe equipe : equipes) {
 			exchangeData.getEquipes().add(equipe);
+
+			for(String id : equipe.getJoueurs()) {
+				j = data.getJoueurParId(id);
+				if(j != null && !exchangeData.getJoueursCustom().contains(j)) {
+					exchangeData.getJoueursCustom().add(j);
+				}
+			}
 		}
-		
-		//TODO ajouter les joueurs custom
-		
+
 		String json = gson.toJson(exchangeData);
 		try {
 			Files.writeString(path, json);
@@ -139,13 +158,26 @@ public class Launch {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void importEquipes(Path path) {
 		try {
 			String json = Files.readString(path);
 			EquipeExchangeData exchangeData = gson.fromJson(json, EquipeExchangeData.class);
+
+			HashMap<String, String> idToReplace = importerJoueurs(exchangeData.getJoueursCustom());
+			String toReplace;
+			String id;
+
 			Equipe existant = null;
 			for(Equipe equipe : exchangeData.getEquipes()) {
+				for(int i=0;i<equipe.getJoueurs().length;i++) {
+					id = equipe.getJoueurs()[i];
+					toReplace = idToReplace.get(id); 
+					if(toReplace != null) {
+						equipe.getJoueurs()[i] = toReplace;
+					}
+				}
+				
 				if(equipe.getId() == null || equipe.getId().equals("")) {
 					equipe.setId(equipe.regenerateId());
 				}
@@ -161,7 +193,6 @@ public class Launch {
 				} else {
 					data.getEquipes().add(equipe);
 				}
-				//TODO ajouter joueurs custom
 				existant = null;
 			}
 			saveData();
@@ -169,7 +200,7 @@ public class Launch {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void lookForSavedata() {
 		if(!new File(SystemProperties.PATH).exists()) {
 			JFileChooser choose = new JFileChooser(System.getProperty("user.home"));
@@ -180,7 +211,7 @@ public class Launch {
 			}
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		Launch.getInstance();
 		//generateVals("joueursBase", 371, 0);
@@ -192,7 +223,7 @@ public class Launch {
 			System.out.println(prop + ".vals." + i + "=" + (i+offset) + ":" + (i+1));
 		}
 	}
-	
+
 	public Data getData() {
 		return data;
 	}
@@ -204,5 +235,5 @@ public class Launch {
 	public Gson getGson() {
 		return gson;
 	}
-	
+
 }

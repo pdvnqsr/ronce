@@ -35,7 +35,8 @@ public class ElementPanel extends JPanel {
 		JComboBox<String> component = new JComboBox<String>();
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 		for(int i=0 ; i<props.getVals().size() ; i++) {
-			model.addElement(props.getVals().get(i).getDisplayValue());		}
+			model.addElement(props.getVals().get(i).getDisplayValue());
+		}
 		component.setModel(model);
 		AutoCompleteDecorator.decorate(component);
 		return component;

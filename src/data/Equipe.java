@@ -1,5 +1,6 @@
 package data;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 import data.properties.DataProperties;
@@ -86,7 +87,13 @@ public class Equipe {
 		tactiques[3] = new Tactique();
 		
 		joueurs = new String[DataProperties.EQUIPE_JOUEURS.getOffsets().length];
+		for(int i=0;i<joueurs.length;i++) {
+			joueurs[i] = DataProperties.EQUIPE_JOUEURSDEFAUT[i];
+		}
 		numeros = new int[DataProperties.EQUIPE_NUMEROS.getOffsets().length];
+		for(int i=0;i<numeros.length;i++) {
+			numeros[i] = i;
+		}
 	}
 
 	public String regenerateId() {
@@ -339,7 +346,7 @@ public class Equipe {
 	public void setNumeros(int[] numeros) {
 		this.numeros = numeros;
 	}
-
+	
 	public void update(Equipe e) {
 		this.id = e.getId();
 		this.description = e.getDescription();
@@ -363,13 +370,13 @@ public class Equipe {
 		this.bas = e.getBas();
 		this.couleurBas1 = e.getCouleurBas1();
 		this.couleurBas2 = e.getCouleurBas2();
-		this.triPieces = e.getTriPieces();
-		this.tenues = e.getTenues();
-		this.tactiques = e.getTactiques();
-		this.joueurs = e.getJoueurs();
-		this.numeros = e.getNumeros();
+		this.triPieces = Arrays.copyOf(e.getTriPieces(), e.getTriPieces().length);
+		this.tenues = Arrays.copyOf(e.getTenues(), e.getTenues().length);
+		this.tactiques = Arrays.copyOf(e.getTactiques(), e.getTactiques().length);
+		this.joueurs = Arrays.copyOf(e.getJoueurs(), e.getJoueurs().length);
+		this.numeros = Arrays.copyOf(e.getNumeros(), e.getNumeros().length);
 	}
-
+	
 	@Override
 	public String toString() {
 		return nom;

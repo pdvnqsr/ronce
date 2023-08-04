@@ -211,6 +211,7 @@ public class JoueursGUI extends JPanel {
 	}
 
 	public void supprimerJoueurs() {
+		//TODO ajouter dépendance aux équipes
 		String message = TextsProperties.MESSAGE_DELETE + "\n";
 		for(Joueur joueur : inStock.getSelectedValuesList()) {
 			message += joueur.getNom() + "\n";
@@ -235,7 +236,7 @@ public class JoueursGUI extends JPanel {
 	}
 
 	public void ajouterJoueursAuStock() {
-		String message = TextsProperties.MESSAGE_ADDPLAYERS + "\n";
+		String message = TextsProperties.MESSAGE_ADDELEMENTS + "\n";
 		for(Joueur joueur : inGame.getSelectedValuesList()) {
 			message += joueur.getNom() + "\n";
 		}
@@ -264,7 +265,7 @@ public class JoueursGUI extends JPanel {
 		
 		int res = JOptionPane.showConfirmDialog(this, message,TextsProperties.BUTTON_TOGAME, JOptionPane.YES_NO_OPTION);
 		if(res == JOptionPane.YES_OPTION) {
-			Launch.getInstance().getData().saveIntoGame(inStock.getSelectedValue(), inGame.getSelectedIndex()+1);
+			Launch.getInstance().getData().saveIntoGame(inStock.getSelectedValue(), inGame.getSelectedIndex());
 			Launch.getInstance().getData().loadJoueursFromGame();
 			remplirListesJoueurs(true);
 		}

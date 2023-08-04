@@ -11,6 +11,8 @@ public class TextsProperties {
 	public static String BUTTON_TOGAME;
 	public static String BUTTON_EXPORT;
 	public static String BUTTON_IMPORT;
+	public static String BUTTON_VALIDER;
+	public static String BUTTON_ANNULER;
 	
 	public static String LABEL_ID;
 	public static String LABEL_DESCRIPTION;
@@ -100,7 +102,7 @@ public class TextsProperties {
 	public static String MESSAGE_IMPORTERROR;
 	public static String MESSAGE_IMPORT;
 	public static String MESSAGE_DELETE;
-	public static String MESSAGE_ADDPLAYERS;
+	public static String MESSAGE_ADDELEMENTS;
 	public static String MESSAGE_TOGAME1;
 	public static String MESSAGE_TOGAME2;
 	public static String MESSAGE_FICHIEREXISTANT;
@@ -109,6 +111,7 @@ public class TextsProperties {
 	public static String MESSAGE_ELEMENTEXISTANT;
 	public static String MESSAGE_FORCEAJOUT;
 	public static String MESSAGE_JOUEURSMANQUANTS;
+	public static String MESSAGE_REMPLACERJOUEURS;
 	
 	
 	static {
@@ -120,6 +123,8 @@ public class TextsProperties {
 		BUTTON_TOGAME = texts.getString("button.toGame");
 		BUTTON_EXPORT = texts.getString("button.export");
 		BUTTON_IMPORT = texts.getString("button.import");
+		BUTTON_VALIDER = texts.getString("button.valider");
+		BUTTON_ANNULER = texts.getString("button.annuler");
 		
 		LABEL_ID = texts.getString("label.id");
 		LABEL_DESCRIPTION = texts.getString("label.description");
@@ -209,7 +214,7 @@ public class TextsProperties {
 		MESSAGE_IMPORTERROR = texts.getString("message.importError");
 		MESSAGE_IMPORT = texts.getString("message.import");
 		MESSAGE_DELETE = texts.getString("message.delete");
-		MESSAGE_ADDPLAYERS = texts.getString("message.addPlayers");
+		MESSAGE_ADDELEMENTS = texts.getString("message.addElements");
 		MESSAGE_TOGAME1 = texts.getString("message.toGame1");
 		MESSAGE_TOGAME2 = texts.getString("message.toGame2");
 		MESSAGE_FICHIEREXISTANT = texts.getString("message.fichierExistant");
@@ -218,5 +223,6 @@ public class TextsProperties {
 		MESSAGE_ELEMENTEXISTANT = texts.getString("message.elementExistant");
 		MESSAGE_FORCEAJOUT = texts.getString("message.forceAjout");
 		MESSAGE_JOUEURSMANQUANTS = texts.getString("message.joueursManquants");
+		MESSAGE_REMPLACERJOUEURS = texts.getString("message.remplacerJoueurs");
 	}
 }
