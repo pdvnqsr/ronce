@@ -1,11 +1,13 @@
 package GUI;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import data.Joueur;
@@ -78,6 +80,7 @@ public class JoueurPanel extends ElementPanel {
 	private JComboBox<String> competence4Field;
 	private JComboBox<String> competence5Field;
 	private JComboBox<String> competence6Field;
+	private JTextArea equipesField;
 
 	public JoueurPanel() {
 		setLayout(new GridLayout(1, 3));
@@ -86,8 +89,10 @@ public class JoueurPanel extends ElementPanel {
 		add(infos);
 		JPanel apparence = new JPanel(layout);
 		add(apparence);
-		JPanel autres = new JPanel(layout);
-		add(autres);
+		JPanel autresContainer = new JPanel(new BorderLayout(10,10));
+		JPanel autres = new JPanel(new GridLayout(10,1,10,10));
+		autresContainer.add(autres, BorderLayout.NORTH);
+		add(autresContainer);
 		
 		idField = new JTextField(28);
 		idField.setEditable(false);
@@ -150,6 +155,9 @@ public class JoueurPanel extends ElementPanel {
 		competence4Field = makeComboboxComponent(DataProperties.COMPETENCES);
 		competence5Field = makeComboboxComponent(DataProperties.COMPETENCES);
 		competence6Field = makeComboboxComponent(DataProperties.COMPETENCES);
+		
+		equipesField = new JTextArea(1,10);
+		equipesField.setEditable(false);
 				
 		infos.add(makeFieldPanel(TextsProperties.LABEL_NOM, nomField));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_POSTE, posteField));
@@ -212,6 +220,8 @@ public class JoueurPanel extends ElementPanel {
 		
 		autres.add(makeFieldPanel(TextsProperties.LABEL_ID, idField));
 		autres.add(makeFieldPanel(TextsProperties.LABEL_DESCRIPTION, descriptionField));
+		
+		autresContainer.add(makeFieldPanel(TextsProperties.LABEL_EQUIPES, equipesField), BorderLayout.CENTER);
 		
 		setEnabled(false);
 	}
@@ -280,6 +290,7 @@ public class JoueurPanel extends ElementPanel {
 			competence4Field.setSelectedIndex(joueur.getCompetence4());
 			competence5Field.setSelectedIndex(joueur.getCompetence5());
 			competence6Field.setSelectedIndex(joueur.getCompetence6());
+			equipesField.setText(joueur.getEquipes());
 		}
 	}
 

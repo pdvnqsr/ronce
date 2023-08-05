@@ -237,4 +237,8 @@ public class EquipePanel extends ElementPanel {
 	public void setEquipeSelectionne(Equipe equipeSelectionne) {
 		this.equipeSelectionne = equipeSelectionne;
 	}
+
+	public RosterPanel getRosterPanel() {
+		return rosterPanel;
+	}
 }

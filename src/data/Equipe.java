@@ -43,6 +43,8 @@ public class Equipe {
 	
 	private String[] joueurs;
 	private int[] numeros;
+	private int[] placementY;
+	private int[] placementX;
 	
 	public Equipe(boolean withId){
 		if(withId) {
@@ -94,6 +96,11 @@ public class Equipe {
 		for(int i=0;i<numeros.length;i++) {
 			numeros[i] = i;
 		}
+		
+		placementY = new int[DataProperties.EQUIPE_PLACEMENTY.getOffsets().length];
+		Arrays.fill(placementY, DataProperties.EQUIPE_PLACEMENTY.getDefaut());
+		placementX = new int[DataProperties.EQUIPE_PLACEMENTX.getOffsets().length];
+		Arrays.fill(placementX, DataProperties.EQUIPE_PLACEMENTX.getDefaut());
 	}
 
 	public String regenerateId() {
@@ -347,6 +354,30 @@ public class Equipe {
 		this.numeros = numeros;
 	}
 	
+	public int[] getPlacementY() {
+		if(placementY == null) {
+			placementY = new int[DataProperties.EQUIPE_PLACEMENTY.getOffsets().length];
+			Arrays.fill(placementY, DataProperties.EQUIPE_PLACEMENTY.getDefaut());
+		}
+		return placementY;
+	}
+
+	public void setPlacementY(int[] placementY) {
+		this.placementY = placementY;
+	}
+
+	public int[] getPlacementX() {
+		if(placementX == null) {
+			placementX = new int[DataProperties.EQUIPE_PLACEMENTX.getOffsets().length];
+			Arrays.fill(placementX, DataProperties.EQUIPE_PLACEMENTX.getDefaut());
+		}
+		return placementX;
+	}
+
+	public void setPlacementX(int[] placementX) {
+		this.placementX = placementX;
+	}
+
 	public void update(Equipe e) {
 		this.id = e.getId();
 		this.description = e.getDescription();
@@ -375,6 +406,8 @@ public class Equipe {
 		this.tactiques = Arrays.copyOf(e.getTactiques(), e.getTactiques().length);
 		this.joueurs = Arrays.copyOf(e.getJoueurs(), e.getJoueurs().length);
 		this.numeros = Arrays.copyOf(e.getNumeros(), e.getNumeros().length);
+		this.placementY = Arrays.copyOf(e.getPlacementY(), e.getPlacementY().length);
+		this.placementX = Arrays.copyOf(e.getPlacementX(), e.getPlacementX().length);
 	}
 	
 	@Override

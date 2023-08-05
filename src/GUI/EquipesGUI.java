@@ -336,7 +336,6 @@ public class EquipesGUI extends JPanel {
 					for(Joueur joueur : joueursAEdit.keySet()) {
 						j = choix.get(selection.get(i));
 						indexInGame = Launch.getInstance().getData().getJoueursInGame().indexOf(j);
-						System.out.println(joueur.getNom() + " -> " + j.getNom() + " : " + indexInGame);
 						equipe.getJoueurs()[joueursAEdit.get(joueur)] = "NH-" + indexInGame;
 						Launch.getInstance().getData().saveIntoGame(joueur, indexInGame);
 						i++;
@@ -352,5 +351,9 @@ public class EquipesGUI extends JPanel {
 				remplirListes(true);
 			}
 		}
+	}
+	
+	public void majGui() {
+		panel.getRosterPanel().majGui();
 	}
 }

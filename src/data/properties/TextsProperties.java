@@ -112,6 +112,7 @@ public class TextsProperties {
 	public static String MESSAGE_FORCEAJOUT;
 	public static String MESSAGE_JOUEURSMANQUANTS;
 	public static String MESSAGE_REMPLACERJOUEURS;
+	public static String MESSAGE_IMPOSSIBLESUPPRIMER;
 	
 	
 	static {
@@ -224,5 +225,6 @@ public class TextsProperties {
 		MESSAGE_FORCEAJOUT = texts.getString("message.forceAjout");
 		MESSAGE_JOUEURSMANQUANTS = texts.getString("message.joueursManquants");
 		MESSAGE_REMPLACERJOUEURS = texts.getString("message.remplacerJoueurs");
+		MESSAGE_IMPOSSIBLESUPPRIMER = texts.getString("message.impossibleSupprimer");
 	}
 }

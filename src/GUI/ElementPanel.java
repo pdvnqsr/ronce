@@ -54,6 +54,12 @@ public class ElementPanel extends JPanel {
 	
 	public JComboBox<JoueurMapping> makeJoueursComboboxComponent() {
 		JComboBox<JoueurMapping> component = new JComboBox<JoueurMapping>();
+		setJoueursComboboxModel(component);
+		AutoCompleteDecorator.decorate(component);
+		return component;
+	}
+	
+	public void setJoueursComboboxModel(JComboBox<JoueurMapping> component) {
 		DefaultComboBoxModel<JoueurMapping> model = new DefaultComboBoxModel<JoueurMapping>();
 		// Joueurs de base
 		IncrementalData props = DataProperties.JOUEURSBASE;
@@ -74,8 +80,6 @@ public class ElementPanel extends JPanel {
 		}
 		
 		component.setModel(model);
-		AutoCompleteDecorator.decorate(component);
-		return component;
 	}
 	
 	public JSlider makeSliderComponent(NumericData props) {

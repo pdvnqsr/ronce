@@ -316,6 +316,16 @@ public class Data implements Serializable {
 				for(int j=0;j<equipe.getNumeros().length;j++) {
 					equipe.getNumeros()[j] = getByteFromGame(raf, addr, DataProperties.EQUIPE_NUMEROS,j);
 				}
+				
+				addr = DataProperties.EQUIPES_ADDRESS.get(i)[2];
+				
+				for(int j=0;j<equipe.getPlacementY().length;j++) {
+					equipe.getPlacementY()[j] = getLongFromGame(raf, addr, DataProperties.EQUIPE_PLACEMENTY,j);
+				}
+				
+				for(int j=0;j<equipe.getPlacementX().length;j++) {
+					equipe.getPlacementX()[j] = getLongFromGame(raf, addr, DataProperties.EQUIPE_PLACEMENTX,j);
+				}
 
 				equipesInGame.add(equipe);
 			}
@@ -401,6 +411,16 @@ public class Data implements Serializable {
 			
 			for(int j=0;j<equipe.getNumeros().length;j++) {
 				writeIntInGame(raf, addr, DataProperties.EQUIPE_NUMEROS,j,equipe.getNumeros()[j]);
+			}
+			
+			addr = DataProperties.EQUIPES_ADDRESS.get(inGameIndex)[2];
+			
+			for(int j=0;j<equipe.getPlacementY().length;j++) {
+				writeLongInGame(raf, addr, DataProperties.EQUIPE_PLACEMENTY,j,equipe.getPlacementY()[j]);
+			}
+			
+			for(int j=0;j<equipe.getPlacementX().length;j++) {
+				writeLongInGame(raf, addr, DataProperties.EQUIPE_PLACEMENTX,j,equipe.getPlacementX()[j]);
 			}
 
 			raf.close();
@@ -543,6 +563,17 @@ public class Data implements Serializable {
 		ByteBuffer wrapped = ByteBuffer.wrap(bytesVal);
 		return props.getIndexFromInGameValue(Short.toUnsignedInt(wrapped.getShort()), props.getDefaut());
 	}
+	
+	private int getLongFromGame(RandomAccessFile raf, long addr, NumericData props, int offsetIdex) throws Exception {
+		raf.seek(addr + props.getOffsets()[offsetIdex]);
+		byte[] bytesVal = new byte[4];
+		bytesVal[3]=raf.readByte();
+		bytesVal[2]=raf.readByte();
+		bytesVal[1]=raf.readByte();
+		bytesVal[0]=raf.readByte();
+		ByteBuffer wrapped = ByteBuffer.wrap(bytesVal);
+		return wrapped.getInt();
+	}
 
 	private void writeTextInGame(RandomAccessFile raf, long addr, TextData props, String text) throws Exception {
 		raf.seek(addr + props.getOffset());
@@ -600,6 +631,15 @@ public class Data implements Serializable {
 		ByteBuffer bb = ByteBuffer.allocate(4);
 		bb.putInt(value);
 		raf.write(bb.array()[3]);
+	}
+	
+	private void writeLongInGame(RandomAccessFile raf, long addr, NumericData props, int offsetIdex, int value) throws Exception {
+		raf.seek(addr + props.getOffsets()[offsetIdex]);
+		ByteBuffer bb = ByteBuffer.allocate(4);
+		bb.putInt(value);
+		byte[] bytesValue = {bb.array()[3], bb.array()[2], bb.array()[1], bb.array()[0]};
+		raf.write(bytesValue);
+		
 	}
 
 	private void archiveSavedata() {

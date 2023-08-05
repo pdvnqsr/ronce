@@ -150,4 +150,10 @@ public class RosterPanel extends ElementPanel {
 		}
 		deselectedItem = null;
 	}
+	
+	public void majGui() {
+		for(JComboBox<JoueurMapping> field : joueurFields) {
+			setJoueursComboboxModel(field);
+		}
+	}
 }

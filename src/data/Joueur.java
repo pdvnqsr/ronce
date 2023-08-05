@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import data.properties.DataProperties;
+import main.Launch;
 
 public class Joueur implements Serializable {
 
@@ -99,6 +100,20 @@ public class Joueur implements Serializable {
 	
 	public String regenerateId() {
 		return "J:" + UUID.randomUUID().toString();
+	}
+	
+	public String getEquipes() {
+		String equipes = "";
+		if(id != null && !"".equals(id)) {
+			for(Equipe e : Launch.getInstance().getData().getEquipes()) {
+				for(String s : e.getJoueurs()) {
+					if(s.equals(id)) {
+						equipes += e.getNom() + "\n";
+					}
+				}
+			}
+		}
+		return equipes;
 	}
 	
 	public String getId() {
