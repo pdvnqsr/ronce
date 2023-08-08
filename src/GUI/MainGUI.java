@@ -16,6 +16,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import GUI.tabs.BuildsGUI;
+import GUI.tabs.EquipesGUI;
+import GUI.tabs.JoueursGUI;
 import data.properties.TextsProperties;
 
 public class MainGUI extends JFrame {
@@ -33,6 +36,7 @@ public class MainGUI extends JFrame {
 	
 	private JoueursGUI joueursGUI;
 	private EquipesGUI equipesGUI;
+	private BuildsGUI buildsGUI;
 
 	static{
 		try{
@@ -98,6 +102,9 @@ public class MainGUI extends JFrame {
 		equipesGUI = new EquipesGUI();
 		mainPanel.addTab(TextsProperties.LABEL_EQUIPES, equipesGUI);
 		
+		buildsGUI = new BuildsGUI();
+		mainPanel.addTab(TextsProperties.LABEL_JOUEURSBASE, buildsGUI);
+		
 		getContentPane().add(mainPanel, BorderLayout.CENTER);
 		
 		// Config fenêtre
@@ -116,7 +123,7 @@ public class MainGUI extends JFrame {
 	public static JPanel getListePanel(JList<?> liste,String nom){
 		JPanel listPanel = new JPanel(new BorderLayout());
 		listPanel.setBorder(new EmptyBorder(5,5,5,5));
-		listPanel.setPreferredSize(new Dimension(150,720));
+		listPanel.setPreferredSize(new Dimension(180,720));
 
 		JLabel titre = new JLabel(nom);
 		titre.setHorizontalAlignment(JLabel.CENTER);
@@ -142,5 +149,13 @@ public class MainGUI extends JFrame {
 
 	public void setEquipesGUI(EquipesGUI equipesGUI) {
 		this.equipesGUI = equipesGUI;
+	}
+	
+	public BuildsGUI getBuildsGUI() {
+		return buildsGUI;
+	}
+
+	public void setBuildsGUI(BuildsGUI buildsGUI) {
+		this.buildsGUI = buildsGUI;
 	}
 }

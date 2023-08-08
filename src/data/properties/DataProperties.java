@@ -6,6 +6,13 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import data.properties.types.IncrementalData;
+import data.properties.types.MultiSelectData;
+import data.properties.types.NumericData;
+import data.properties.types.SelectData;
+import data.properties.types.SideData;
+import data.properties.types.TextData;
+
 public class DataProperties {
 	public static TextData JOUEUR_NOM;
 	
@@ -124,7 +131,9 @@ public class DataProperties {
 	
 	public static IncrementalData JOUEURSBASE;
 	public static IncrementalData EQUIPESBASE;
+	public static IncrementalData EQUIPESBASEPLACEMENT;
 	public static IncrementalData JOUEURSCUSTOM;
+	public static int JOUEURSBASEEDITABLES;
 	
 	static {
 		try (InputStream input = new FileInputStream("config/data.properties")) {
@@ -253,8 +262,10 @@ public class DataProperties {
         	EQUIPE_PLACEMENTX = new NumericData(prop, "equipe.placementX");
         	
         	EQUIPESBASE = new IncrementalData(prop, "equipesBase");
+        	EQUIPESBASEPLACEMENT = new IncrementalData(prop, "equipesBasePlacement");
         	JOUEURSBASE = new IncrementalData(prop, "joueursBase");
         	JOUEURSCUSTOM = new IncrementalData(prop, "joueursCustom");
+        	JOUEURSBASEEDITABLES = Integer.parseInt(prop.getProperty("joueursBaseEditables.nombre"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }

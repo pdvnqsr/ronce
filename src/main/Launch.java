@@ -20,10 +20,12 @@ import com.google.gson.GsonBuilder;
 
 import GUI.MainGUI;
 import data.Data;
-import data.Equipe;
-import data.EquipeExchangeData;
-import data.JoueursExchangeData;
-import data.Joueur;
+import data.elements.Build;
+import data.elements.Equipe;
+import data.elements.Joueur;
+import data.exchange.BuildsExchangeData;
+import data.exchange.EquipesExchangeData;
+import data.exchange.JoueursExchangeData;
 import data.properties.SystemProperties;
 import data.properties.TextsProperties;
 
@@ -80,6 +82,7 @@ public class Launch {
 		}
 		data.loadJoueursFromGame();
 		data.loadEquipesFromGame();
+		data.loadBuildsFromGame();
 		data.loadCompositionsFromGame();
 	}
 
@@ -138,7 +141,7 @@ public class Launch {
 	}
 
 	public void exportEquipes(List<Equipe> equipes, Path path) {
-		EquipeExchangeData exchangeData = new EquipeExchangeData();
+		EquipesExchangeData exchangeData = new EquipesExchangeData();
 		Joueur j;
 		for(Equipe equipe : equipes) {
 			exchangeData.getEquipes().add(equipe);
@@ -162,7 +165,7 @@ public class Launch {
 	public void importEquipes(Path path) {
 		try {
 			String json = Files.readString(path);
-			EquipeExchangeData exchangeData = gson.fromJson(json, EquipeExchangeData.class);
+			EquipesExchangeData exchangeData = gson.fromJson(json, EquipesExchangeData.class);
 
 			HashMap<String, String> idToReplace = importerJoueurs(exchangeData.getJoueursCustom());
 			String toReplace;
@@ -201,6 +204,53 @@ public class Launch {
 		}
 	}
 
+	public void exportBuilds(List<Build> builds, Path path) {
+		BuildsExchangeData exchangeData = new BuildsExchangeData();
+		for(Build build : builds) {
+			exchangeData.getBuilds().add(build);
+		}
+
+		String json = gson.toJson(exchangeData);
+		try {
+			Files.writeString(path, json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void importBuilds(Path path) {
+		try {
+			String json = Files.readString(path);
+			BuildsExchangeData exchangeData = gson.fromJson(json, BuildsExchangeData.class);
+			Build existant = null;
+			String newId;
+			for(Build build : exchangeData.getBuilds()) {
+				if(build.getId() == null || build.getId().equals("")) {
+					build.setId(build.regenerateId());
+				}
+				existant = data.getBuildParId(build.getId()); 
+				if(existant != null) {
+					if(!build.equals(existant)) {
+						int res = JOptionPane.showConfirmDialog(gui, TextsProperties.MESSAGE_IDEXISTANT1 + " : \n" + existant.getNom() + "\n" + TextsProperties.MESSAGE_IDEXISTANT2);
+						if(res == JOptionPane.YES_NO_OPTION) {
+							existant.update(build);
+						} else if(res == JOptionPane.NO_OPTION) {
+							newId = build.regenerateId();
+							build.setId(newId);
+							data.getBuilds().add(build);
+						}
+					}
+				} else {
+					data.getBuilds().add(build);
+				}
+				existant = null;
+			}
+			saveData();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void lookForSavedata() {
 		if(!new File(SystemProperties.PATH).exists()) {
 			JFileChooser choose = new JFileChooser(System.getProperty("user.home"));
