@@ -478,7 +478,7 @@ public class Data implements Serializable {
 			}
 			
 			for(int j=0;j<equipe.getNumeros().length;j++) {
-				writeIntInGame(raf, addr, DataProperties.EQUIPE_NUMEROS,j,equipe.getNumeros()[j]);
+				writeByteInGame(raf, addr, DataProperties.EQUIPE_NUMEROS,j,equipe.getNumeros()[j]);
 			}
 			
 			addr = DataProperties.EQUIPES_ADDRESS.get(inGameIndex)[2];
@@ -644,7 +644,7 @@ public class Data implements Serializable {
 			}
 			
 			for(int j=0;j<composition.getNumeros().length;j++) {
-				writeIntInGame(raf, addr, DataProperties.EQUIPE_NUMEROS,j,composition.getNumeros()[j]);
+				writeByteInGame(raf, addr, DataProperties.EQUIPE_NUMEROS,j,composition.getNumeros()[j]);
 			}
 			
 			
@@ -827,9 +827,7 @@ public class Data implements Serializable {
 	private void writeByteInGame(RandomAccessFile raf, long addr, SelectData props, int offsetIdex, int value) throws Exception {
 		raf.seek(addr + props.getOffsets()[offsetIdex]);
 		ByteBuffer bb = ByteBuffer.allocate(4);
-		System.out.println(value + " : " + props.getVals().get(value).getInGameValue());
 		bb.putInt(props.getVals().get(value).getInGameValue());
-		System.out.println(bb.array()[3]);
 		raf.write(bb.array()[3]);
 	}
 	
