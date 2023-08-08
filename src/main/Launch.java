@@ -21,9 +21,11 @@ import com.google.gson.GsonBuilder;
 import GUI.MainGUI;
 import data.Data;
 import data.elements.Build;
+import data.elements.Composition;
 import data.elements.Equipe;
 import data.elements.Joueur;
 import data.exchange.BuildsExchangeData;
+import data.exchange.CompositionsExchangeData;
 import data.exchange.EquipesExchangeData;
 import data.exchange.JoueursExchangeData;
 import data.properties.SystemProperties;
@@ -242,6 +244,70 @@ public class Launch {
 					}
 				} else {
 					data.getBuilds().add(build);
+				}
+				existant = null;
+			}
+			saveData();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void exportCompositions(List<Composition> compositions, Path path) {
+		CompositionsExchangeData exchangeData = new CompositionsExchangeData();
+		Joueur j;
+		for(Composition composition : compositions) {
+			exchangeData.getCompositions().add(composition);
+
+			for(String id : composition.getJoueurs()) {
+				j = data.getJoueurParId(id);
+				if(j != null && !exchangeData.getJoueursCustom().contains(j)) {
+					exchangeData.getJoueursCustom().add(j);
+				}
+			}
+		}
+
+		String json = gson.toJson(exchangeData);
+		try {
+			Files.writeString(path, json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void importCompositions(Path path) {
+		try {
+			String json = Files.readString(path);
+			CompositionsExchangeData exchangeData = gson.fromJson(json, CompositionsExchangeData.class);
+
+			HashMap<String, String> idToReplace = importerJoueurs(exchangeData.getJoueursCustom());
+			String toReplace;
+			String id;
+
+			Composition existant = null;
+			for(Composition composition : exchangeData.getCompositions()) {
+				for(int i=0;i<composition.getJoueurs().length;i++) {
+					id = composition.getJoueurs()[i];
+					toReplace = idToReplace.get(id); 
+					if(toReplace != null) {
+						composition.getJoueurs()[i] = toReplace;
+					}
+				}
+				
+				if(composition.getId() == null || composition.getId().equals("")) {
+					composition.setId(composition.regenerateId());
+				}
+				existant = data.getCompositionParId(composition.getId()); 
+				if(existant != null) {
+					int res = JOptionPane.showConfirmDialog(gui, TextsProperties.MESSAGE_IDEXISTANT1 + " : \n" + existant.getNom() + "\n" + TextsProperties.MESSAGE_IDEXISTANT2);
+					if(res == JOptionPane.YES_NO_OPTION) {
+						existant.update(composition);
+					} else if(res == JOptionPane.NO_OPTION) {
+						composition.setId(composition.regenerateId());
+						data.getCompositions().add(composition);
+					}
+				} else {
+					data.getCompositions().add(composition);
 				}
 				existant = null;
 			}

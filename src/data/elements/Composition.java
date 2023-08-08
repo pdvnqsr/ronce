@@ -8,9 +8,9 @@ import data.properties.DataProperties;
 
 public class Composition {
 
+	private String nom;
 	private String id;
 	private String description;
-	private String nom;
 	
 	private int formation;
 	private int capitaine;
@@ -20,7 +20,6 @@ public class Composition {
 	
 	private String[] joueurs;
 	private int[] numeros;
-	
 	private int[] placementY;
 	private int[] placementX;
 	
@@ -41,7 +40,13 @@ public class Composition {
 		tactiques[3] = new Tactique();
 		
 		joueurs = new String[DataProperties.EQUIPE_JOUEURS.getOffsets().length];
+		for(int i=0;i<joueurs.length;i++) {
+			joueurs[i] = DataProperties.EQUIPE_JOUEURSDEFAUT[i];
+		}
 		numeros = new int[DataProperties.EQUIPE_NUMEROS.getOffsets().length];
+		for(int i=0;i<numeros.length;i++) {
+			numeros[i] = i;
+		}
 		
 		placementY = new int[DataProperties.EQUIPE_PLACEMENTY.getOffsets().length];
 		Arrays.fill(placementY, DataProperties.EQUIPE_PLACEMENTY.getDefaut());
@@ -131,7 +136,7 @@ public class Composition {
 	public void setNumeros(int[] numeros) {
 		this.numeros = numeros;
 	}
-
+	
 	public int[] getPlacementY() {
 		if(placementY == null) {
 			placementY = new int[DataProperties.EQUIPE_PLACEMENTY.getOffsets().length];
@@ -155,16 +160,19 @@ public class Composition {
 	public void setPlacementX(int[] placementX) {
 		this.placementX = placementX;
 	}
-	
-	public void update(Composition e) {
-		this.id = e.getId();
-		this.description = e.getDescription();
-		this.nom = e.getNom();
-		this.tactiques = e.getTactiques();
-		this.joueurs = e.getJoueurs();
-		this.numeros = e.getNumeros();
-		this.placementY = Arrays.copyOf(e.getPlacementY(), e.getPlacementY().length);
-		this.placementX = Arrays.copyOf(e.getPlacementX(), e.getPlacementX().length);
+
+	public void update(Composition c) {
+		this.id = c.getId();
+		this.description = c.getDescription();
+		this.nom = c.getNom();
+		this.formation = c.getFormation();
+		this.capitaine = c.getCapitaine();
+		this.tireurCorner = c.getTireurCorner();
+		this.tactiques = Arrays.copyOf(c.getTactiques(), c.getTactiques().length);
+		this.joueurs = Arrays.copyOf(c.getJoueurs(), c.getJoueurs().length);
+		this.numeros = Arrays.copyOf(c.getNumeros(), c.getNumeros().length);
+		this.placementY = Arrays.copyOf(c.getPlacementY(), c.getPlacementY().length);
+		this.placementX = Arrays.copyOf(c.getPlacementX(), c.getPlacementX().length);
 	}
 	
 	@Override
@@ -176,7 +184,7 @@ public class Composition {
 		result = prime * result + Arrays.hashCode(placementX);
 		result = prime * result + Arrays.hashCode(placementY);
 		result = prime * result + Arrays.hashCode(tactiques);
-		result = prime * result + Objects.hash(capitaine, formation, nom, tireurCorner);
+		result = prime * result + Objects.hash(capitaine, formation, tireurCorner);
 		return result;
 	}
 
@@ -190,9 +198,9 @@ public class Composition {
 			return false;
 		Composition other = (Composition) obj;
 		return capitaine == other.capitaine && formation == other.formation && Arrays.equals(joueurs, other.joueurs)
-				&& Objects.equals(nom, other.nom) && Arrays.equals(numeros, other.numeros)
-				&& Arrays.equals(placementX, other.placementX) && Arrays.equals(placementY, other.placementY)
-				&& Arrays.equals(tactiques, other.tactiques) && tireurCorner == other.tireurCorner;
+				&& Arrays.equals(numeros, other.numeros) && Arrays.equals(placementX, other.placementX)
+				&& Arrays.equals(placementY, other.placementY) && Arrays.equals(tactiques, other.tactiques)
+				&& tireurCorner == other.tireurCorner;
 	}
 
 	@Override

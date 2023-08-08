@@ -404,6 +404,9 @@ public class Equipe {
 		this.couleurBas2 = e.getCouleurBas2();
 		this.triPieces = Arrays.copyOf(e.getTriPieces(), e.getTriPieces().length);
 		this.tenues = Arrays.copyOf(e.getTenues(), e.getTenues().length);
+		this.formation = e.getFormation();
+		this.capitaine = e.getCapitaine();
+		this.tireurCorner = e.getTireurCorner();
 		this.tactiques = Arrays.copyOf(e.getTactiques(), e.getTactiques().length);
 		this.joueurs = Arrays.copyOf(e.getJoueurs(), e.getJoueurs().length);
 		this.numeros = Arrays.copyOf(e.getNumeros(), e.getNumeros().length);

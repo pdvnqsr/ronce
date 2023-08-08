@@ -37,6 +37,9 @@ public class Data implements Serializable {
 	
 	private ArrayList<Build> builds;
 	private transient ArrayList<Build> buildsInGame;
+	
+	private ArrayList<Composition> compositions;
+	private transient ArrayList<Composition> compositionsInGame;
 
 	public Data() {
 		joueurs = new ArrayList<Joueur>();
@@ -47,6 +50,9 @@ public class Data implements Serializable {
 		
 		builds = new ArrayList<Build>();
 		buildsInGame = new ArrayList<Build>();
+		
+		compositions = new ArrayList<Composition>();
+		compositionsInGame = new ArrayList<Composition>();
 	}
 
 	public void supprimerJoueur(Joueur j) {
@@ -78,6 +84,16 @@ public class Data implements Serializable {
 		builds.add(build);
 		return build;
 	}
+
+	public void supprimerComposition(Composition c) {
+		compositions.remove(c);
+	}
+
+	public Composition nouvelleComposition() {
+		Composition c = new Composition(true);
+		compositions.add(c);
+		return c;
+	}
 	
 	public Joueur getJoueurParId(String id) {
 		Joueur joueur = null;
@@ -107,6 +123,16 @@ public class Data implements Serializable {
 			}
 		}
 		return build;
+	}
+	
+	public Composition getCompositionParId(String id) {
+		Composition composition = null;
+		for(Composition c : compositions) {
+			if(id.equals(c.getId())) {
+				composition = c;
+			}
+		}
+		return composition;
 	}
 	
 	public ArrayList<String> ajouterJoueursAuStock(ArrayList<Joueur> joueurs) {
@@ -547,35 +573,93 @@ public class Data implements Serializable {
 		try  {
 			RandomAccessFile raf = new RandomAccessFile(SystemProperties.PATH, "rw");
 
-			Composition Composition;
+			compositionsInGame.clear();
+
+			Composition composition;
 			for(int i=0;i<DataProperties.EQUIPESBASE.getNombre();i++) {
 				Long addr = DataProperties.EQUIPESBASE.getAdresse(i);
 
-				Composition = new Composition(false);
-				Composition.setNom(getTextFromGame(raf, addr, DataProperties.EQUIPE_NOM));
+				composition = new Composition(false);
+				composition.setNom(DataProperties.EQUIPESBASE.getVals().get(i).getDisplayValue());
 
-				Composition.setFormation(getByteFromGame(raf, addr, DataProperties.EQUIPE_FORMATION, 0));
-				Composition.setCapitaine(getByteFromGame(raf, addr, DataProperties.EQUIPE_CAPITAINE,0));
-				Composition.setTireurCorner(getByteFromGame(raf, addr, DataProperties.EQUIPE_TIREURCORNER,0));
+				composition.setFormation(getByteFromGame(raf, addr, DataProperties.EQUIPE_FORMATION, 0));
+				composition.setCapitaine(getByteFromGame(raf, addr, DataProperties.EQUIPE_CAPITAINE,0));
+				composition.setTireurCorner(getByteFromGame(raf, addr, DataProperties.EQUIPE_TIREURCORNER,0));
 
-				for(int j=0;j<Composition.getTactiques().length;j++) {
-					Composition.getTactiques()[j].setTactique(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUE,j));
-					Composition.getTactiques()[j].setJoueur1(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR1,j));
-					Composition.getTactiques()[j].setJoueur2(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR2,j));
-					Composition.getTactiques()[j].setJoueur3(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR3,j));
-					Composition.getTactiques()[j].setJoueur3(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR4,j));
+				for(int j=0;j<composition.getTactiques().length;j++) {
+					composition.getTactiques()[j].setTactique(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUE,j));
+					composition.getTactiques()[j].setJoueur1(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR1,j));
+					composition.getTactiques()[j].setJoueur2(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR2,j));
+					composition.getTactiques()[j].setJoueur3(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR3,j));
+					composition.getTactiques()[j].setJoueur3(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR4,j));
 				}
 
-				for(int j=0;j<Composition.getJoueurs().length;j++) {
-					Composition.getJoueurs()[j] = getJoueurIdFromGame(raf, addr, j);
+				for(int j=0;j<composition.getJoueurs().length;j++) {
+					composition.getJoueurs()[j] = "" + getJoueurIdFromGame(raf, addr, j);
 				}
 
-				for(int j=0;j<Composition.getNumeros().length;j++) {
-					Composition.getNumeros()[j] = getByteFromGame(raf, addr, DataProperties.EQUIPE_NUMEROS,j);
+				for(int j=0;j<composition.getNumeros().length;j++) {
+					composition.getNumeros()[j] = getByteFromGame(raf, addr, DataProperties.EQUIPE_NUMEROS,j);
+				}
+				
+				
+				addr = DataProperties.EQUIPESBASEPLACEMENT.getAdresse(i);
+				
+				for(int j=0;j<composition.getPlacementY().length;j++) {
+					composition.getPlacementY()[j] = getLongFromGame(raf, addr, DataProperties.EQUIPE_PLACEMENTY,j);
+				}
+				
+				for(int j=0;j<composition.getPlacementX().length;j++) {
+					composition.getPlacementX()[j] = getLongFromGame(raf, addr, DataProperties.EQUIPE_PLACEMENTX,j);
 				}
 
+				compositionsInGame.add(composition);
 			}
 		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void saveCompositionIntoGame(Composition composition, int inGameIndex) {
+		archiveSavedata();
+		try {
+			Long addr = DataProperties.EQUIPESBASE.getAdresse(inGameIndex);
+
+			RandomAccessFile raf = new RandomAccessFile(SystemProperties.PATH, "rw");
+
+			writeByteInGame(raf, addr, DataProperties.EQUIPE_FORMATION,0,composition.getFormation());
+			writeByteInGame(raf, addr, DataProperties.EQUIPE_CAPITAINE,0,composition.getCapitaine());
+			writeByteInGame(raf, addr, DataProperties.EQUIPE_TIREURCORNER,0,composition.getTireurCorner());
+
+			for(int j=0;j<composition.getTactiques().length;j++) {
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_TACTIQUE,j,composition.getTactiques()[j].getTactique());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR1,j,composition.getTactiques()[j].getJoueur1());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR2,j,composition.getTactiques()[j].getJoueur2());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR3,j,composition.getTactiques()[j].getJoueur3());
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR4,j,composition.getTactiques()[j].getJoueur4());
+			}
+
+			for(int j=0;j<composition.getJoueurs().length;j++) {
+				writeJoueurIdInGame(raf, addr, j, composition.getJoueurs()[j]);
+			}
+			
+			for(int j=0;j<composition.getNumeros().length;j++) {
+				writeIntInGame(raf, addr, DataProperties.EQUIPE_NUMEROS,j,composition.getNumeros()[j]);
+			}
+			
+			
+			addr = DataProperties.EQUIPESBASEPLACEMENT.getAdresse(inGameIndex);
+			
+			for(int j=0;j<composition.getPlacementY().length;j++) {
+				writeLongInGame(raf, addr, DataProperties.EQUIPE_PLACEMENTY,j,composition.getPlacementY()[j]);
+			}
+			
+			for(int j=0;j<composition.getPlacementX().length;j++) {
+				writeLongInGame(raf, addr, DataProperties.EQUIPE_PLACEMENTX,j,composition.getPlacementX()[j]);
+			}
+
+			raf.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -743,7 +827,9 @@ public class Data implements Serializable {
 	private void writeByteInGame(RandomAccessFile raf, long addr, SelectData props, int offsetIdex, int value) throws Exception {
 		raf.seek(addr + props.getOffsets()[offsetIdex]);
 		ByteBuffer bb = ByteBuffer.allocate(4);
-		bb.putInt(value);
+		System.out.println(value + " : " + props.getVals().get(value).getInGameValue());
+		bb.putInt(props.getVals().get(value).getInGameValue());
+		System.out.println(bb.array()[3]);
 		raf.write(bb.array()[3]);
 	}
 	
@@ -788,5 +874,13 @@ public class Data implements Serializable {
 
 	public ArrayList<Build> getBuildsInGame() {
 		return buildsInGame;
+	}
+
+	public ArrayList<Composition> getCompositions() {
+		return compositions;
+	}
+
+	public ArrayList<Composition> getCompositionsInGame() {
+		return compositionsInGame;
 	}
 }
