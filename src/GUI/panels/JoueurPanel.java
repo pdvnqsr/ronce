@@ -1,10 +1,9 @@
 package GUI.panels;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-
+import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
@@ -82,18 +81,7 @@ public class JoueurPanel extends ElementPanel {
 	private JComboBox<String> competence6Field;
 	private JTextArea equipesField;
 
-	public JoueurPanel() {
-		setLayout(new GridLayout(1, 3));
-		GridLayout layout = new GridLayout(28,1,0,0);
-		JPanel infos = new JPanel(layout);
-		add(infos);
-		JPanel apparence = new JPanel(layout);
-		add(apparence);
-		JPanel autresContainer = new JPanel(new BorderLayout(10,10));
-		JPanel autres = new JPanel(new GridLayout(10,1,10,10));
-		autresContainer.add(autres, BorderLayout.NORTH);
-		add(autresContainer);
-		
+	public JoueurPanel() {		
 		idField = new JTextField(28);
 		idField.setEditable(false);
 		descriptionField = new JTextField(20);
@@ -159,69 +147,272 @@ public class JoueurPanel extends ElementPanel {
 		equipesField = new JTextArea(1,10);
 		equipesField.setEditable(false);
 				
-		infos.add(makeFieldPanel(TextsProperties.LABEL_NOM, nomField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_POSTE, posteField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_TYPECORPS, typeCorpsField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_TAILLE, tailleField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_TAILLETETE, tailleTeteField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_COULEURPEAU, couleurPeauField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_STYLEMANCHES, manchesField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_VISAGE, visageField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_TAILLEBOUCHE, tailleBoucheField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_COMMISSURE, commissuresField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_POSITIONBOUCHE, positionBoucheField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_CHEVEUX, cheveuxField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_COULEURCHEVEUX, couleurCheveuxField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_YEUX, yeuxField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_TAILLEYEUX, tailleYeuxField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_POSITIONYEUX, positionYeuxField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_ESPACEMENTYEUX, espacementYeuxField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_TAILLEPUPILLES, taillePupillesField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_COULEURYEUX, couleurYeuxField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_SOURCILS, sourcilsField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_COULEURSOURCILS, couleurSourcilsField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_NEZ, nezField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_POSITIONNEZ, positionNezField));
-		apparence.add(makeFieldPanel(TextsProperties.LABEL_TAILLENEZ, tailleNezField));
-		autres.add(makeFieldPanel(TextsProperties.LABEL_CRAMPONS, cramponsField));
-		autres.add(makeFieldPanel(TextsProperties.LABEL_VOIX, voixField));
-		autres.add(makeFieldPanel(TextsProperties.LABEL_LUNETTES, lunettesField));
-		autres.add(makeFieldPanel(TextsProperties.LABEL_COULEURLUNETTES, couleurLunettesField));
-		autres.add(makeFieldPanel(TextsProperties.LABEL_CELEBRATION + " 1", celebration1Field));
-		autres.add(makeFieldPanel(TextsProperties.LABEL_CELEBRATION + " 2", celebration2Field));
-		autres.add(makeFieldPanel(TextsProperties.LABEL_CELEBRATION + " 3", celebration3Field));
-		autres.add(makeFieldPanel(TextsProperties.LABEL_CELEBRATION + " 4", celebration4Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_ATTAQUE, attaqueField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_DEFENSE, defenseField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_PUISSANCE, puissanceField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_VITESSE, vitesseField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_TECHNIQUE, techniqueField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_TIR, tirField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_TIR + " *", tirAltField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_TIRAERIENS, tirAerienField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_SUPERTIR, superTirField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_SUPERTIR + " *", superTirAltField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_DRIBBLE + " 1", dribble1Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_DRIBBLE + " 2", dribble2Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_PASSELONGUE, passeField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_TIRSCOMBOS + " 1", tirCombo1Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_TIRSCOMBOS + " 2", tirCombo2Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_PASSESCOMBO, passesComboField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_TACLE + " 1", tacle1Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_TACLE + " 2", tacle2Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_BLOCAGE, blocageField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_COMPETECECAPITAINE, competenceCapitaineField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 1", competence1Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 2", competence2Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 3", competence3Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 4", competence4Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 5", competence5Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 6", competence6Field));
+		JPanel nomPanel = makeFieldPanel(TextsProperties.LABEL_NOM, nomField);
+		JPanel postePanel = makeFieldPanel(TextsProperties.LABEL_POSTE, posteField);
+		JPanel typeCorpsPanel = makeFieldPanel(TextsProperties.LABEL_TYPECORPS, typeCorpsField);
+		JPanel taillePanel = makeFieldPanel(TextsProperties.LABEL_TAILLE, tailleField);
+		JPanel tailleTetePanel = makeFieldPanel(TextsProperties.LABEL_TAILLETETE, tailleTeteField);
+		JPanel couleurPeauPanel = makeFieldPanel(TextsProperties.LABEL_COULEURPEAU, couleurPeauField);
+		JPanel manchesPanel = makeFieldPanel(TextsProperties.LABEL_STYLEMANCHES, manchesField);
+		JPanel visagePanel = makeFieldPanel(TextsProperties.LABEL_VISAGE, visageField);
+		JPanel tailleBouchePanel = makeFieldPanel(TextsProperties.LABEL_TAILLEBOUCHE, tailleBoucheField);
+		JPanel commissurePanel = makeFieldPanel(TextsProperties.LABEL_COMMISSURE, commissuresField);
+		JPanel positionBouchePanel = makeFieldPanel(TextsProperties.LABEL_POSITIONBOUCHE, positionBoucheField);
+		JPanel cheveuxPanel = makeFieldPanel(TextsProperties.LABEL_CHEVEUX, cheveuxField);
+		JPanel couleurCheveuxPanel = makeFieldPanel(TextsProperties.LABEL_COULEURCHEVEUX, couleurCheveuxField);
+		JPanel yeuxPanel = makeFieldPanel(TextsProperties.LABEL_YEUX, yeuxField);
+		JPanel tailleYeuxPanel = makeFieldPanel(TextsProperties.LABEL_TAILLEYEUX, tailleYeuxField);
+		JPanel positionYeuxPanel = makeFieldPanel(TextsProperties.LABEL_POSITIONYEUX, positionYeuxField);
+		JPanel espacementYeuxPanel = makeFieldPanel(TextsProperties.LABEL_ESPACEMENTYEUX, espacementYeuxField);
+		JPanel taillePupillesPanel = makeFieldPanel(TextsProperties.LABEL_TAILLEPUPILLES, taillePupillesField);
+		JPanel couleurYeuxPanel = makeFieldPanel(TextsProperties.LABEL_COULEURYEUX, couleurYeuxField);
+		JPanel sourcilsPanel = makeFieldPanel(TextsProperties.LABEL_SOURCILS, sourcilsField);
+		JPanel couleurSourcilsPanel = makeFieldPanel(TextsProperties.LABEL_COULEURSOURCILS, couleurSourcilsField);
+		JPanel nezPanel = makeFieldPanel(TextsProperties.LABEL_NEZ, nezField);
+		JPanel positionNezPanel = makeFieldPanel(TextsProperties.LABEL_POSITIONNEZ, positionNezField);
+		JPanel tailleNezPanel = makeFieldPanel(TextsProperties.LABEL_TAILLENEZ, tailleNezField);
+		JPanel cramponsPanel = makeFieldPanel(TextsProperties.LABEL_CRAMPONS, cramponsField);
+		JPanel voixPanel = makeFieldPanel(TextsProperties.LABEL_VOIX, voixField);
+		JPanel lunettesPanel = makeFieldPanel(TextsProperties.LABEL_LUNETTES, lunettesField);
+		JPanel couleurLunettesPanel = makeFieldPanel(TextsProperties.LABEL_COULEURLUNETTES, couleurLunettesField);
+		JPanel celebration1Panel = makeFieldPanel(TextsProperties.LABEL_CELEBRATION + " 1", celebration1Field);
+		JPanel celebration2Panel = makeFieldPanel(TextsProperties.LABEL_CELEBRATION + " 2", celebration2Field);
+		JPanel celebration3Panel = makeFieldPanel(TextsProperties.LABEL_CELEBRATION + " 3", celebration3Field);
+		JPanel celebration4Panel = makeFieldPanel(TextsProperties.LABEL_CELEBRATION + " 4", celebration4Field);
+		JPanel attaquePanel = makeFieldPanel(TextsProperties.LABEL_ATTAQUE, attaqueField);
+		JPanel defensePanel = makeFieldPanel(TextsProperties.LABEL_DEFENSE, defenseField);
+		JPanel puissancePanel = makeFieldPanel(TextsProperties.LABEL_PUISSANCE, puissanceField);
+		JPanel vitessePanel = makeFieldPanel(TextsProperties.LABEL_VITESSE, vitesseField);
+		JPanel techniquePanel = makeFieldPanel(TextsProperties.LABEL_TECHNIQUE, techniqueField);
+		JPanel tirPanel = makeFieldPanel(TextsProperties.LABEL_TIR, tirField);
+		JPanel tirAltPanel = makeFieldPanel(TextsProperties.LABEL_TIR + " *", tirAltField);
+		JPanel tirAerienPanel = makeFieldPanel(TextsProperties.LABEL_TIRAERIENS, tirAerienField);
+		JPanel superTirPanel = makeFieldPanel(TextsProperties.LABEL_SUPERTIR, superTirField);
+		JPanel superTirAltPanel = makeFieldPanel(TextsProperties.LABEL_SUPERTIR + " *", superTirAltField);
+		JPanel dribble1Panel = makeFieldPanel(TextsProperties.LABEL_DRIBBLE + " 1", dribble1Field);
+		JPanel dribble2Panel = makeFieldPanel(TextsProperties.LABEL_DRIBBLE + " 2", dribble2Field);
+		JPanel passePanel = makeFieldPanel(TextsProperties.LABEL_PASSELONGUE, passeField);
+		JPanel tirCombo1Panel = makeFieldPanel(TextsProperties.LABEL_TIRSCOMBOS + " 1", tirCombo1Field);
+		JPanel tirCombo2Panel = makeFieldPanel(TextsProperties.LABEL_TIRSCOMBOS + " 2", tirCombo2Field);
+		JPanel passesComboPanel = makeFieldPanel(TextsProperties.LABEL_PASSESCOMBO, passesComboField);
+		JPanel tacle1Panel = makeFieldPanel(TextsProperties.LABEL_TACLE + " 1", tacle1Field);
+		JPanel tacle2Panel = makeFieldPanel(TextsProperties.LABEL_TACLE + " 2", tacle2Field);
+		JPanel blocagePanel = makeFieldPanel(TextsProperties.LABEL_BLOCAGE, blocageField);
+		JPanel competenceCapitainePanel = makeFieldPanel(TextsProperties.LABEL_COMPETECECAPITAINE, competenceCapitaineField);
+		JPanel competence1Panel = makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 1", competence1Field);
+		JPanel competence2Panel = makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 2", competence2Field);
+		JPanel competence3Panel = makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 3", competence3Field);
+		JPanel competence4Panel = makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 4", competence4Field);
+		JPanel competence5Panel = makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 5", competence5Field);
+		JPanel competence6Panel = makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 6", competence6Field);
 		
-		autres.add(makeFieldPanel(TextsProperties.LABEL_ID, idField));
-		autres.add(makeFieldPanel(TextsProperties.LABEL_DESCRIPTION, descriptionField));
+		JPanel idPanel = makeFieldPanel(TextsProperties.LABEL_ID, idField);
+		JPanel descriptionPanel = makeFieldPanel(TextsProperties.LABEL_DESCRIPTION, descriptionField);
 		
-		autresContainer.add(makeFieldPanel(TextsProperties.LABEL_EQUIPES, equipesField), BorderLayout.CENTER);
+		JPanel equipesPanel = makeFieldPanel(TextsProperties.LABEL_EQUIPES, equipesField);
+		
+		GroupLayout layout = new GroupLayout(this);
+		this.setLayout(layout);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
+		layout.setHonorsVisibility(true);
+
+		layout.setHorizontalGroup(
+			layout.createSequentialGroup()
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+					.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(nomPanel)
+									.addComponent(idPanel)
+									.addComponent(descriptionPanel)
+									.addComponent(postePanel)
+									.addComponent(voixPanel)
+							)
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(attaquePanel)
+									.addComponent(defensePanel)
+									.addComponent(puissancePanel)
+									.addComponent(vitessePanel)
+									.addComponent(techniquePanel)
+							)
+					)
+					.addComponent(tirPanel)
+					.addComponent(tirAltPanel)
+					.addComponent(tirAerienPanel)
+					.addComponent(superTirPanel)
+					.addComponent(superTirAltPanel)
+					.addComponent(dribble1Panel)
+					.addComponent(dribble2Panel)
+					.addComponent(passePanel)
+					.addComponent(tirCombo1Panel)
+					.addComponent(tirCombo2Panel)
+					.addComponent(passesComboPanel)
+					.addComponent(tacle1Panel)
+					.addComponent(tacle2Panel)
+					.addComponent(blocagePanel)
+					.addComponent(competenceCapitainePanel)
+					.addComponent(competence1Panel)
+					.addComponent(competence2Panel)
+					.addComponent(competence3Panel)
+					.addComponent(competence4Panel)
+					.addComponent(competence5Panel)
+					.addComponent(competence6Panel)
+			)
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+					.addComponent(typeCorpsPanel, 250, 250, 250)
+					.addComponent(manchesPanel, 250, 250, 250)
+					.addComponent(visagePanel, 250, 250, 250)
+					.addComponent(couleurPeauPanel, 250, 250, 250)
+					.addComponent(yeuxPanel, 250, 250, 250)
+					.addComponent(couleurYeuxPanel, 250, 250, 250)
+					.addComponent(nezPanel, 250, 250, 250)
+					.addComponent(cheveuxPanel, 250, 250, 250)
+					.addComponent(couleurCheveuxPanel, 250, 250, 250)
+			)
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+					.addComponent(taillePanel, 370, 370, 370)
+					.addComponent(tailleTetePanel, 370, 370, 370)
+					.addComponent(tailleBouchePanel, 370, 370, 370)
+					.addComponent(commissurePanel, 370, 370, 370)
+					.addComponent(positionBouchePanel, 370, 370, 370)
+					.addComponent(tailleYeuxPanel, 370, 370, 370)
+					.addComponent(positionYeuxPanel, 370, 370, 370)
+					.addComponent(espacementYeuxPanel, 370, 370, 370)
+					.addComponent(taillePupillesPanel, 370, 370, 370)
+					.addComponent(tailleNezPanel, 370, 370, 370)
+					.addComponent(positionNezPanel, 370, 370, 370)
+					.addComponent(sourcilsPanel, 370, 370, 370)
+					.addComponent(couleurSourcilsPanel, 370, 370, 370)
+			)
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+					.addComponent(celebration1Panel, 400, 400, 400)
+					.addComponent(celebration2Panel, 400, 400, 400)
+					.addComponent(celebration3Panel, 400, 400, 400)
+					.addComponent(celebration4Panel, 400, 400, 400)
+					.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+									.addComponent(lunettesPanel, 250, 250, 250)
+									.addComponent(couleurLunettesPanel, 250, 250, 250)
+									.addComponent(cramponsPanel, 250, 250, 250)
+							)
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+									.addComponent(equipesPanel, 100, 100, 100)
+							)
+					)
+			)
+		);
+		layout.setVerticalGroup(
+			layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+			.addGroup(layout.createSequentialGroup()
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(nomPanel)
+									.addComponent(idPanel)
+									.addComponent(descriptionPanel)
+									.addComponent(postePanel)
+									.addComponent(voixPanel)
+							)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(attaquePanel)
+									.addComponent(defensePanel)
+									.addComponent(puissancePanel)
+									.addComponent(vitessePanel)
+									.addComponent(techniquePanel)
+							)
+					)
+					.addComponent(tirPanel)
+					.addComponent(tirAltPanel)
+					.addComponent(tirAerienPanel)
+					.addComponent(superTirPanel)
+					.addComponent(superTirAltPanel)
+					.addComponent(dribble1Panel)
+					.addComponent(dribble2Panel)
+					.addComponent(passePanel)
+					.addComponent(tirCombo1Panel)
+					.addComponent(tirCombo2Panel)
+					.addComponent(passesComboPanel)
+					.addComponent(tacle1Panel)
+					.addComponent(tacle2Panel)
+					.addComponent(blocagePanel)
+					.addComponent(competenceCapitainePanel)
+					.addComponent(competence1Panel)
+					.addComponent(competence2Panel)
+					.addComponent(competence3Panel)
+					.addComponent(competence4Panel)
+					.addComponent(competence5Panel)
+					.addComponent(competence6Panel)
+			)
+			.addGroup(layout.createSequentialGroup()
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(typeCorpsPanel)
+									.addComponent(manchesPanel)
+							)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(taillePanel)
+									.addComponent(tailleTetePanel)
+							)
+					)
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(visagePanel)
+									.addComponent(couleurPeauPanel)
+							)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(tailleBouchePanel)
+									.addComponent(commissurePanel)
+									.addComponent(positionBouchePanel)
+							)
+					)
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(yeuxPanel)
+									.addComponent(couleurYeuxPanel)
+							)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(tailleYeuxPanel)
+									.addComponent(positionYeuxPanel)
+									.addComponent(espacementYeuxPanel)
+									.addComponent(taillePupillesPanel)
+							)
+					)
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(nezPanel)
+							)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(tailleNezPanel)
+									.addComponent(positionNezPanel)
+							)
+					)
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(cheveuxPanel)
+									.addComponent(couleurCheveuxPanel)
+							)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(sourcilsPanel)
+									.addComponent(couleurSourcilsPanel)
+							)
+					)
+			)
+			.addGroup(layout.createSequentialGroup()
+					.addComponent(celebration1Panel)
+					.addComponent(celebration2Panel)
+					.addComponent(celebration3Panel)
+					.addComponent(celebration4Panel)
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(lunettesPanel)
+									.addComponent(couleurLunettesPanel)
+									.addComponent(cramponsPanel)
+							)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(equipesPanel)
+							)
+					)
+			)
+		);
 		
 		setEnabled(false);
 	}

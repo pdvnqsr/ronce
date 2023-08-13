@@ -62,7 +62,7 @@ public class MainGUI extends JFrame {
 			UIManager.put("TitledBorder.font",titreFont.deriveFont(Font.PLAIN,14));
 
 			UIManager.put("Label.background",darkBase);
-			UIManager.put("Label.font",titreFont.deriveFont(Font.PLAIN,15));
+			UIManager.put("Label.font",titreFont.deriveFont(Font.PLAIN,14));
 			UIManager.put("Label.foreground",lightBase);
 
 			UIManager.put("List.background",gris);

@@ -18,8 +18,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import GUI.MainGUI;
-import GUI.dialogs.JoueursToGameDialog;
 import GUI.panels.EquipePanel;
+import GUI.utils.JoueursToGameDialog;
 import data.elements.Equipe;
 import data.elements.Joueur;
 import data.properties.TextsProperties;
