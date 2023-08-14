@@ -1,9 +1,9 @@
 package GUI.panels;
 
 
-import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
+import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -65,25 +65,14 @@ public class EquipePanel extends ElementPanel {
 		tactiquePanels[2] = new TactiquePanel(3);
 		tactiquePanels[3] = new TactiquePanel(4);
 		
-		GridLayout layout = new GridLayout(22,1,0,0);
-		JPanel infosContainer = new JPanel(new BorderLayout(0,0));
-		JPanel infos = new JPanel(layout);
-		infosContainer.add(infos,BorderLayout.CENTER);
-		add(infosContainer);
-		
-		JTabbedPane tenuesPane = new JTabbedPane(JTabbedPane.LEFT);
+		JTabbedPane tenuesPane = new JTabbedPane();
 		tenuesPane.addTab(TextsProperties.LABEL_TENUEJOUEUR + "(" + TextsProperties.LABEL_DOMICILE + ")", tenuePanels[0]);
 		tenuesPane.addTab(TextsProperties.LABEL_TENUEJOUEUR + "(" + TextsProperties.LABEL_EXTERIEUR + ")", tenuePanels[1]);
 		tenuesPane.addTab(TextsProperties.LABEL_TENUEGARDIEN + "(" + TextsProperties.LABEL_DOMICILE + ")", tenuePanels[2]);
 		tenuesPane.addTab(TextsProperties.LABEL_TENUEGARDIEN + "(" + TextsProperties.LABEL_EXTERIEUR + ")", tenuePanels[3]);
 		add(tenuesPane);
 		
-		JPanel roster = new JPanel(new BorderLayout());
-		JPanel strategie = new JPanel(new GridLayout(8, 1));
-		roster.add(strategie,BorderLayout.NORTH);
 		rosterPanel = new RosterPanel();
-		roster.add(rosterPanel,BorderLayout.CENTER);
-		add(roster);
 		
 		idField = new JTextField(28);
 		idField.setEditable(false);
@@ -114,37 +103,206 @@ public class EquipePanel extends ElementPanel {
 		capitaineField = makeComboboxComponent(DataProperties.EQUIPE_CAPITAINE);
 		tireurCornerField = makeComboboxComponent(DataProperties.EQUIPE_TIREURCORNER);
 		
-		infos.add(makeFieldPanel(TextsProperties.LABEL_ID, idField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_DESCRIPTION, descriptionField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_NOM, nomField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_ABREVIATION, abreviationField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_FOND, fondField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_MOTIF, fondMotifField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_FOND + " : " + TextsProperties.LABEL_COULEUR + " 1", fondCouleur1Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_FOND + " : " + TextsProperties.LABEL_COULEUR + " 2", fondCouleur2Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_FOND + " : " + TextsProperties.LABEL_COULEUR + " 3", fondCouleur3Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_FOND + " : " + TextsProperties.LABEL_COULEUR + " 4", fondCouleur4Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_MILIEU, milieuField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_MILIEU + " : " + TextsProperties.LABEL_COULEUR + " 1", milieuCouleur1Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_MILIEU + " : " + TextsProperties.LABEL_COULEUR + " 2", milieuCouleur2Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_COTE, coteField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_COTE + " : " + TextsProperties.LABEL_COULEUR + " 1", coteCouleur1Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_COTE + " : " + TextsProperties.LABEL_COULEUR + " 2", coteCouleur2Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_HAUT, hautField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_HAUT + " : " + TextsProperties.LABEL_COULEUR + " 1", hautCouleur1Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_HAUT + " : " + TextsProperties.LABEL_COULEUR + " 2", hautCouleur2Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_BAS, basField));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_BAS + " : " + TextsProperties.LABEL_COULEUR + " 1", basCouleur1Field));
-		infos.add(makeFieldPanel(TextsProperties.LABEL_BAS + " : " + TextsProperties.LABEL_COULEUR + " 2", basCouleur2Field));
-		infosContainer.add(makeFieldPanel(TextsProperties.LABEL_TRIPIECES + " : ", triElementsField),BorderLayout.SOUTH);
+		JPanel idPanel = makeFieldPanel(TextsProperties.LABEL_ID, idField);
+		JPanel descriptionPanel = makeFieldPanel(TextsProperties.LABEL_DESCRIPTION, descriptionField);
+		JPanel nomPanel = makeFieldPanel(TextsProperties.LABEL_NOM, nomField);
+		JPanel abreviationPanel = makeFieldPanel(TextsProperties.LABEL_ABREVIATION, abreviationField);
+		JPanel fondPanel = makeFieldPanel(TextsProperties.LABEL_FOND, fondField);
+		JPanel fondMotifPanel = makeFieldPanel(TextsProperties.LABEL_MOTIF, fondMotifField);
+		JPanel fondCouleur1Panel = makeFieldPanel(TextsProperties.LABEL_FOND + " : " + TextsProperties.LABEL_COULEUR + " 1", fondCouleur1Field);
+		JPanel fondCouleur2Panel = makeFieldPanel(TextsProperties.LABEL_FOND + " : " + TextsProperties.LABEL_COULEUR + " 2", fondCouleur2Field);
+		JPanel fondCouleur3Panel = makeFieldPanel(TextsProperties.LABEL_FOND + " : " + TextsProperties.LABEL_COULEUR + " 3", fondCouleur3Field);
+		JPanel fondCouleur4Panel = makeFieldPanel(TextsProperties.LABEL_FOND + " : " + TextsProperties.LABEL_COULEUR + " 4", fondCouleur4Field);
+		JPanel milieuPanel = makeFieldPanel(TextsProperties.LABEL_MILIEU, milieuField);
+		JPanel milieuCouleur1Panel = makeFieldPanel(TextsProperties.LABEL_MILIEU + " : " + TextsProperties.LABEL_COULEUR + " 1", milieuCouleur1Field);
+		JPanel milieuCouleur2Panel = makeFieldPanel(TextsProperties.LABEL_MILIEU + " : " + TextsProperties.LABEL_COULEUR + " 2", milieuCouleur2Field);
+		JPanel cotePanel = makeFieldPanel(TextsProperties.LABEL_COTE, coteField);
+		JPanel coteCouleur1Panel = makeFieldPanel(TextsProperties.LABEL_COTE + " : " + TextsProperties.LABEL_COULEUR + " 1", coteCouleur1Field);
+		JPanel coteCouleur2Panel = makeFieldPanel(TextsProperties.LABEL_COTE + " : " + TextsProperties.LABEL_COULEUR + " 2", coteCouleur2Field);
+		JPanel hautPanel = makeFieldPanel(TextsProperties.LABEL_HAUT, hautField);
+		JPanel hautCouleur1Panel = makeFieldPanel(TextsProperties.LABEL_HAUT + " : " + TextsProperties.LABEL_COULEUR + " 1", hautCouleur1Field);
+		JPanel hautCouleur2Panel = makeFieldPanel(TextsProperties.LABEL_HAUT + " : " + TextsProperties.LABEL_COULEUR + " 2", hautCouleur2Field);
+		JPanel basPanel = makeFieldPanel(TextsProperties.LABEL_BAS, basField);
+		JPanel basCouleur1Panel = makeFieldPanel(TextsProperties.LABEL_BAS + " : " + TextsProperties.LABEL_COULEUR + " 1", basCouleur1Field);
+		JPanel basCouleur2Panel = makeFieldPanel(TextsProperties.LABEL_BAS + " : " + TextsProperties.LABEL_COULEUR + " 2", basCouleur2Field);
+		JPanel triPanel = makeFieldPanel(TextsProperties.LABEL_TRIPIECES + " : ", triElementsField);
 		
-		strategie.add(makeFieldPanel(TextsProperties.LABEL_FORMATION, formationField));
-		strategie.add(makeFieldPanel(TextsProperties.LABEL_CAPITAINE, capitaineField));
-		strategie.add(makeFieldPanel(TextsProperties.LABEL_TIREURCORNER, tireurCornerField));
-		strategie.add(tactiquePanels[0]);
-		strategie.add(tactiquePanels[1]);
-		strategie.add(tactiquePanels[2]);
-		strategie.add(tactiquePanels[3]);
+		JPanel formationPanel = makeFieldPanel(TextsProperties.LABEL_FORMATION, formationField);
+		JPanel capitainePanel = makeFieldPanel(TextsProperties.LABEL_CAPITAINE, capitaineField);
+		JPanel tireurCornerPanel = makeFieldPanel(TextsProperties.LABEL_TIREURCORNER, tireurCornerField);
+		
+		GroupLayout layout = new GroupLayout(this);
+		this.setLayout(layout);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
+		layout.setHonorsVisibility(true);
+
+		layout.setHorizontalGroup(
+			layout.createSequentialGroup()
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+					.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(nomPanel)
+									.addComponent(abreviationPanel)
+									.addComponent(idPanel)
+									.addComponent(descriptionPanel)
+							)
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(triPanel)
+							)
+					)
+					.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(fondPanel)
+									.addComponent(fondMotifPanel)
+							)
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(fondCouleur1Panel)
+									.addComponent(fondCouleur2Panel)
+									.addComponent(fondCouleur3Panel)
+									.addComponent(fondCouleur4Panel)
+							)
+					)
+					.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(milieuPanel)
+							)
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(milieuCouleur1Panel)
+									.addComponent(milieuCouleur2Panel)
+							)
+					)
+					.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(cotePanel)
+							)
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(coteCouleur1Panel)
+									.addComponent(coteCouleur2Panel)
+							)
+					)
+					.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(hautPanel)
+							)
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(hautCouleur1Panel)
+									.addComponent(hautCouleur2Panel)
+							)
+					)
+					.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(basPanel)
+							)
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(basCouleur1Panel)
+									.addComponent(basCouleur2Panel)
+							)
+					)
+			)
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+					.addComponent(tenuesPane)
+			)
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+					.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(formationPanel)
+									.addComponent(capitainePanel)
+									.addComponent(tireurCornerPanel)
+							)
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+									.addComponent(tactiquePanels[0])
+									.addComponent(tactiquePanels[1])
+									.addComponent(tactiquePanels[2])
+									.addComponent(tactiquePanels[3])
+							)
+					)
+					.addComponent(rosterPanel)
+			)
+		);
+		layout.setVerticalGroup(
+			layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+			.addGroup(layout.createSequentialGroup()
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(nomPanel)
+									.addComponent(abreviationPanel)
+									.addComponent(idPanel)
+									.addComponent(descriptionPanel)
+							)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(triPanel)
+							)
+					)
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(fondPanel)
+									.addComponent(fondMotifPanel)
+							)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(fondCouleur1Panel)
+									.addComponent(fondCouleur2Panel)
+									.addComponent(fondCouleur3Panel)
+									.addComponent(fondCouleur4Panel)
+							)
+					)
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(milieuPanel)
+							)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(milieuCouleur1Panel)
+									.addComponent(milieuCouleur2Panel)
+							)
+					)
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(cotePanel)
+							)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(coteCouleur1Panel)
+									.addComponent(coteCouleur2Panel)
+							)
+					)
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(hautPanel)
+							)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(hautCouleur1Panel)
+									.addComponent(hautCouleur2Panel)
+							)
+					)
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(basPanel)
+							)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(basCouleur1Panel)
+									.addComponent(basCouleur2Panel)
+							)
+					)
+			)
+			.addGroup(layout.createSequentialGroup()
+					.addComponent(tenuesPane)
+			)
+			.addGroup(layout.createSequentialGroup()
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(formationPanel)
+									.addComponent(capitainePanel)
+									.addComponent(tireurCornerPanel)
+							)
+							.addGroup(layout.createSequentialGroup()
+									.addComponent(tactiquePanels[0])
+									.addComponent(tactiquePanels[1])
+									.addComponent(tactiquePanels[2])
+									.addComponent(tactiquePanels[3])
+							)
+					)
+					.addComponent(rosterPanel)
+			)
+		);
 		
 		setEnabled(false);
 	}
