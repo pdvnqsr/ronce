@@ -227,19 +227,21 @@ public class BoundsPopupMenuListener implements PopupMenuListener
 	protected void popupWider(BasicComboPopup popup)
 	{
 		JList list = popup.getList();
-
-		Dimension d = list.getCellRenderer().getListCellRendererComponent(list, list.getModel().getElementAt(0), 0, false , false).getPreferredSize();
-		
-		scrollPane.setPreferredSize(new Dimension(list.getModel().getSize()/list.getVisibleRowCount()*d.width, list.getVisibleRowCount()*d.height));
 		
 		//  Determine the maximimum width to use:
 		//  a) determine the popup preferred width
 		//  b) limit width to the maximum if specified
 		//  c) ensure width is not less than the scroll pane width
 
-		int popupWidth = list.getPreferredSize().width;  // make sure horizontal scrollbar doesn't appear
+		int popupWidth = list.getPreferredSize().width;
 		if(scrollBarRequired) {
+			Dimension d = list.getCellRenderer().getListCellRendererComponent(list, list.getModel().getElementAt(0), 0, false , false).getPreferredSize();
+			scrollPane.setPreferredSize(new Dimension(list.getModel().getSize()/list.getVisibleRowCount()*d.width, 2*d.height));
+			
 			popupWidth += 5 + getScrollBarWidth(popup, scrollPane);
+		} else {
+			Dimension d = list.getCellRenderer().getListCellRendererComponent(list, list.getModel().getElementAt(0), 0, false , false).getPreferredSize();
+			scrollPane.setPreferredSize(new Dimension(list.getModel().getSize()/list.getVisibleRowCount()*d.width, list.getVisibleRowCount()*d.height));
 		}
 
 		if (maximumWidth != -1)

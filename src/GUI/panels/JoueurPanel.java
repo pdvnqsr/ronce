@@ -3,7 +3,6 @@ package GUI.panels;
 import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;

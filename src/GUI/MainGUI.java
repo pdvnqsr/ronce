@@ -82,14 +82,14 @@ public class MainGUI extends JFrame {
 			UIManager.put("Slider.highlight",gris);
 			UIManager.put("Slider.shadow",gris);
 			
-			/*UIManager.put("ComboBox.background",gris);
-			UIManager.put("ComboBox.foreground",lightBase);
-			UIManager.put("ComboBox.selectionBackground",selectionBackground);
-			UIManager.put("ComboBox.selectionForeground",lightBase);
-			UIManager.put("Table.background",gris);
+			//UIManager.put("ComboBox.background",gris);
+			//UIManager.put("ComboBox.foreground",lightBase);
+			//UIManager.put("ComboBox.selectionBackground",jaune);
+			//UIManager.put("ComboBox.selectionForeground",lightBase);
+			//UIManager.put("EditorPane.background",gris);
 			
-			UIManager.put("TextField.background",gris);
-			UIManager.put("TextField.foreground",lightBase);*/
+			//UIManager.put("TextField.background",gris);
+			//UIManager.put("TextField.foreground",lightBase);
 			
 			UIManager.put("ActiveCaption",Color.RED);
 		} catch (Exception e) {

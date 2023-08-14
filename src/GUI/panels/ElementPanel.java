@@ -23,9 +23,11 @@ import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.LineBorder;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
+import GUI.MainGUI;
 import GUI.utils.BoundsPopupMenuListener;
 import data.elements.Joueur;
 import data.properties.DataProperties;
@@ -62,6 +64,12 @@ public class ElementPanel extends JPanel {
 
 					list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 					list.setVisibleRowCount(Math.round((float)list.getModel().getSize()/(float)12));
+					
+					if(isSelected) {
+						cell.setBackground(MainGUI.jaune);
+						cell.setBorder(new LineBorder(MainGUI.jaune,3));
+					}
+					
 					return cell;
 				}
 			});
@@ -80,8 +88,14 @@ public class ElementPanel extends JPanel {
 					cell.setText("");
 
 					list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-					list.setVisibleRowCount(Math.round((float)list.getModel().getSize()/(float)4));
+					list.setVisibleRowCount(Math.round((float)list.getModel().getSize()/(float)3.5));
 					dimension.setSize(cell.getIcon().getIconWidth() + 14, cell.getIcon().getIconHeight() + 4);
+					
+					if(isSelected) {
+						cell.setBackground(MainGUI.jaune);
+						cell.setBorder(new LineBorder(MainGUI.jaune,3));
+					}
+					
 					return cell;
 				}
 			});
