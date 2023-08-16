@@ -1,8 +1,8 @@
 package GUI.panels;
 
-import java.awt.GridLayout;
-
+import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
 
 import data.elements.Tenue;
 import data.properties.DataProperties;
@@ -38,7 +38,6 @@ public class TenuePanel extends ElementPanel {
 	private JComboBox<String> brassardCouleurField;
 	
 	public TenuePanel() {
-		setLayout(new GridLayout(24, 1));
 		
 		maillotField = makeComboboxComponent(DataProperties.EQUIPE_MAILLOT);
 		colField = makeComboboxComponent(DataProperties.EQUIPE_COL);
@@ -65,30 +64,135 @@ public class TenuePanel extends ElementPanel {
 		policeCouleur4Field = makeComboboxComponent(DataProperties.EQUIPE_POLICECOULEUR4);
 		brassardCouleurField = makeComboboxComponent(DataProperties.EQUIPE_BRASSARDCOULEUR);
 		
-		add(makeFieldPanel(TextsProperties.LABEL_MAILLOT, maillotField));
-		add(makeFieldPanel(TextsProperties.LABEL_COL, colField));
-		add(makeFieldPanel(TextsProperties.LABEL_MAILLOT + " : " + TextsProperties.LABEL_COULEUR + " 1", maillotCouleur1Field));
-		add(makeFieldPanel(TextsProperties.LABEL_MAILLOT + " : " + TextsProperties.LABEL_COULEUR + " 2", maillotCouleur2Field));
-		add(makeFieldPanel(TextsProperties.LABEL_MAILLOT + " : " + TextsProperties.LABEL_COULEUR + " 3", maillotCouleur3Field));
-		add(makeFieldPanel(TextsProperties.LABEL_MAILLOT + " : " + TextsProperties.LABEL_COULEUR + " 4", maillotCouleur4Field));
-		add(makeFieldPanel(TextsProperties.LABEL_SHORT, shortField));
-		add(makeFieldPanel(TextsProperties.LABEL_MARQUES, shortMarquesField));
-		add(makeFieldPanel(TextsProperties.LABEL_SHORT + " : " + TextsProperties.LABEL_COULEUR + " 1", shortCouleur1Field));
-		add(makeFieldPanel(TextsProperties.LABEL_SHORT + " : " + TextsProperties.LABEL_COULEUR + " 2", shortCouleur2Field));
-		add(makeFieldPanel(TextsProperties.LABEL_SHORT + " : " + TextsProperties.LABEL_COULEUR + " 3", shortCouleur3Field));
-		add(makeFieldPanel(TextsProperties.LABEL_SHORT + " : " + TextsProperties.LABEL_COULEUR + " 4", shortCouleur4Field));
-		add(makeFieldPanel(TextsProperties.LABEL_CHAUSSETTES, chaussettesField));
-		add(makeFieldPanel(TextsProperties.LABEL_CHAUSSETTES + " : " + TextsProperties.LABEL_COULEUR + " 1", chaussettesCouleur1Field));
-		add(makeFieldPanel(TextsProperties.LABEL_CHAUSSETTES + " : " + TextsProperties.LABEL_COULEUR + " 2", chaussettesCouleur2Field));
-		add(makeFieldPanel(TextsProperties.LABEL_CHAUSSETTES + " : " + TextsProperties.LABEL_COULEUR + " 3", chaussettesCouleur3Field));
-		add(makeFieldPanel(TextsProperties.LABEL_CHAUSSETTES + " : " + TextsProperties.LABEL_COULEUR + " 4", chaussettesCouleur4Field));
-		add(makeFieldPanel(TextsProperties.LABEL_POLICE, policeField));
-		add(makeFieldPanel(TextsProperties.LABEL_BORDURE, policeBordureField));
-		add(makeFieldPanel(TextsProperties.LABEL_POLICE + " : " + TextsProperties.LABEL_COULEUR + " 1", policeCouleur1Field));
-		add(makeFieldPanel(TextsProperties.LABEL_POLICE + " : " + TextsProperties.LABEL_COULEUR + " 2", policeCouleur2Field));
-		add(makeFieldPanel(TextsProperties.LABEL_POLICE + " : " + TextsProperties.LABEL_COULEUR + " 3", policeCouleur3Field));
-		add(makeFieldPanel(TextsProperties.LABEL_POLICE + " : " + TextsProperties.LABEL_COULEUR + " 4", policeCouleur4Field));
-		add(makeFieldPanel(TextsProperties.LABEL_COULEURBRASSARD, brassardCouleurField));
+		JPanel maillotPanel = makeFieldPanel(TextsProperties.LABEL_MAILLOT, maillotField);
+		JPanel colPanel = makeFieldPanel(TextsProperties.LABEL_COL, colField);
+		JPanel maillotCouleur1Panel = makeFieldPanel("1", maillotCouleur1Field);
+		JPanel maillotCouleur2Panel = makeFieldPanel("2", maillotCouleur2Field);
+		JPanel maillotCouleur3Panel = makeFieldPanel("3", maillotCouleur3Field);
+		JPanel maillotCouleur4Panel = makeFieldPanel("4", maillotCouleur4Field);
+		JPanel shortPanel = makeFieldPanel(TextsProperties.LABEL_SHORT, shortField);
+		JPanel shortMarquesPanel = makeFieldPanel(TextsProperties.LABEL_MARQUES, shortMarquesField);
+		JPanel shortCouleur1Panel = makeFieldPanel("1", shortCouleur1Field);
+		JPanel shortCouleur2Panel = makeFieldPanel("2", shortCouleur2Field);
+		JPanel shortCouleur3Panel = makeFieldPanel("3", shortCouleur3Field);
+		JPanel shortCouleur4Panel = makeFieldPanel("4", shortCouleur4Field);
+		JPanel chaussettesPanel = makeFieldPanel(TextsProperties.LABEL_CHAUSSETTES, chaussettesField);
+		JPanel chaussettesCouleur1Panel = makeFieldPanel("1", chaussettesCouleur1Field);
+		JPanel chaussettesCouleur2Panel = makeFieldPanel("2", chaussettesCouleur2Field);
+		JPanel chaussettesCouleur3Panel = makeFieldPanel("3", chaussettesCouleur3Field);
+		JPanel chaussettesCouleur4Panel = makeFieldPanel("4", chaussettesCouleur4Field);
+		JPanel policePanel = makeFieldPanel(TextsProperties.LABEL_POLICE, policeField);
+		JPanel bordurePanel = makeFieldPanel(TextsProperties.LABEL_BORDURE, policeBordureField);
+		JPanel policeCouleur1Panel = makeFieldPanel("1", policeCouleur1Field);
+		JPanel policeCouleur2Panel = makeFieldPanel("2", policeCouleur2Field);
+		JPanel policeCouleur3Panel = makeFieldPanel("3", policeCouleur3Field);
+		JPanel policeCouleur4Panel = makeFieldPanel("4", policeCouleur4Field);
+		JPanel brassardCouleurPanel = makeFieldPanel(TextsProperties.LABEL_COULEURBRASSARD, brassardCouleurField);
+		
+		GroupLayout layout = new GroupLayout(this);
+		this.setLayout(layout);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
+		layout.setHonorsVisibility(true);
+
+		layout.setHorizontalGroup(
+			layout.createSequentialGroup()
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+						.addComponent(maillotPanel, 180, 180, 180)
+						.addGroup(layout.createSequentialGroup()
+								.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+										.addComponent(maillotCouleur1Panel, 70, 70, 70)
+										.addComponent(maillotCouleur3Panel, 70, 70, 70)
+								)
+								.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+										.addComponent(maillotCouleur2Panel, 70, 70, 70)
+										.addComponent(maillotCouleur4Panel, 70, 70, 70)
+								)
+						)
+						.addComponent(policePanel, 180, 180, 180)
+						.addGroup(layout.createSequentialGroup()
+								.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+										.addComponent(policeCouleur1Panel, 70, 70, 70)
+										.addComponent(policeCouleur3Panel, 70, 70, 70)
+								)
+								.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+										.addComponent(policeCouleur2Panel, 70, 70, 70)
+										.addComponent(policeCouleur4Panel, 70, 70, 70)
+								)
+						)
+						.addComponent(bordurePanel, 180, 180, 180)
+						.addComponent(colPanel, 180, 180, 180)
+				)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+						.addComponent(chaussettesPanel, 180, 180, 180)
+						.addGroup(layout.createSequentialGroup()
+								.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+										.addComponent(chaussettesCouleur1Panel, 70, 70, 70)
+										.addComponent(chaussettesCouleur3Panel, 70, 70, 70)
+								)
+								.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+										.addComponent(chaussettesCouleur2Panel, 70, 70, 70)
+										.addComponent(chaussettesCouleur4Panel, 70, 70, 70)
+								)
+						)
+						.addComponent(shortPanel, 180, 180, 180)
+						.addGroup(layout.createSequentialGroup()
+								.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+										.addComponent(shortCouleur1Panel, 70, 70, 70)
+										.addComponent(shortCouleur3Panel, 70, 70, 70)
+								)
+								.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+										.addComponent(shortCouleur2Panel, 70, 70, 70)
+										.addComponent(shortCouleur4Panel, 70, 70, 70)
+								)
+						)
+						.addComponent(shortMarquesPanel, 180, 180, 180)
+						.addComponent(brassardCouleurPanel, 180, 180, 180)
+				)
+		);
+		layout.setVerticalGroup(
+			layout.createSequentialGroup()
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addComponent(maillotPanel)
+						.addComponent(chaussettesPanel)
+				)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addComponent(maillotCouleur1Panel)
+						.addComponent(maillotCouleur2Panel)
+						.addComponent(chaussettesCouleur1Panel)
+						.addComponent(chaussettesCouleur2Panel)
+				)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addComponent(maillotCouleur3Panel)
+						.addComponent(maillotCouleur4Panel)
+						.addComponent(chaussettesCouleur3Panel)
+						.addComponent(chaussettesCouleur4Panel)
+				)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addComponent(policePanel)
+						.addComponent(shortPanel)
+				)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addComponent(policeCouleur1Panel)
+						.addComponent(policeCouleur2Panel)
+						.addComponent(shortCouleur1Panel)
+						.addComponent(shortCouleur2Panel)
+				)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addComponent(policeCouleur3Panel)
+						.addComponent(policeCouleur4Panel)
+						.addComponent(shortCouleur3Panel)
+						.addComponent(shortCouleur4Panel)
+				)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addComponent(bordurePanel)
+						.addComponent(shortMarquesPanel)
+				)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addComponent(colPanel)
+						.addComponent(brassardCouleurPanel)
+				)
+		);
 	}
 	
 	public void load(Tenue tenue) {

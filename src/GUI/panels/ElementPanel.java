@@ -77,6 +77,7 @@ public class ElementPanel extends JPanel {
 			menuListener.setPopupWider(true);
 			menuListener.setScrollBarRequired(false);
 			component.addPopupMenuListener(menuListener);
+			component.setPreferredSize(new Dimension(50,30));
 			
 		} else if(sample.toString().startsWith("img/")) {
 			component.setRenderer(new DefaultListCellRenderer() {
@@ -167,6 +168,8 @@ public class ElementPanel extends JPanel {
 		JLabel nomLabel = new JLabel(nom);
 		panel.add(nomLabel);
 		panel.add(champ);
+		//panel.setOpaque(true);
+		//panel.setBackground(Color.RED);
 		return panel;
 	}
 

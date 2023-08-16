@@ -20,7 +20,7 @@ public class MultiSelectPanel extends JPanel {
 	private String deselectedItem;
 	
 	public MultiSelectPanel(ElementPanel parent, MultiSelectData props) {
-		setLayout(new GridLayout(props.getVals().size(),1));
+		setLayout(new GridLayout(props.getVals().size(),1,10,5));
 		fields = new ArrayList<JComboBox<String>>();
 		
 		JComboBox<String> field;

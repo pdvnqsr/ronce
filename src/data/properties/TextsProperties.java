@@ -79,8 +79,7 @@ public class TextsProperties {
 	public static String LABEL_HAUT;
 	public static String LABEL_BAS;
 	public static String LABEL_TRIPIECES;
-	public static String LABEL_TENUEJOUEUR;
-	public static String LABEL_TENUEGARDIEN;
+	public static String LABEL_GARDIEN;
 	public static String LABEL_DOMICILE;
 	public static String LABEL_EXTERIEUR;
 	public static String LABEL_MAILLOT;
@@ -95,7 +94,8 @@ public class TextsProperties {
 	public static String LABEL_CAPITAINE;
 	public static String LABEL_TIREURCORNER;
 	public static String LABEL_TACTIQUE;
-	public static String LABEL_NUMERO;
+	public static String LABEL_NUMEROS;
+	public static String LABEL_COMPOSITION;
 	
 	public static String MESSAGE_IRREVERSIBLE;
 	public static String MESSAGE_SURE;
@@ -194,8 +194,7 @@ public class TextsProperties {
 		LABEL_HAUT = texts.getString("label.haut");
 		LABEL_BAS = texts.getString("label.bas");
 		LABEL_TRIPIECES = texts.getString("label.triPieces");
-		LABEL_TENUEJOUEUR = texts.getString("label.tenueJoueur");
-		LABEL_TENUEGARDIEN = texts.getString("label.tenueGardien");
+		LABEL_GARDIEN = texts.getString("label.gardien");
 		LABEL_DOMICILE = texts.getString("label.domicile");
 		LABEL_EXTERIEUR = texts.getString("label.exterieur");
 		LABEL_MAILLOT = texts.getString("label.maillot");
@@ -210,7 +209,8 @@ public class TextsProperties {
 		LABEL_CAPITAINE = texts.getString("label.capitaine");
 		LABEL_TIREURCORNER = texts.getString("label.tireurCorner");
 		LABEL_TACTIQUE = texts.getString("label.tactique");
-		LABEL_NUMERO = texts.getString("label.numero");
+		LABEL_NUMEROS = texts.getString("label.numeros");
+		LABEL_COMPOSITION = texts.getString("label.composition");
 		
 		MESSAGE_IRREVERSIBLE = texts.getString("message.irreversible");
 		MESSAGE_SURE = texts.getString("message.sure");

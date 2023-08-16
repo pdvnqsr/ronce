@@ -1,10 +1,11 @@
 package GUI.panels;
 
-import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import data.elements.Tactique;
@@ -22,21 +23,13 @@ public class TactiquePanel extends ElementPanel {
 	private JComboBox<String> joueur4Field;
 	
 	public TactiquePanel(int index) {
-		setLayout(new GridLayout(2, 1));
-		
 		tactiqueField = makeComboboxComponent(DataProperties.EQUIPE_TACTIQUE);
 		joueur1Field = makeComboboxComponent(DataProperties.EQUIPE_TACTIQUEJOUEUR1);
 		joueur2Field = makeComboboxComponent(DataProperties.EQUIPE_TACTIQUEJOUEUR2);
 		joueur3Field = makeComboboxComponent(DataProperties.EQUIPE_TACTIQUEJOUEUR3);
 		joueur4Field = makeComboboxComponent(DataProperties.EQUIPE_TACTIQUEJOUEUR4);
-		
-		add(makeFieldPanel(TextsProperties.LABEL_TACTIQUE + index, tactiqueField));
-		JPanel joueursPanel = new JPanel(new GridLayout(1, 4));
-		joueursPanel.add(joueur1Field);
-		joueursPanel.add(joueur2Field);
-		joueursPanel.add(joueur3Field);
-		joueursPanel.add(joueur4Field);
-		add(joueursPanel);
+		JLabel joueursLabel = new JLabel(TextsProperties.LABEL_JOUEURS);
+		JPanel tactiquePanel = makeFieldPanel(TextsProperties.LABEL_TACTIQUE + index, tactiqueField);
 		
 		tactiqueField.addItemListener(new ItemListener() {
 			@Override
@@ -46,6 +39,35 @@ public class TactiquePanel extends ElementPanel {
 				}
 			}
 		});
+		
+		GroupLayout layout = new GroupLayout(this);
+		this.setLayout(layout);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
+		layout.setHonorsVisibility(true);
+
+		layout.setHorizontalGroup(
+				layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+				.addComponent(tactiquePanel)
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(joueursLabel)
+						.addComponent(joueur1Field, 50, 50, 50)
+						.addComponent(joueur2Field, 50, 50, 50)
+						.addComponent(joueur3Field, 50, 50, 50)
+						.addComponent(joueur4Field, 50, 50, 50)
+				)
+		);
+		layout.setVerticalGroup(
+			layout.createSequentialGroup()
+				.addComponent(tactiquePanel)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addComponent(joueursLabel)
+						.addComponent(joueur1Field)
+						.addComponent(joueur2Field)
+						.addComponent(joueur3Field)
+						.addComponent(joueur4Field)
+				)
+		);
 		
 		manageJoueurFields();
 	}

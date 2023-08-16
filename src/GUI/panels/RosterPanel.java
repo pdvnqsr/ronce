@@ -1,12 +1,18 @@
 package GUI.panels;
 
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.ParallelGroup;
+import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import data.elements.Composition;
 import data.elements.Equipe;
@@ -28,8 +34,13 @@ public class RosterPanel extends ElementPanel {
 	public RosterPanel() {
 		setLayout(new GridLayout(18, 2));
 
+		JLabel compositionLabel = new JLabel(TextsProperties.LABEL_COMPOSITION);
+		JLabel numerosLabel = new JLabel(TextsProperties.LABEL_NUMEROS);
+		
 		joueurFields = new ArrayList<JComboBox<JoueurMapping>>();
 		numeroFields = new ArrayList<JComboBox<String>>();
+		
+		ArrayList<JPanel> joueurPanels = new ArrayList<JPanel>();
 
 		for(int i=0;i<DataProperties.EQUIPE_JOUEURS.getOffsets().length;i++) {
 			joueurFields.add(makeJoueursComboboxComponent());
@@ -53,9 +64,44 @@ public class RosterPanel extends ElementPanel {
 		}
 
 		for(int i=0;i<joueurFields.size();i++) {
-			add(makeFieldPanel(TextsProperties.LABEL_JOUEUR + " " + (i+1), joueurFields.get(i)));
-			add(makeFieldPanel(TextsProperties.LABEL_NUMERO, numeroFields.get(i)));
+			joueurPanels.add(makeFieldPanel(TextsProperties.LABEL_JOUEUR + " " + (i+1), joueurFields.get(i)));
 		}
+		
+		
+		GroupLayout layout = new GroupLayout(this);
+		this.setLayout(layout);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
+		layout.setHonorsVisibility(true);
+
+		ParallelGroup joueursHGroup = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
+		SequentialGroup joueursVGroup = layout.createSequentialGroup();
+		ParallelGroup numerosHGroup = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
+		SequentialGroup numerosVGroup = layout.createSequentialGroup();
+		
+		joueursHGroup.addComponent(compositionLabel);
+		joueursVGroup.addComponent(compositionLabel);
+		for(JPanel panel : joueurPanels) {
+			joueursHGroup.addComponent(panel, 200, 200, 200);
+			joueursVGroup.addComponent(panel);
+		}
+		numerosHGroup.addComponent(numerosLabel);
+		numerosVGroup.addComponent(numerosLabel);
+		for(Component component : numeroFields) {
+			numerosHGroup.addComponent(component, 50, 50, 50);
+			numerosVGroup.addComponent(component);
+		}
+		
+		layout.setHorizontalGroup(
+			layout.createSequentialGroup()
+				.addGroup(joueursHGroup)
+				.addGroup(numerosHGroup)
+		);
+		layout.setVerticalGroup(
+			layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addGroup(joueursVGroup)
+				.addGroup(numerosVGroup)
+		);
 	}
 
 	public void load(Equipe e) {

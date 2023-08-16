@@ -1,6 +1,7 @@
 package GUI.panels;
 
 
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JComboBox;
@@ -29,7 +30,8 @@ public class CompositionPanel extends ElementPanel {
 	private TactiquePanel[] tactiquePanels;
 	
 	public CompositionPanel() {
-		setLayout(new GridLayout(1, 3));
+		FlowLayout panelLayout = new FlowLayout(FlowLayout.LEADING);
+		setLayout(panelLayout);
 		
 		tactiquePanels = new TactiquePanel[4];
 		tactiquePanels[0] = new TactiquePanel(1);
@@ -37,15 +39,15 @@ public class CompositionPanel extends ElementPanel {
 		tactiquePanels[2] = new TactiquePanel(3);
 		tactiquePanels[3] = new TactiquePanel(4);
 		
-		GridLayout layout = new GridLayout(20,1,0,0);
+		GridLayout layout = new GridLayout(6,1,10,10);
 		JPanel infos = new JPanel(layout);
 		add(infos);
 		
-		JPanel strategie = new JPanel(layout);
-		add(strategie);
-		
 		rosterPanel = new RosterPanel();
 		add(rosterPanel);
+		
+		JPanel strategie = new JPanel(layout);
+		add(strategie);
 		
 		nomField = new JTextField(15);
 		idField = new JTextField(28);
@@ -58,10 +60,10 @@ public class CompositionPanel extends ElementPanel {
 		infos.add(makeFieldPanel(TextsProperties.LABEL_NOM, nomField));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_ID, idField));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_DESCRIPTION, descriptionField));
+		infos.add(makeFieldPanel(TextsProperties.LABEL_FORMATION, formationField));
+		infos.add(makeFieldPanel(TextsProperties.LABEL_CAPITAINE, capitaineField));
+		infos.add(makeFieldPanel(TextsProperties.LABEL_TIREURCORNER, tireurCornerField));
 		
-		strategie.add(makeFieldPanel(TextsProperties.LABEL_FORMATION, formationField));
-		strategie.add(makeFieldPanel(TextsProperties.LABEL_CAPITAINE, capitaineField));
-		strategie.add(makeFieldPanel(TextsProperties.LABEL_TIREURCORNER, tireurCornerField));
 		strategie.add(tactiquePanels[0]);
 		strategie.add(tactiquePanels[1]);
 		strategie.add(tactiquePanels[2]);

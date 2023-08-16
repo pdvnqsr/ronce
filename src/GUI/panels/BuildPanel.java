@@ -1,5 +1,6 @@
 package GUI.panels;
 
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JComboBox;
@@ -42,6 +43,8 @@ public class BuildPanel extends ElementPanel {
 	private JComboBox<String> competence6Field;
 
 	public BuildPanel() {
+		setLayout(new FlowLayout(FlowLayout.LEADING));
+		
 		GridLayout layout = new GridLayout(20,1,10,10);
 		JPanel infos = new JPanel(layout);
 		add(infos);
