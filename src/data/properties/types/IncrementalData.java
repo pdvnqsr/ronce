@@ -3,6 +3,7 @@ package data.properties.types;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import data.properties.TextsProperties;
 import data.properties.mappings.JoueurMapping;
 
 public class IncrementalData {
@@ -27,9 +28,14 @@ public class IncrementalData {
 		}
 		
 		String[] valContent;
+		String displayValue;
 		while(go) {
 			valContent = props.getProperty(valsKey+".vals."+i).split(":");
-			this.vals.add(new JoueurMapping(valContent[0], valContent[1]));
+			displayValue = valContent[1];
+			if(displayValue.startsWith("txt.")) {
+				displayValue = TextsProperties.TEXTS.getString(displayValue);
+			}
+			this.vals.add(new JoueurMapping(valContent[0], displayValue));
 			i++;
 			go = props.containsKey(valsKey+".vals."+i);
 		}

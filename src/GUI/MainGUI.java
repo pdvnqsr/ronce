@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 import GUI.tabs.BuildsGUI;
 import GUI.tabs.CompositionsGUI;
+import GUI.tabs.ConfigGui;
 import GUI.tabs.EquipesGUI;
 import GUI.tabs.JoueursGUI;
 import data.properties.TextsProperties;
@@ -38,6 +39,7 @@ public class MainGUI extends JFrame {
 	private JoueursGUI joueursGUI;
 	private EquipesGUI equipesGUI;
 	private BuildsGUI buildsGUI;
+	private ConfigGui configGUI;
 	private CompositionsGUI compositionsGUI;
 
 	static{
@@ -110,6 +112,9 @@ public class MainGUI extends JFrame {
 		compositionsGUI = new CompositionsGUI();
 		mainPanel.addTab(TextsProperties.LABEL_EQUIPESBASE, compositionsGUI);
 		
+		configGUI = new ConfigGui();
+		mainPanel.addTab(TextsProperties.LABEL_CONFIG, configGUI);
+		
 		getContentPane().add(mainPanel, BorderLayout.CENTER);
 		
 		// Config fenêtre
@@ -171,4 +176,13 @@ public class MainGUI extends JFrame {
 	public void setCompositionsGUI(CompositionsGUI compositionsGUI) {
 		this.compositionsGUI = compositionsGUI;
 	}
+
+	public ConfigGui getConfigGUI() {
+		return configGUI;
+	}
+
+	public void setConfigGUI(ConfigGui configGUI) {
+		this.configGUI = configGUI;
+	}
+	
 }

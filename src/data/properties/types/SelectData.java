@@ -3,6 +3,7 @@ package data.properties.types;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import data.properties.TextsProperties;
 import data.properties.mappings.ValueMapping;
 
 public class SelectData {
@@ -29,9 +30,14 @@ public class SelectData {
 		boolean go = true;
 		int i=0;
 		String[] valContent;
+		String displayValue;
 		while(go) {
 			valContent = props.getProperty(valsKey+".vals."+i).split(":");
-			this.vals.add(new ValueMapping( Integer.parseInt(valContent[0]),valContent[1]));
+			displayValue = valContent[1];
+			if(displayValue.startsWith("txt.")) {
+				displayValue = TextsProperties.TEXTS.getString(displayValue);
+			}
+			this.vals.add(new ValueMapping( Integer.parseInt(valContent[0]), displayValue));
 			i++;
 			go = props.containsKey(valsKey+".vals."+i);
 		}

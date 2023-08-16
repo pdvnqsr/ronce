@@ -256,6 +256,7 @@ public class EquipePanel extends ElementPanel {
 					.addComponent(tactiquePanels[1])
 					.addComponent(tactiquePanels[2])
 					.addComponent(tactiquePanels[3])
+					.addGap(45)
 					.addComponent(rosterPanel)
 			)
 			.addGroup(layout.createSequentialGroup()

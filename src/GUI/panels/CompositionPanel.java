@@ -1,8 +1,8 @@
 package GUI.panels;
 
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -30,8 +30,8 @@ public class CompositionPanel extends ElementPanel {
 	private TactiquePanel[] tactiquePanels;
 	
 	public CompositionPanel() {
-		FlowLayout panelLayout = new FlowLayout(FlowLayout.LEADING);
-		setLayout(panelLayout);
+		FlowLayout layout = new FlowLayout(FlowLayout.LEADING,0,0);
+		setLayout(layout);
 		
 		tactiquePanels = new TactiquePanel[4];
 		tactiquePanels[0] = new TactiquePanel(1);
@@ -39,14 +39,16 @@ public class CompositionPanel extends ElementPanel {
 		tactiquePanels[2] = new TactiquePanel(3);
 		tactiquePanels[3] = new TactiquePanel(4);
 		
-		GridLayout layout = new GridLayout(6,1,10,10);
+		layout = new FlowLayout(FlowLayout.TRAILING,10,10);
 		JPanel infos = new JPanel(layout);
+		infos.setPreferredSize(new Dimension(300,550));
 		add(infos);
 		
 		rosterPanel = new RosterPanel();
 		add(rosterPanel);
 		
 		JPanel strategie = new JPanel(layout);
+		strategie.setPreferredSize(new Dimension(300,550));
 		add(strategie);
 		
 		nomField = new JTextField(15);

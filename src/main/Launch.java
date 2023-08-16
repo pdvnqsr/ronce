@@ -14,6 +14,8 @@ import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,6 +30,7 @@ import data.exchange.BuildsExchangeData;
 import data.exchange.CompositionsExchangeData;
 import data.exchange.EquipesExchangeData;
 import data.exchange.JoueursExchangeData;
+import data.properties.DataProperties;
 import data.properties.SystemProperties;
 import data.properties.TextsProperties;
 
@@ -51,6 +54,7 @@ public class Launch {
 			e.printStackTrace();
 		}
 		lookForSavedata();
+		lookForLocale();
 		data = new Data();
 		loadData();
 		gui = new MainGUI();
@@ -319,15 +323,59 @@ public class Launch {
 	
 	private void lookForSavedata() {
 		if(!new File(SystemProperties.PATH).exists()) {
-			JFileChooser choose = new JFileChooser(System.getProperty("user.home"));
-			choose.setDialogTitle("Sélectionnez le savedata.dat du jeu");
-			int res = choose.showOpenDialog(null);
-			if (res == JFileChooser.APPROVE_OPTION) {
-				SystemProperties.setPath(choose.getSelectedFile().getAbsolutePath());
-			}
+			changeSavedata(false);
+		}
+	}
+	
+	private void lookForLocale() {
+		if(SystemProperties.LOCALE == null || "".equals(SystemProperties.LOCALE)) {
+			changeLocale(false);
 		}
 	}
 
+	public void changeSavedata(boolean restart) {
+		try {
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+		
+		JFileChooser choose = new JFileChooser(System.getProperty("user.home"));
+		choose.setDialogTitle("Sélectionnez le savedata.dat du jeu");
+		int res = choose.showOpenDialog(null);
+		if (res == JFileChooser.APPROVE_OPTION) {
+			SystemProperties.setPath(choose.getSelectedFile().getAbsolutePath());
+			if(restart) {
+				restart();
+			}
+		} else {
+			try {
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void changeLocale(boolean restart) {
+		String[] locales = {"FR","EN"};
+		Object locale = JOptionPane.showInputDialog(gui, "", "Locale", JOptionPane.QUESTION_MESSAGE, null, locales, locales[0]);
+		if(locale != null && !"".equals(locale.toString())) {
+			SystemProperties.setLocale(locale.toString());
+			if(restart) {
+				restart();
+			}
+		}
+	}
+	
+	private void restart() {
+		JOptionPane.showMessageDialog(gui, TextsProperties.MESSAGE_REDEMARRER);
+		TextsProperties.init();
+		DataProperties.init();
+		gui.dispose();
+		init();
+	}
+	
 	public static void main(String[] args) {
 		Launch.getInstance();
 		//generateVals("joueursBase", 371, 0);

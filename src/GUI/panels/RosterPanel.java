@@ -1,7 +1,6 @@
 package GUI.panels;
 
 import java.awt.Component;
-import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
@@ -32,8 +31,7 @@ public class RosterPanel extends ElementPanel {
 	private String deselectedItem;
 
 	public RosterPanel() {
-		setLayout(new GridLayout(18, 2));
-
+		
 		JLabel compositionLabel = new JLabel(TextsProperties.LABEL_COMPOSITION);
 		JLabel numerosLabel = new JLabel(TextsProperties.LABEL_NUMEROS);
 		

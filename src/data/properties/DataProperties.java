@@ -136,6 +136,10 @@ public class DataProperties {
 	public static int JOUEURSBASEEDITABLES;
 	
 	static {
+		init();
+	}
+	
+	public static void init() {
 		try (InputStream input = new FileInputStream("config/data.properties")) {
             Properties prop = new Properties();
             prop.load(input);

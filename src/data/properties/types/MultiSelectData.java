@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Properties;
 
+import data.properties.TextsProperties;
 import data.properties.mappings.MultiValueMapping;
 
 public class MultiSelectData {
@@ -28,6 +29,7 @@ public class MultiSelectData {
 		boolean go = true;
 		int i=0;
 		String[] valContent;
+		String displayValue;
 		while(go) {
 			valContent = props.getProperty(key+".vals."+i).split(":");
 			temp = valContent[0].split(",");
@@ -35,7 +37,12 @@ public class MultiSelectData {
 			for(int j=0;j<temp.length;j++) {
 				values[j] = Integer.parseInt(temp[j]);
 			}
-			this.vals.add(new MultiValueMapping(values,valContent[1]));
+			displayValue = valContent[1];
+			if(displayValue.startsWith("txt.")) {
+				displayValue = TextsProperties.TEXTS.getString(displayValue);
+			}
+			
+			this.vals.add(new MultiValueMapping(values, displayValue));
 			i++;
 			go = props.containsKey(key+".vals."+i);
 		}
