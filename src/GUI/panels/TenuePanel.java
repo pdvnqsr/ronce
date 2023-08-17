@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import data.elements.Tenue;
 import data.properties.DataProperties;
 import data.properties.TextsProperties;
+import data.properties.types.SelectData;
 
 public class TenuePanel extends ElementPanel {
 
@@ -37,21 +38,33 @@ public class TenuePanel extends ElementPanel {
 	private JComboBox<String> policeCouleur4Field;
 	private JComboBox<String> brassardCouleurField;
 	
-	public TenuePanel() {
+	public TenuePanel(boolean gk) {
+		SelectData maillot;
+		SelectData shorts;
+		SelectData chaussettes;
+		if(!gk) {
+			maillot = DataProperties.EQUIPE_MAILLOT;
+			shorts = DataProperties.EQUIPE_SHORT;
+			chaussettes = DataProperties.EQUIPE_CHAUSSETTES;
+		} else {
+			maillot = DataProperties.EQUIPE_MAILLOTGK;
+			shorts = DataProperties.EQUIPE_SHORTGK;
+			chaussettes = DataProperties.EQUIPE_CHAUSSETTESGK;
+		}
 		
-		maillotField = makeComboboxComponent(DataProperties.EQUIPE_MAILLOT);
+		maillotField = makeComboboxComponent(maillot);
 		colField = makeComboboxComponent(DataProperties.EQUIPE_COL);
 		maillotCouleur1Field = makeComboboxComponent(DataProperties.EQUIPE_MAILLOTCOULEUR1);
 		maillotCouleur2Field = makeComboboxComponent(DataProperties.EQUIPE_MAILLOTCOULEUR2);
 		maillotCouleur3Field = makeComboboxComponent(DataProperties.EQUIPE_MAILLOTCOULEUR3);
 		maillotCouleur4Field = makeComboboxComponent(DataProperties.EQUIPE_MAILLOTCOULEUR4);
-		shortField = makeComboboxComponent(DataProperties.EQUIPE_SHORT);
+		shortField = makeComboboxComponent(shorts);
 		shortMarquesField = makeComboboxComponent(DataProperties.EQUIPE_SHORTMARQUES);
 		shortCouleur1Field = makeComboboxComponent(DataProperties.EQUIPE_SHORTCOULEUR1);
 		shortCouleur2Field = makeComboboxComponent(DataProperties.EQUIPE_SHORTCOULEUR2);
 		shortCouleur3Field = makeComboboxComponent(DataProperties.EQUIPE_SHORTCOULEUR3);
 		shortCouleur4Field = makeComboboxComponent(DataProperties.EQUIPE_SHORTCOULEUR4);
-		chaussettesField = makeComboboxComponent(DataProperties.EQUIPE_CHAUSSETTES);
+		chaussettesField = makeComboboxComponent(chaussettes);
 		chaussettesCouleur1Field = makeComboboxComponent(DataProperties.EQUIPE_CHAUSSETTESCOULEUR1);
 		chaussettesCouleur2Field = makeComboboxComponent(DataProperties.EQUIPE_CHAUSSETTESCOULEUR2);
 		chaussettesCouleur3Field = makeComboboxComponent(DataProperties.EQUIPE_CHAUSSETTESCOULEUR3);

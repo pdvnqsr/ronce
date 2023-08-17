@@ -54,10 +54,10 @@ public class EquipePanel extends ElementPanel {
 	public EquipePanel() {
 		setLayout(new GridLayout(1, 3));
 		tenuePanels = new TenuePanel[4];
-		tenuePanels[0] = new TenuePanel();
-		tenuePanels[1] = new TenuePanel();
-		tenuePanels[2] = new TenuePanel();
-		tenuePanels[3] = new TenuePanel();
+		tenuePanels[0] = new TenuePanel(false);
+		tenuePanels[1] = new TenuePanel(false);
+		tenuePanels[2] = new TenuePanel(true);
+		tenuePanels[3] = new TenuePanel(true);
 		
 		tactiquePanels = new TactiquePanel[4];
 		tactiquePanels[0] = new TactiquePanel(1);
