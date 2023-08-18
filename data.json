@@ -514,6 +514,7 @@
     },
     {
       "id": "J:316fa5c1-bd1b-4595-87db-245c2bbe0121",
+      "description": "",
       "nom": "Teigerbran",
       "position": 2,
       "titre1": 0,
@@ -528,7 +529,7 @@
       "tailleBouche": 10,
       "commissures": 3,
       "positionBouche": 10,
-      "cheveux": 137,
+      "cheveux": 128,
       "couleurCheveux": 9,
       "yeux": 58,
       "tailleYeux": 10,
@@ -1281,5 +1282,7 @@
       "celebration4": 3
     }
   ],
-  "equipes": []
+  "equipes": [],
+  "builds": [],
+  "compositions": []
 }
