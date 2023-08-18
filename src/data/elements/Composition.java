@@ -55,7 +55,7 @@ public class Composition {
 	}
 
 	public String regenerateId() {
-		return "E:" + UUID.randomUUID().toString();
+		return "C:" + UUID.randomUUID().toString();
 	}
 	
 	public String getId() {
