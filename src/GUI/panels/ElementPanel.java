@@ -70,6 +70,8 @@ public class ElementPanel extends JPanel {
 						cell.setBorder(new LineBorder(MainGUI.jaune,3));
 					}
 					
+					cell.setBackground(MainGUI.darkBase);
+					
 					return cell;
 				}
 			});
@@ -97,6 +99,8 @@ public class ElementPanel extends JPanel {
 						cell.setBorder(new LineBorder(MainGUI.jaune,3));
 					}
 					
+					cell.setBackground(MainGUI.darkBase);
+					
 					return cell;
 				}
 			});
@@ -108,7 +112,7 @@ public class ElementPanel extends JPanel {
 		} else {
 			AutoCompleteDecorator.decorate(component);
 		}
-
+		
 		return component;
 	}
 

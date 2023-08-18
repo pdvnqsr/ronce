@@ -193,7 +193,7 @@ public class BoundsPopupMenuListener implements PopupMenuListener
 	protected void customizePopup(BasicComboPopup popup)
 	{
 		scrollPane = getScrollPane(popup);
-
+		
 		if (popupWider)
 			popupWider( popup );
 
