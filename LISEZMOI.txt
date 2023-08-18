@@ -1,0 +1,83 @@
+R.O.N.C.E. : Rise Of New Champions Editor !
+
+RONCE est un logiciel permettant d'éditer le fichier de sauvegarde du jeu Captain Tsubasa : Rise Of New Champions.
+
+AVERTISSEMENT : RONCE permet des configurations non permises à l'origine dans le jeu, ce qui implique 2 choses : 
+1. Certaines peuvent ne pas totalement fonctionner
+2. Jouer en ligne avec ces configurations est techniquement de la triche donc...ne le faites pas.
+
+RONCE est conçu pour aider les créateurs de contenus à faire des trucs cools, alors faites plutôt des trucs cools avec. SVP.
+
+
+ATTENTION : Il est déconseillé d'utiliser RONCE lorsque le jeu est lancé
+
+
+CONTENU : 
+backup : stocke les backups automatiques du fichier savedata.dat
+config : fichiers de configuration
+exchange : stocke les fichier d'export faits depuis le logiciel
+fonts : polices de caratères utilisées dans le logiciel
+img : images utilisées dans le logiciel
+jre : environnement java (oui c'est du java, désolé). Il est embarqué pour que vous n'ayez pas besoin de l'installer.
+ronce_lib : librairies externes java
+src : code source de l'appli, je l'ai mis avec parce-que flemme de faire une vraie release
+data.json : sauvegarde du logiciel. CE FICHIER EST IMPORTANT !
+ronce.exe : pour lancer le logiciel (normal)
+ronce.jar : logiciel en lui-même
+
+
+LANCEMENT : 
+1. Double-cliquez sur ronce.exe
+2. Survivez au splashscreen moche
+3. Ca y est
+
+Au 1er lancement, on vous demande votre langue (français et anglais disponibles), puis l'emplacement du fichier savedata.dat du jeu (habituellement dans le dosser utilisateur puis AppData/Roaming)
+Ces valeurs sont stockées dans le fichier config/system.properties et modifiables dans l'onglet Configuration
+
+
+FONCTIONNALITES : 
+RONCE dispose de plusieurs onglets permettant de traiter divers éléments du jeu.
+Chaque onglet dispose de 2 listes : 
+Dans le jeu : Ce qu'il y'a de disponible dans le jeu pour le savedata sélectionné
+Mon stock : Les éléments disponibles dans votre fichier data.json
+
+Chaque onglet dispose des mêmes actions disponibles : 
+Ajouter à mon stock : extraire les éléments du jeu sélectionnés pour les ajouter à votre stock.
+Créer : créer un nouvel élément dans votre stock. Des valeurs par défaut son utilisées. Un ID unique est créé. Il sera très utile pour l'export/import
+Supprimer : supprimer les éléments sélectionnés de votre stock. Ne peut pas être annulé.
+Sauvegarder : enregistrer votre stock dans le data.json. ATTENTION si vous ne le faites pas avant de sélectionner un nouvel item, vos modifications seront perdues !
+Envoyer vers le jeu : modifie le fichier savedata.dat du jeu pour intégrer l'élément de votre stock sélectionné à la place de l'élément du jeu sélectionné. Ceci fait automatiquement un backup du savedata. On ne sait jamais.
+Exporter : Exporte les éléments de votre stock sélectionnés dans un fichier json que vous pouvez partager. Le fichier se trouve dans le sous-répertoire dédié du répertoire exchange.
+Importer : Importe un fichier situé dans le sous-répertoire dédié du répertoire exchange. A l'import on vérifie si l'ID existe déjà pour éviter les doublons.
+
+Onglet Joueurs  :
+Permet de gérer les joueurs personnalisés. Vous pouvez stocker autant de joueurs que vous voulez dans RONCE, et remplacer l'un des 20 slots du jeu.
+Choses à savoir : 
+- On peut mettre un tir différent dans le slot de tir et le slot de tir alternatif. Tous les tirs peuvent être utilisés comme tir alternatif (pas que les tirs étoile). Idem pour les super tirs.
+- Tous les tacles peuvent être utilisés comme tacle 1. Il n'est pas impossible que certains fonctionnent bizarrement, je ne les ai pas tous testés.
+- Si vous sélectionnez dans le logiciel une coupe de cheveux que vous n'avez pas acheté dans le jeu, le jeu la remplacera par une autre au lancement.
+- On ne peut pas supprimer un joueur présent dans une équipe. Donc éditez d'abord vos équipes avant de supprimer le joueur.
+
+Onglet Equipes : 
+Permet de gérer les équipes personnalisées. Vous pouvez stocker autant d'équipe que vous voulez dans RONCE, et remplacer l'un des 5 slots du jeu.
+Choses à savoir : 
+- Contrairement aux cheveux des joueurs, vous pouvez utiliser des parties d'emblème que vous n'avez pas acheté dans le jeu.
+- Le positionnement personnalisé des joueurs sur le terrain n'est pas éditable dans le logiciel. Mais il est enregristré depuis le jeu et envoyé au jeu, donc n'hésitez pas à l'utiliser.
+- Vous pouvez sélectionner plus de 8 joueurs personnalisés dans votre équipe.
+- Tous les joueurs sont sélectionnables à tous les postes. Cependant, un joueur de champ dans les buts est incapable de réaliser le moindre arrêt.
+  Un gardien peut jouer sur le champ, mais pas sûr que vous puissiez le remettre dans les cages en cours de match.
+- Vous pouvez mettre autant de fois que vous voulez le même joueur. En revanche si le même joueur est dans les cages et sur le champ, ça peut également perturber les remplacements.
+- Le logiciel gère les tenues, mais pas uniformes préfaits (RIP les maillots de la Ligue 1)
+- Lors de l'export, l'import, l'ajout au stock, ou l'envoi vers le jeu, une équipe vient avec ses joueurs personnalisés.
+  Dans chaque cas on regarde si la destination contient déjà le joueur. C'est-à-dire si l'ID est le même, ou si l'intégralité des champs sont égaux (hors nom, ID et description). On va alors vous demander quoi faire pour chaque joueur.
+
+Onglet Joueurs de base : 
+Permet de gérer des builds (techniques et compétences) pouvant s'appliquer aux joueurs de base du jeu. Malheureusement, seuls les joueurs disposant d'une carte ami sont éditables.
+Les choses à savoir sont les mêmes que pour les joueurs personnalisés
+
+Onglet Equipes de base : 
+Permet de gérer de compositions d'équipes applicables aux équipes de base. Et oui vous povez y mettre des joueurs personnalisés.
+Les choses à savoir sont les mêmes que pour les équipes personnalsiées.
+
+
+Voilà, c'est tout ce qui me vient à l'esprit, amusez-vous bien avec R.O.N.C.E. !
