@@ -80,4 +80,10 @@ Permet de gérer de compositions d'équipes applicables aux équipes de base. Et
 Les choses à savoir sont les mêmes que pour les équipes personnalsiées.
 
 
+BASE DE DONNEES : 
+Une base de données commune hébergée sur Google Drive a été crée. Elle permet de partager vos créations via les fichiers exports, avec tous les utilisateur de RONCE.
+Lien : 
+https://drive.google.com/drive/folders/1RO9-KrnWxWWJ80ZaGH0_cEk8VozLiEJ1?usp=sharing
+
+
 Voilà, c'est tout ce qui me vient à l'esprit, amusez-vous bien avec R.O.N.C.E. !

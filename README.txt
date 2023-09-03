@@ -79,4 +79,9 @@ Allow to manage team rosters that can be applied to base game teams. And yes, yo
 Things to know are pretty much the same than for custom players.
 
 
+DATABASE : 
+A common database located on Google Drive has been created. It allows you to where with export files yiour creations with all RONCE users.
+Link : 
+https://drive.google.com/drive/folders/1RO9-KrnWxWWJ80ZaGH0_cEk8VozLiEJ1?usp=sharing
+
 There you are, this is all that comes to mind, so have fun with R.O.N.C.E. !
