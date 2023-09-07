@@ -15,7 +15,7 @@ ATTENTION : Il est déconseillé d'utiliser RONCE lorsque le jeu est lancé
 CONTENU : 
 backup : stocke les backups automatiques du fichier savedata.dat
 config : fichiers de configuration
-exchange : stocke les fichier d'export faits depuis le logiciel
+exchange : stocke les fichier d'export faits depuis le logiciel (chaque sous-dossier contient un fichier txt. Ignorez-le et essayez de ne pas le supprimer, même si ce n'est pas grave)
 fonts : polices de caratères utilisées dans le logiciel
 img : images utilisées dans le logiciel
 jre : environnement java (oui c'est du java, désolé). Il est embarqué pour que vous n'ayez pas besoin de l'installer.

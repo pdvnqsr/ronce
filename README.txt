@@ -15,7 +15,7 @@ ATTENTION : It's advised NOT TO use RONCE while the game is launched.
 CONTENT : 
 backup : stores automatic backups of savadata.dat files
 config : configuration files
-exchange : store files exported from software
+exchange : store files exported from software (each sub-directory contains a txt file. Please ignore it and try not to delete it either)
 fonts : character fonts used in the software
 img : images used in the software
 jre : java environment (yep it's java, sorry). But it's embedded so that you don't have to install it

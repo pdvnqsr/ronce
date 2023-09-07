@@ -2,3 +2,4 @@
 Added DLC star players
 Added missing tehcniques
 Techniques names bug fixes
+Fixed missing exchange directory bug
