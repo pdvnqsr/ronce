@@ -1,0 +1,4 @@
+1.0.1 : 
+Added DLC star players
+Added missing tehcniques
+Techniques names bug fixes
