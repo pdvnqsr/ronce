@@ -31,7 +31,6 @@ public class RosterPanel extends ElementPanel {
 	private String deselectedItem;
 
 	public RosterPanel() {
-		
 		JLabel compositionLabel = new JLabel(TextsProperties.LABEL_COMPOSITION);
 		JLabel numerosLabel = new JLabel(TextsProperties.LABEL_NUMEROS);
 		
@@ -52,10 +51,12 @@ public class RosterPanel extends ElementPanel {
 				@SuppressWarnings("unchecked")
 				@Override
 				public void itemStateChanged(ItemEvent e) {
-					if(e.getStateChange() == ItemEvent.DESELECTED) {
-						deselectedItem = e.getItem().toString();
-					} else {
-						swapSelection((JComboBox<String>)e.getSource(), e.getItem().toString());
+					if(e.getItem().toString().equals(DataProperties.EQUIPE_NUMEROS.getVals().get(DataProperties.EQUIPE_NUMEROS.getDefaut()))) {
+						if(e.getStateChange() == ItemEvent.DESELECTED) {
+							deselectedItem = e.getItem().toString();
+						} else {
+							swapSelection((JComboBox<String>)e.getSource(), e.getItem().toString());
+						}
 					}
 				}
 			});

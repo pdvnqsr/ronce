@@ -43,7 +43,7 @@ public class TactiquePanel extends ElementPanel {
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setAutoCreateGaps(true);
-		layout.setAutoCreateContainerGaps(true);
+		//layout.setAutoCreateContainerGaps(true);
 		layout.setHonorsVisibility(true);
 
 		layout.setHorizontalGroup(

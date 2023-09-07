@@ -340,6 +340,13 @@ public class Equipe {
 	}
 
 	public String[] getJoueurs() {
+		if(joueurs.length != DataProperties.EQUIPE_JOUEURS.getOffsets().length) {
+			String[] newJoueurs = Arrays.copyOf(joueurs, DataProperties.EQUIPE_JOUEURS.getOffsets().length);
+			for(int i = joueurs.length;i<newJoueurs.length;i++) {
+				newJoueurs[i] = ""+DataProperties.EQUIPE_JOUEURS.getDefaut();
+			}
+			joueurs = newJoueurs;
+		}
 		return joueurs;
 	}
 
@@ -348,6 +355,13 @@ public class Equipe {
 	}
 
 	public int[] getNumeros() {
+		if(numeros.length != DataProperties.EQUIPE_NUMEROS.getOffsets().length) {
+			int[] newNumeros = Arrays.copyOf(numeros, DataProperties.EQUIPE_NUMEROS.getOffsets().length);
+			for(int i = numeros.length;i<newNumeros.length;i++) {
+				newNumeros[i] = DataProperties.EQUIPE_NUMEROS.getDefaut();
+			}
+			numeros = newNumeros;
+		}
 		return numeros;
 	}
 

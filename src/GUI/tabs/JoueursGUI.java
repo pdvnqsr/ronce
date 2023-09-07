@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -192,13 +193,18 @@ public class JoueursGUI extends JPanel {
 
 	public void importJoueurs() {
 		File dir = new File("exchange/players");
-		File[] fichiers = dir.listFiles();
+		File[] fichiers = dir.listFiles(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".json");
+			}
+		});
 
 		if(fichiers.length == 0) {
 			JOptionPane.showMessageDialog(this, TextsProperties.MESSAGE_IMPORTERROR);
 		} else {
 			String message = TextsProperties.MESSAGE_IMPORT;
-			String[] nomsFichiers = new String[fichiers.length];
+			String[] nomsFichiers = new String[fichiers.length-1];
 			for(int i=0;i<nomsFichiers.length;i++) {
 				nomsFichiers[i] = fichiers[i].getName();
 			}

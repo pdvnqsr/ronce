@@ -137,6 +137,8 @@ public class DataProperties {
 	public static IncrementalData EQUIPESBASEPLACEMENT;
 	public static IncrementalData JOUEURSCUSTOM;
 	public static int JOUEURSBASEEDITABLES;
+	public static int JOUEURSETOILENOMBRE;
+	public static int JOUEURSETOILEOFFSET;
 	
 	static {
 		init();
@@ -276,6 +278,9 @@ public class DataProperties {
         	JOUEURSBASE = new IncrementalData(prop, "joueursBase");
         	JOUEURSCUSTOM = new IncrementalData(prop, "joueursCustom");
         	JOUEURSBASEEDITABLES = Integer.parseInt(prop.getProperty("joueursBaseEditables.nombre"));
+        	JOUEURSETOILENOMBRE = Integer.parseInt(prop.getProperty("joueursEtoile.nombre"));
+        	JOUEURSETOILEOFFSET = Integer.parseInt(prop.getProperty("joueursEtoile.offset"));
+        	
         } catch (IOException ex) {
             ex.printStackTrace();
         }

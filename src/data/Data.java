@@ -390,7 +390,7 @@ public class Data implements Serializable {
 					equipe.getTactiques()[j].setJoueur1(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR1,j));
 					equipe.getTactiques()[j].setJoueur2(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR2,j));
 					equipe.getTactiques()[j].setJoueur3(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR3,j));
-					equipe.getTactiques()[j].setJoueur3(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR4,j));
+					equipe.getTactiques()[j].setJoueur4(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR4,j));
 				}
 
 				for(int j=0;j<equipe.getJoueurs().length;j++) {
@@ -536,10 +536,15 @@ public class Data implements Serializable {
 			buildsInGame.clear();
 
 			Build build;
-			for(int i=0;i<DataProperties.JOUEURSBASEEDITABLES;i++) {
+			int index;
+			for(int i=0;i<DataProperties.JOUEURSBASEEDITABLES + DataProperties.JOUEURSETOILENOMBRE;i++) {
+				index = i;
+				if(i >= DataProperties.JOUEURSBASEEDITABLES) {
+					index = i + DataProperties.JOUEURSETOILEOFFSET - DataProperties.JOUEURSBASEEDITABLES;
+				}
 				Long addr = DataProperties.JOUEURSBASE.getAdresse(i);
 
-				build = new Build(DataProperties.JOUEURSBASE.getVals().get(i).getDisplayValue(),false);
+				build = new Build(DataProperties.JOUEURSBASE.getVals().get(index).getDisplayValue(),false);
 				build.setTir(getIntFromGame(raf, addr, DataProperties.TIRS,0));
 				build.setTirAlt(getIntFromGame(raf, addr, DataProperties.TIRS,1));
 				build.setTirAerien(getIntFromGame(raf, addr, DataProperties.TIRSAERIENS,0));
@@ -623,7 +628,7 @@ public class Data implements Serializable {
 					composition.getTactiques()[j].setJoueur1(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR1,j));
 					composition.getTactiques()[j].setJoueur2(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR2,j));
 					composition.getTactiques()[j].setJoueur3(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR3,j));
-					composition.getTactiques()[j].setJoueur3(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR4,j));
+					composition.getTactiques()[j].setJoueur4(getIntFromGame(raf, addr, DataProperties.EQUIPE_TACTIQUEJOUEUR4,j));
 				}
 
 				for(int j=0;j<composition.getJoueurs().length;j++) {
