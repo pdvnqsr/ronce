@@ -1,5 +1,9 @@
+1.0.2 : 
+Set names length from 10 to 20
+Some Skills names bug fixes
+
 1.0.1 : 
 Added DLC star players
-Added missing tehcniques
+Added missing techniques
 Techniques names bug fixes
 Fixed missing exchange directory bug
