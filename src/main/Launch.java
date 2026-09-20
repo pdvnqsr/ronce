@@ -22,7 +22,7 @@ import com.google.gson.GsonBuilder;
 
 import GUI.MainGUI;
 import data.Data;
-import data.elements.Build;
+import data.elements.JoueurStar;
 import data.elements.Composition;
 import data.elements.Equipe;
 import data.elements.Joueur;
@@ -55,6 +55,8 @@ public class Launch {
 		}
 		lookForSavedata();
 		lookForLocale();
+		lookForGamefiles();
+		
 		data = new Data();
 		loadData();
 		gui = new MainGUI();
@@ -88,7 +90,7 @@ public class Launch {
 		}
 		data.loadJoueursFromGame();
 		data.loadEquipesFromGame();
-		data.loadBuildsFromGame();
+		data.loadJoueursStarsFromGame();
 		data.loadCompositionsFromGame();
 	}
 
@@ -210,9 +212,9 @@ public class Launch {
 		}
 	}
 
-	public void exportBuilds(List<Build> builds, Path path) {
+	public void exportBuilds(List<JoueurStar> builds, Path path) {
 		BuildsExchangeData exchangeData = new BuildsExchangeData();
-		for(Build build : builds) {
+		for(JoueurStar build : builds) {
 			exchangeData.getBuilds().add(build);
 		}
 
@@ -228,13 +230,13 @@ public class Launch {
 		try {
 			String json = Files.readString(path);
 			BuildsExchangeData exchangeData = gson.fromJson(json, BuildsExchangeData.class);
-			Build existant = null;
+			JoueurStar existant = null;
 			String newId;
-			for(Build build : exchangeData.getBuilds()) {
+			for(JoueurStar build : exchangeData.getBuilds()) {
 				if(build.getId() == null || build.getId().equals("")) {
 					build.setId(build.regenerateId());
 				}
-				existant = data.getBuildParId(build.getId()); 
+				existant = data.getJoueurStarParId(build.getId()); 
 				if(existant != null) {
 					if(!build.equals(existant)) {
 						int res = JOptionPane.showConfirmDialog(gui, TextsProperties.MESSAGE_IDEXISTANT1 + " : \n" + existant.getNom() + "\n" + TextsProperties.MESSAGE_IDEXISTANT2);
@@ -243,11 +245,11 @@ public class Launch {
 						} else if(res == JOptionPane.NO_OPTION) {
 							newId = build.regenerateId();
 							build.setId(newId);
-							data.getBuilds().add(build);
+							data.getJoueursStars().add(build);
 						}
 					}
 				} else {
-					data.getBuilds().add(build);
+					data.getJoueursStars().add(build);
 				}
 				existant = null;
 			}
@@ -327,11 +329,18 @@ public class Launch {
 		}
 	}
 	
+	private void lookForGamefiles() {
+		if(!new File(SystemProperties.GAMEPATH).exists()) {
+			changeGamefiles(false);
+		}
+	}
+	
 	private void lookForLocale() {
 		if(SystemProperties.LOCALE == null || "".equals(SystemProperties.LOCALE)) {
 			changeLocale(false);
 		}
 	}
+	
 
 	public void changeSavedata(boolean restart) {
 		try {
@@ -345,6 +354,31 @@ public class Launch {
 		int res = choose.showOpenDialog(null);
 		if (res == JFileChooser.APPROVE_OPTION) {
 			SystemProperties.setPath(choose.getSelectedFile().getAbsolutePath());
+			if(restart) {
+				restart();
+			}
+		} else {
+			try {
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void changeGamefiles(boolean restart) {
+		try {
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+		
+		JFileChooser choose = new JFileChooser(System.getenv("ProgramFiles"));
+		choose.setDialogTitle("Sélectionnez le dossier \"Gamedata\" du jeu");
+		choose.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		int res = choose.showOpenDialog(null);
+		if (res == JFileChooser.APPROVE_OPTION) {
+			SystemProperties.setGamepath(choose.getSelectedFile().getAbsolutePath());
 			if(restart) {
 				restart();
 			}

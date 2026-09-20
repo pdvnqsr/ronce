@@ -59,6 +59,8 @@ public class DataProperties {
 	public static SelectData PASSESCOMBO;
 	public static SelectData TACLES;
 	public static SelectData BLOCAGES;
+	public static SelectData ARRETS;
+	public static SelectData SUPERARRET;
 	
 	public static SelectData COMPETECESCAPITAINE;
 	public static SelectData COMPETENCES;
@@ -194,6 +196,8 @@ public class DataProperties {
             PASSESCOMBO = new SelectData(prop, "passesCombo");
             TACLES = new SelectData(prop, "tacle");
             BLOCAGES = new SelectData(prop, "blocage");
+            ARRETS = new SelectData(prop, "arrets");
+            SUPERARRET = new SelectData(prop, "superarret");
             
             COMPETECESCAPITAINE = new SelectData(prop, "competenceCapitaine");
             COMPETENCES = new SelectData(prop, "competence");

@@ -2,21 +2,21 @@ package data.exchange;
 
 import java.util.ArrayList;
 
-import data.elements.Build;
+import data.elements.JoueurStar;
 
 public class BuildsExchangeData {
 
-	private ArrayList<Build> builds;
+	private ArrayList<JoueurStar> builds;
 	
 	public BuildsExchangeData() {
-		builds = new ArrayList<Build>();
+		builds = new ArrayList<JoueurStar>();
 	}
 
-	public ArrayList<Build> getBuilds() {
+	public ArrayList<JoueurStar> getBuilds() {
 		return builds;
 	}
 
-	public void setBuilds(ArrayList<Build> builds) {
+	public void setBuilds(ArrayList<JoueurStar> builds) {
 		this.builds = builds;
 	}
 }

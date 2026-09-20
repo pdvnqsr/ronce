@@ -77,6 +77,8 @@ public class Joueur implements Serializable {
 	private int tacle1 = DataProperties.TACLES.getDefaut();
 	private int tacle2 = DataProperties.TACLES.getDefaut();
 	private int blocage = DataProperties.BLOCAGES.getDefaut();
+	private int arrets = DataProperties.ARRETS.getDefaut();
+	private int superArret = DataProperties.SUPERARRET.getDefaut();
 	
 	private int competenceCapitaine = DataProperties.COMPETECESCAPITAINE.getDefaut();
 	private int competence1 = DataProperties.COMPETENCES.getDefaut();
@@ -532,6 +534,22 @@ public class Joueur implements Serializable {
 		this.blocage = blocage;
 	}
 
+	public int getArrets() {
+		return arrets;
+	}
+
+	public void setArrets(int arrets) {
+		this.arrets = arrets;
+	}
+
+	public int getSuperArret() {
+		return superArret;
+	}
+
+	public void setSuperArret(int superArret) {
+		this.superArret = superArret;
+	}
+
 	public int getCompetenceCapitaine() {
 		return competenceCapitaine;
 	}
@@ -678,6 +696,8 @@ public class Joueur implements Serializable {
 		this.tacle1 = j.getTacle1();
 		this.tacle2 = j.getTacle2();
 		this.blocage = j.getBlocage();
+		this.arrets = j.getArrets();
+		this.superArret = j.getSuperArret();
 		this.competenceCapitaine = j.getCompetenceCapitaine();
 		this.competence1 = j.getCompetence1();
 		this.competence2 = j.getCompetence2();
@@ -693,12 +713,12 @@ public class Joueur implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(attaque, blocage, celebration1, celebration2, celebration3, celebration4, cheveux,
+		return Objects.hash(arrets, attaque, blocage, celebration1, celebration2, celebration3, celebration4, cheveux,
 				commissures, competence1, competence2, competence3, competence4, competence5, competence6,
 				competenceCapitaine, couleurCheveux, couleurLunettes, couleurPeau, couleurSourcils, couleurYeux,
 				crampons, defense, description, dribble1, dribble2, espacementYeux, id, lunettes, nez, nom, passe,
 				passesCombo, position, positionBouche, positionNez, positionYeux, puissance, sourcils, styleManche,
-				superTir, superTirAlt, tacle1, tacle2, taille, tailleBouche, tailleNez, taillePupilles, tailleTete,
+				superArret, superTir, superTirAlt, tacle1, tacle2, taille, tailleBouche, tailleNez, taillePupilles, tailleTete,
 				tailleYeux, technique, tir, tirAerien, tirAlt, tirCombo1, tirCombo2, titre1, titre2, titre3, typeCorps,
 				visage, vitesse, voix, yeux);
 	}
@@ -712,8 +732,8 @@ public class Joueur implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Joueur other = (Joueur) obj;
-		return attaque == other.attaque && blocage == other.blocage && celebration1 == other.celebration1
-				&& celebration2 == other.celebration2 && celebration3 == other.celebration3
+		return arrets == other.arrets && attaque == other.attaque && blocage == other.blocage 
+				&& celebration1 == other.celebration1 && celebration2 == other.celebration2 && celebration3 == other.celebration3
 				&& celebration4 == other.celebration4 && cheveux == other.cheveux && commissures == other.commissures
 				&& competence1 == other.competence1 && competence2 == other.competence2
 				&& competence3 == other.competence3 && competence4 == other.competence4
@@ -728,7 +748,8 @@ public class Joueur implements Serializable {
 				&& passe == other.passe && passesCombo == other.passesCombo && position == other.position
 				&& positionBouche == other.positionBouche && positionNez == other.positionNez
 				&& positionYeux == other.positionYeux && puissance == other.puissance && sourcils == other.sourcils
-				&& styleManche == other.styleManche && superTir == other.superTir && superTirAlt == other.superTirAlt
+				&& styleManche == other.styleManche&& superArret == other.superArret && superTir == other.superTir 
+				&& superTirAlt == other.superTirAlt
 				&& tacle1 == other.tacle1 && tacle2 == other.tacle2 && taille == other.taille
 				&& tailleBouche == other.tailleBouche && tailleNez == other.tailleNez
 				&& taillePupilles == other.taillePupilles && tailleTete == other.tailleTete

@@ -71,6 +71,8 @@ public class JoueurPanel extends ElementPanel {
 	private JComboBox<String> tacle1Field;
 	private JComboBox<String> tacle2Field;
 	private JComboBox<String> blocageField;
+	private JComboBox<String> arretsField;
+	private JComboBox<String> superArretField;
 	private JComboBox<String> competenceCapitaineField;
 	private JComboBox<String> competence1Field;
 	private JComboBox<String> competence2Field;
@@ -80,6 +82,7 @@ public class JoueurPanel extends ElementPanel {
 	private JComboBox<String> competence6Field;
 	private JTextArea equipesField;
 
+	@SuppressWarnings("unused")
 	public JoueurPanel() {		
 		idField = new JTextField(28);
 		idField.setEditable(false);
@@ -135,6 +138,8 @@ public class JoueurPanel extends ElementPanel {
 		tacle1Field = makeComboboxComponent(DataProperties.TACLES);
 		tacle2Field = makeComboboxComponent(DataProperties.TACLES);
 		blocageField = makeComboboxComponent(DataProperties.BLOCAGES);
+		arretsField = makeComboboxComponent(DataProperties.ARRETS);
+		superArretField = makeComboboxComponent(DataProperties.SUPERARRET);
 		competenceCapitaineField = makeComboboxComponent(DataProperties.COMPETECESCAPITAINE);
 		competence1Field = makeComboboxComponent(DataProperties.COMPETENCES);
 		competence2Field = makeComboboxComponent(DataProperties.COMPETENCES);
@@ -197,6 +202,10 @@ public class JoueurPanel extends ElementPanel {
 		JPanel tacle1Panel = makeFieldPanel(TextsProperties.LABEL_TACLE + " 1", tacle1Field);
 		JPanel tacle2Panel = makeFieldPanel(TextsProperties.LABEL_TACLE + " 2", tacle2Field);
 		JPanel blocagePanel = makeFieldPanel(TextsProperties.LABEL_BLOCAGE, blocageField);
+		@SuppressWarnings("unused")
+		JPanel arretsPanel = makeFieldPanel(TextsProperties.LABEL_ARRETS, arretsField);
+		@SuppressWarnings("unused")
+		JPanel superArretPanel = makeFieldPanel(TextsProperties.LABEL_SUPERARRET, superArretField);
 		JPanel competenceCapitainePanel = makeFieldPanel(TextsProperties.LABEL_COMPETECECAPITAINE, competenceCapitaineField);
 		JPanel competence1Panel = makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 1", competence1Field);
 		JPanel competence2Panel = makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 2", competence2Field);
@@ -249,6 +258,9 @@ public class JoueurPanel extends ElementPanel {
 					.addComponent(tacle1Panel)
 					.addComponent(tacle2Panel)
 					.addComponent(blocagePanel)
+					// UNUSABLE
+					//.addComponent(arretsPanel)
+					//.addComponent(superArretPanel)
 					.addComponent(competenceCapitainePanel)
 					.addComponent(competence1Panel)
 					.addComponent(competence2Panel)
@@ -333,6 +345,9 @@ public class JoueurPanel extends ElementPanel {
 					.addComponent(tacle1Panel)
 					.addComponent(tacle2Panel)
 					.addComponent(blocagePanel)
+					// UNUSABLE
+					//.addComponent(arretsPanel)
+					//.addComponent(superArretPanel)
 					.addComponent(competenceCapitainePanel)
 					.addComponent(competence1Panel)
 					.addComponent(competence2Panel)
@@ -473,6 +488,8 @@ public class JoueurPanel extends ElementPanel {
 			tacle1Field.setSelectedIndex(joueur.getTacle1());
 			tacle2Field.setSelectedIndex(joueur.getTacle2());
 			blocageField.setSelectedIndex(joueur.getBlocage());
+			arretsField.setSelectedIndex(joueur.getArrets());
+			superArretField.setSelectedIndex(joueur.getSuperArret());
 			competenceCapitaineField.setSelectedIndex(joueur.getCompetenceCapitaine());
 			competence1Field.setSelectedIndex(joueur.getCompetence1());
 			competence2Field.setSelectedIndex(joueur.getCompetence2());
@@ -538,6 +555,8 @@ public class JoueurPanel extends ElementPanel {
 			joueurSelectionne.setTacle1(tacle1Field.getSelectedIndex());
 			joueurSelectionne.setTacle2(tacle2Field.getSelectedIndex());
 			joueurSelectionne.setBlocage(blocageField.getSelectedIndex());
+			joueurSelectionne.setArrets(arretsField.getSelectedIndex());
+			joueurSelectionne.setSuperArret(superArretField.getSelectedIndex());
 			joueurSelectionne.setCompetenceCapitaine(competenceCapitaineField.getSelectedIndex());
 			joueurSelectionne.setCompetence1(competence1Field.getSelectedIndex());
 			joueurSelectionne.setCompetence2(competence2Field.getSelectedIndex());

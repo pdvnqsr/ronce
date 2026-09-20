@@ -1,3 +1,12 @@
+GENERAL WARNING : 
+DON'T FORGET TO KEEP YOUR DATA.JSON FILE AWAY WHEN UPDATING OR IT WLL BE OVERRIDDEN !!!
+
+1.1.0 : 
+Bug fix on hair color
+Added path config to game files (WARNING : System.config has changed !)
+Added editing Ace players Stats (WARNING : Existing builds will have all stats to 0. Don't forget to pu some stats before sending into game !)
+Added Saves and supersave editing (WARNING works only for GK players. Existing builds won't have any. Don't forget to put some stats before sending into game !)
+
 1.0.2 : 
 Set names length from 10 to 20
 Some Skills names bug fixes

@@ -13,7 +13,7 @@ ATTENTION : Il est déconseillé d'utiliser RONCE lorsque le jeu est lancé
 
 
 CONTENU : 
-backup : stocke les backups automatiques du fichier savedata.dat
+backup : stocke les backups automatiques du fichier savedata.dat et des fichiers du jeu
 config : fichiers de configuration
 exchange : stocke les fichier d'export faits depuis le logiciel (chaque sous-dossier contient un fichier txt. Ignorez-le et essayez de ne pas le supprimer, même si ce n'est pas grave)
 fonts : polices de caratères utilisées dans le logiciel
@@ -31,7 +31,10 @@ LANCEMENT :
 2. Survivez au splashscreen moche
 3. Ca y est
 
-Au 1er lancement, on vous demande votre langue (français et anglais disponibles), puis l'emplacement du fichier savedata.dat du jeu (habituellement dans le dosser utilisateur puis AppData/Roaming)
+Au 1er lancement, on vous demande : 
+Votre langue (français et anglais disponibles)
+L'emplacement du fichier savedata.dat du jeu (habituellement dans le dosser utilisateur puis AppData/Roaming)
+L'emplacement du dossier GameData du jeu (habituellement pour Steam dans Program Files/steamapps/common/Captain Tsubasa Rise of New Champions)
 Ces valeurs sont stockées dans le fichier config/system.properties et modifiables dans l'onglet Configuration
 
 
@@ -71,8 +74,8 @@ Choses à savoir :
 - Lors de l'export, l'import, l'ajout au stock, ou l'envoi vers le jeu, une équipe vient avec ses joueurs personnalisés.
   Dans chaque cas on regarde si la destination contient déjà le joueur. C'est-à-dire si l'ID est le même, ou si l'intégralité des champs sont égaux (hors nom, ID et description). On va alors vous demander quoi faire pour chaque joueur.
 
-Onglet Joueurs de base : 
-Permet de gérer des builds (techniques et compétences) pouvant s'appliquer aux joueurs de base du jeu. Malheureusement, seuls les joueurs disposant d'une carte ami sont éditables.
+Onglet Joueurs Star : 
+Permet de gérer des builds (Stats, techniques et compétences) pouvant s'appliquer aux joueurs de base du jeu. Malheureusement, seuls les joueurs disposant d'une carte ami sont éditables.
 Les choses à savoir sont les mêmes que pour les joueurs personnalisés
 
 Onglet Equipes de base : 

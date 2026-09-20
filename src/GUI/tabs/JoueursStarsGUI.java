@@ -18,17 +18,17 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import GUI.MainGUI;
-import GUI.panels.BuildPanel;
-import data.elements.Build;
+import GUI.panels.JoueurStarPanel;
+import data.elements.JoueurStar;
 import data.properties.TextsProperties;
 import main.Launch;
 
-public class BuildsGUI extends JPanel {
+public class JoueursStarsGUI extends JPanel {
 
 	private static final long serialVersionUID = -6559051654385212939L;
-	private JList<Build> inGame;
-	private JList<Build> inStock;
-	private BuildPanel buildPanel;
+	private JList<JoueurStar> inGame;
+	private JList<JoueurStar> inStock;
+	private JoueurStarPanel joueurStarPanel;
 
 	private JButton versLeStockBouton;
 	private JButton creerBouton;
@@ -38,7 +38,7 @@ public class BuildsGUI extends JPanel {
 	private JButton exporterBouton;
 	private JButton importerBouton;
 	
-	public BuildsGUI() {
+	public JoueursStarsGUI() {
 		setLayout(new BorderLayout());
 		
 		// Actions
@@ -102,33 +102,33 @@ public class BuildsGUI extends JPanel {
 		boutonsPanel.add(importerBouton);
 		add(boutonsPanel, BorderLayout.NORTH);
 
-		// Présentation/édition d'un build
-		buildPanel = new BuildPanel();
-		JScrollPane scroll = new JScrollPane(buildPanel);
+		// Présentation/édition d'un joueur star
+		joueurStarPanel = new JoueurStarPanel();
+		JScrollPane scroll = new JScrollPane(joueurStarPanel);
 		add(scroll,BorderLayout.CENTER);
 
-		// Listes de builds
-		inGame = new JList<Build>();
-		inGame.setModel(new DefaultListModel<Build>());
+		// Listes de joueurs star
+		inGame = new JList<JoueurStar>();
+		inGame.setModel(new DefaultListModel<JoueurStar>());
 		remplirListes(true);
 		inGame.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				enableButtons();
-				buildPanel.setEnabled(false);
-				buildPanel.load(inGame.getSelectedValue());
+				joueurStarPanel.setEnabled(false);
+				joueurStarPanel.load(inGame.getSelectedValue());
 			}
 		});
 
-		inStock = new JList<Build>();
-		inStock.setModel(new DefaultListModel<Build>());
+		inStock = new JList<JoueurStar>();
+		inStock.setModel(new DefaultListModel<JoueurStar>());
 		remplirListes(false);
 		inStock.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				enableButtons();
-				buildPanel.setEnabled(true);
-				buildPanel.load(inStock.getSelectedValue());
+				joueurStarPanel.setEnabled(true);
+				joueurStarPanel.load(inStock.getSelectedValue());
 			}
 		});
 
@@ -142,18 +142,18 @@ public class BuildsGUI extends JPanel {
 	
 	
 	public void remplirListes(boolean isInGame){
-		DefaultListModel<Build> model;
+		DefaultListModel<JoueurStar> model;
 		if(isInGame) {
-			model = (DefaultListModel<Build>) inGame.getModel();
+			model = (DefaultListModel<JoueurStar>) inGame.getModel();
 		} else {
-			model = (DefaultListModel<Build>) inStock.getModel();
+			model = (DefaultListModel<JoueurStar>) inStock.getModel();
 		}	
 		model.removeAllElements();
-		ArrayList<Build> list;
+		ArrayList<JoueurStar> list;
 		if(isInGame) {
-			list = Launch.getInstance().getData().getBuildsInGame();
+			list = Launch.getInstance().getData().getJoueursStarsInGame();
 		} else {
-			list = Launch.getInstance().getData().getBuilds();
+			list = Launch.getInstance().getData().getJoueursStars();
 		}
 		for(int i=0;i<list.size();i++){
 			model.addElement(list.get(i));
@@ -170,8 +170,8 @@ public class BuildsGUI extends JPanel {
 
 	public void export() {
 		String message = TextsProperties.MESSAGE_EXPORT1 + "\n";
-		for(Build build : inStock.getSelectedValuesList()) {
-			message += build.getNom() + "\n";
+		for(JoueurStar joueur : inStock.getSelectedValuesList()) {
+			message += joueur.getNom() + "\n";
 		}
 		message += "\n" + TextsProperties.MESSAGE_EXPORT2;
 
@@ -220,15 +220,15 @@ public class BuildsGUI extends JPanel {
 
 	public void supprimer() {
 		String message = TextsProperties.MESSAGE_DELETE + "\n";
-		for(Build build : inStock.getSelectedValuesList()) {
-			message += build.getNom() + "\n";
+		for(JoueurStar joueur : inStock.getSelectedValuesList()) {
+			message += joueur.getNom() + "\n";
 		}
 		message += "\n" + TextsProperties.MESSAGE_IRREVERSIBLE + " " + TextsProperties.MESSAGE_SURE;
 
 		int res = JOptionPane.showConfirmDialog(this, message, TextsProperties.BUTTON_DELETE, JOptionPane.YES_NO_OPTION);
 		if(res == JOptionPane.YES_OPTION) {
-			for(Build j : inStock.getSelectedValuesList()) {
-				Launch.getInstance().getData().supprimerBuild(j);	
+			for(JoueurStar j : inStock.getSelectedValuesList()) {
+				Launch.getInstance().getData().supprimerjoueurStar(j);	
 			}
 			remplirListes(false);
 			Launch.getInstance().saveData();	
@@ -237,7 +237,7 @@ public class BuildsGUI extends JPanel {
 	}
 
 	public void creer() {
-		Build nouveau = Launch.getInstance().getData().nouveauBuild();
+		JoueurStar nouveau = Launch.getInstance().getData().nouveauJoueurStar();
 		remplirListes(false);
 		Launch.getInstance().saveData();
 		inStock.setSelectedValue(nouveau, true);
@@ -246,20 +246,20 @@ public class BuildsGUI extends JPanel {
 
 	public void ajouterAuStock() {
 		String message = TextsProperties.MESSAGE_ADDELEMENTS + "\n";
-		for(Build build : inGame.getSelectedValuesList()) {
-			message += build.getNom() + "\n";
+		for(JoueurStar joueur : inGame.getSelectedValuesList()) {
+			message += joueur.getNom() + "\n";
 		}
 		message += "\n" + TextsProperties.MESSAGE_SURE;
 
 		int res = JOptionPane.showConfirmDialog(this, message, TextsProperties.BUTTON_ADD, JOptionPane.YES_NO_OPTION);
 		if(res == JOptionPane.YES_OPTION) {
-			Launch.getInstance().getData().ajouterBuildsAuStock((ArrayList<Build>)inGame.getSelectedValuesList());
+			Launch.getInstance().getData().ajouterJoueurStarAuStock((ArrayList<JoueurStar>)inGame.getSelectedValuesList());
 		}
 	}
 	
 	public void sauvegarder() {
-		Build j = inStock.getSelectedValue();
-		buildPanel.save();
+		JoueurStar j = inStock.getSelectedValue();
+		joueurStarPanel.save();
 		Launch.getInstance().saveData();
 		remplirListes(false);
 		inStock.setSelectedValue(j, true);
@@ -275,8 +275,8 @@ public class BuildsGUI extends JPanel {
 		
 		int res = JOptionPane.showConfirmDialog(this, message,TextsProperties.BUTTON_TOGAME, JOptionPane.YES_NO_OPTION);
 		if(res == JOptionPane.YES_OPTION) {
-			Launch.getInstance().getData().saveBuildIntoGame(inStock.getSelectedValue(), inGame.getSelectedIndex());
-			Launch.getInstance().getData().loadBuildsFromGame();
+			Launch.getInstance().getData().saveJoueurStarIntoGame(inStock.getSelectedValue(), inGame.getSelectedIndex());
+			Launch.getInstance().getData().loadJoueursStarsFromGame();
 			remplirListes(true);
 		}
 	}

@@ -16,7 +16,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import GUI.tabs.BuildsGUI;
+import GUI.tabs.JoueursStarsGUI;
 import GUI.tabs.CompositionsGUI;
 import GUI.tabs.ConfigGui;
 import GUI.tabs.EquipesGUI;
@@ -38,7 +38,7 @@ public class MainGUI extends JFrame {
 	
 	private JoueursGUI joueursGUI;
 	private EquipesGUI equipesGUI;
-	private BuildsGUI buildsGUI;
+	private JoueursStarsGUI joueursStarsGUI;
 	private ConfigGui configGUI;
 	private CompositionsGUI compositionsGUI;
 
@@ -97,8 +97,8 @@ public class MainGUI extends JFrame {
 		equipesGUI = new EquipesGUI();
 		mainPanel.addTab(TextsProperties.LABEL_EQUIPES, equipesGUI);
 		
-		buildsGUI = new BuildsGUI();
-		mainPanel.addTab(TextsProperties.LABEL_JOUEURSBASE, buildsGUI);
+		joueursStarsGUI = new JoueursStarsGUI();
+		mainPanel.addTab(TextsProperties.LABEL_JOUEURSSTAR, joueursStarsGUI);
 		
 		compositionsGUI = new CompositionsGUI();
 		mainPanel.addTab(TextsProperties.LABEL_EQUIPESBASE, compositionsGUI);
@@ -152,12 +152,12 @@ public class MainGUI extends JFrame {
 		this.equipesGUI = equipesGUI;
 	}
 	
-	public BuildsGUI getBuildsGUI() {
-		return buildsGUI;
+	public JoueursStarsGUI getJoueursStarsGUI() {
+		return joueursStarsGUI;
 	}
 
-	public void setBuildsGUI(BuildsGUI buildsGUI) {
-		this.buildsGUI = buildsGUI;
+	public void setJoueursStarsGUI(JoueursStarsGUI joueursStarsGUI) {
+		this.joueursStarsGUI = joueursStarsGUI;
 	}
 
 	public CompositionsGUI getCompositionsGUI() {

@@ -20,7 +20,7 @@ public class TextsProperties {
 	public static String LABEL_JOUEUR;
 	public static String LABEL_JOUEURS;
 	public static String LABEL_EQUIPES;
-	public static String LABEL_JOUEURSBASE;
+	public static String LABEL_JOUEURSSTAR;
 	public static String LABEL_EQUIPESBASE;
 	public static String LABEL_LISTINGAME;
 	public static String LABEL_LISTINSTOCK;
@@ -67,6 +67,8 @@ public class TextsProperties {
 	public static String LABEL_PASSESCOMBO;
 	public static String LABEL_TACLE;
 	public static String LABEL_BLOCAGE;
+	public static String LABEL_ARRETS;
+	public static String LABEL_SUPERARRET;
 	public static String LABEL_COMPETECECAPITAINE;
 	public static String LABEL_COMPETENCE;
 	public static String LABEL_ABREVIATION;
@@ -143,7 +145,7 @@ public class TextsProperties {
 		LABEL_JOUEUR = TEXTS.getString("label.joueur");
 		LABEL_JOUEURS = TEXTS.getString("label.joueurs");
 		LABEL_EQUIPES = TEXTS.getString("label.equipes");
-		LABEL_JOUEURSBASE = TEXTS.getString("label.joueursBase");
+		LABEL_JOUEURSSTAR = TEXTS.getString("label.joueursStar");
 		LABEL_EQUIPESBASE = TEXTS.getString("label.equipesBase");
 		LABEL_LISTINGAME = TEXTS.getString("label.listInGame");
 		LABEL_LISTINSTOCK = TEXTS.getString("label.listInStock");
@@ -190,6 +192,8 @@ public class TextsProperties {
 		LABEL_PASSESCOMBO = TEXTS.getString("label.passesCombo");
 		LABEL_TACLE = TEXTS.getString("label.table");
 		LABEL_BLOCAGE = TEXTS.getString("label.blocage");
+		LABEL_ARRETS = TEXTS.getString("label.arrets");
+		LABEL_SUPERARRET = TEXTS.getString("label.superArret");
 		LABEL_COMPETECECAPITAINE = TEXTS.getString("label.competenceCapitaine");
 		LABEL_COMPETENCE = TEXTS.getString("label.competence");
 		LABEL_ABREVIATION = TEXTS.getString("label.abreviation");

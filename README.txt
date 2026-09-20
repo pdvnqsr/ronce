@@ -13,14 +13,14 @@ ATTENTION : It's advised NOT TO use RONCE while the game is launched.
 
 
 CONTENT : 
-backup : stores automatic backups of savadata.dat files
+backup : stores automatic backups of savadata.dat and game files
 config : configuration files
 exchange : store files exported from software (each sub-directory contains a txt file. Please ignore it and try not to delete it either)
 fonts : character fonts used in the software
 img : images used in the software
 jre : java environment (yep it's java, sorry). But it's embedded so that you don't have to install it
 ronce_lib : external java libraries
-src : source code of the software. I left it there because I'm to lazy to make a propre release
+src : source code of the software. I left it there because I'm to lazy to make a proper release
 data.json : software save file. THIS FILE IS VITAL !
 ronce.exe : to launch the software (obviously)
 ronce.jar : software in itself
@@ -31,7 +31,10 @@ LAUNCH :
 2. Survive the ugly splashscreen
 3. There you are
 
-At 1st launch, you'll be asked your language (french or english), then your savedata.dat location (usually your user directory, then AppData/Roaming)
+At 1st launch, you'll be asked : 
+Your language (french or english)
+Your savedata.dat location (usually your user directory, then AppData/Roaming)
+Your GameData directory location (usually for Steam in Program Files/steamapps/common/Captain Tsubasa Rise of New Champions)
 This values are stored in the config/system.properties files, and are editable in the Config tab.
 
 
@@ -70,8 +73,8 @@ Things to know :
 - when exported, imported, added to the stock, or sent to the game, a team comes with it's custom players.
   In every case, it's checked if the destination contains the player. That's to say if the ID is the same, or all fields are equal (beside name, ID and description). You'll be asked what to do for each players.
 
-Base players tab : 
-Allow to manage builds (techniques and skills) that can be applied to base game players. Unfortunately, only players with a friend card can be edited.
+Ace players tab : 
+Allow to manage builds (stats, techniques and skills) that can be applied to base game players. Unfortunately, only players with a friend card can be edited.
 Things to know are pretty much the same than for custom players.
 
 Base teams tab : 

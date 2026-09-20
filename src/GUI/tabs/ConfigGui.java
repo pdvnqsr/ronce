@@ -31,9 +31,17 @@ public class ConfigGui extends JPanel {
 				Launch.getInstance().changeSavedata(true);
 			}
 		});
+		JButton modifierGamefiles = new JButton(TextsProperties.BUTTON_MODIFIER);
+		modifierGamefiles.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Launch.getInstance().changeGamefiles(true);
+			}
+		});
 		
 		JLabel locale = new JLabel("Locale : " + SystemProperties.LOCALE);
 		JLabel savedata = new JLabel("Savedata : " + SystemProperties.PATH);
+		JLabel gamefiles = new JLabel("Gamedata : " + SystemProperties.GAMEPATH);
 		
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
@@ -53,6 +61,11 @@ public class ConfigGui extends JPanel {
 						.addGap(10)
 						.addComponent(savedata)
 				)
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(modifierGamefiles)
+						.addGap(10)
+						.addComponent(gamefiles)
+				)
 		);
 		layout.setVerticalGroup(
 				layout.createSequentialGroup()
@@ -64,6 +77,11 @@ public class ConfigGui extends JPanel {
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
 						.addComponent(savedata)
 						.addComponent(modifierSavedata)
+				)
+				.addGap(20)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+						.addComponent(gamefiles)
+						.addComponent(modifierGamefiles)
 				)
 		);
 	}

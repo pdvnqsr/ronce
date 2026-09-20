@@ -12,11 +12,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-import data.elements.Build;
+import data.elements.JoueurStar;
 import data.elements.Composition;
 import data.elements.Equipe;
 import data.elements.Joueur;
 import data.properties.DataProperties;
+import data.properties.GamedataProperties;
 import data.properties.SystemProperties;
 import data.properties.types.MultiSelectData;
 import data.properties.types.NumericData;
@@ -35,8 +36,8 @@ public class Data implements Serializable {
 	private ArrayList<Equipe> equipes;
 	private transient ArrayList<Equipe> equipesInGame;
 	
-	private ArrayList<Build> builds;
-	private transient ArrayList<Build> buildsInGame;
+	private ArrayList<JoueurStar> builds;
+	private transient ArrayList<JoueurStar> joueursStarsInGame;
 	
 	private ArrayList<Composition> compositions;
 	private transient ArrayList<Composition> compositionsInGame;
@@ -48,8 +49,8 @@ public class Data implements Serializable {
 		equipes = new ArrayList<Equipe>();
 		equipesInGame = new ArrayList<Equipe>();
 		
-		builds = new ArrayList<Build>();
-		buildsInGame = new ArrayList<Build>();
+		builds = new ArrayList<JoueurStar>();
+		joueursStarsInGame = new ArrayList<JoueurStar>();
 		
 		compositions = new ArrayList<Composition>();
 		compositionsInGame = new ArrayList<Composition>();
@@ -75,14 +76,14 @@ public class Data implements Serializable {
 		return e;
 	}
 
-	public void supprimerBuild(Build b) {
+	public void supprimerjoueurStar(JoueurStar b) {
 		builds.remove(b);
 	}
 
-	public Build nouveauBuild() {
-		Build build = new Build(DataProperties.JOUEUR_NOM.getDefaut(),true);
-		builds.add(build);
-		return build;
+	public JoueurStar nouveauJoueurStar() {
+		JoueurStar joueur = new JoueurStar(DataProperties.JOUEUR_NOM.getDefaut(),true);
+		builds.add(joueur);
+		return joueur;
 	}
 
 	public void supprimerComposition(Composition c) {
@@ -115,14 +116,14 @@ public class Data implements Serializable {
 		return equipe;
 	}
 
-	public Build getBuildParId(String id) {
-		Build build = null;
-		for(Build b : builds) {
-			if(id.equals(b.getId())) {
-				build = b;
+	public JoueurStar getJoueurStarParId(String id) {
+		JoueurStar joueur = null;
+		for(JoueurStar j : builds) {
+			if(id.equals(j.getId())) {
+				joueur = j;
 			}
 		}
-		return build;
+		return joueur;
 	}
 	
 	public Composition getCompositionParId(String id) {
@@ -147,14 +148,14 @@ public class Data implements Serializable {
 		return idAjoutes;
 	}
 	
-	public ArrayList<String> ajouterBuildsAuStock(ArrayList<Build> builds) {
+	public ArrayList<String> ajouterJoueurStarAuStock(ArrayList<JoueurStar> joueurs) {
 		ArrayList<String> idAjoutes = new ArrayList<String>();
-		for(Build build : builds) {
-			build.setId(build.regenerateId());
-			getBuilds().add(build);
-			idAjoutes.add(build.getId());
+		for(JoueurStar joueur : joueurs) {
+			joueur.setId(joueur.regenerateId());
+			getJoueursStars().add(joueur);
+			idAjoutes.add(joueur.getId());
 		}
-		Launch.getInstance().getGui().getBuildsGUI().remplirListes(false);
+		Launch.getInstance().getGui().getJoueursStarsGUI().remplirListes(false);
 		Launch.getInstance().saveData();
 		return idAjoutes;
 	}
@@ -220,6 +221,8 @@ public class Data implements Serializable {
 				joueur.setTacle1(getIntFromGame(raf, addr, DataProperties.TACLES,0));
 				joueur.setTacle2(getIntFromGame(raf, addr, DataProperties.TACLES,1));
 				joueur.setBlocage(getIntFromGame(raf, addr, DataProperties.BLOCAGES,0));
+				joueur.setArrets(getIntFromGame(raf, addr, DataProperties.ARRETS,0));
+				joueur.setSuperArret(getIntFromGame(raf, addr, DataProperties.SUPERARRET,0));
 				joueur.setCompetenceCapitaine(getIntFromGame(raf, addr, DataProperties.COMPETECESCAPITAINE,0));
 				joueur.setCompetence1(getIntFromGame(raf, addr, DataProperties.COMPETENCES,0));
 				joueur.setCompetence2(getIntFromGame(raf, addr, DataProperties.COMPETENCES,1));
@@ -291,6 +294,8 @@ public class Data implements Serializable {
 			writeIntInGame(raf, addr, DataProperties.TACLES,0,joueur.getTacle1());
 			writeIntInGame(raf, addr, DataProperties.TACLES,1,joueur.getTacle2());
 			writeIntInGame(raf, addr, DataProperties.BLOCAGES,0,joueur.getBlocage());
+			writeIntInGame(raf, addr, DataProperties.ARRETS,0,joueur.getArrets());
+			writeIntInGame(raf, addr, DataProperties.SUPERARRET,0,joueur.getSuperArret());
 			writeIntInGame(raf, addr, DataProperties.COMPETECESCAPITAINE,0,joueur.getCompetenceCapitaine());
 			writeIntInGame(raf, addr, DataProperties.COMPETENCES,0,joueur.getCompetence1());
 			writeIntInGame(raf, addr, DataProperties.COMPETENCES,1,joueur.getCompetence2());
@@ -529,78 +534,105 @@ public class Data implements Serializable {
 		}
 	}
 
-	public void loadBuildsFromGame() {
+	public void loadJoueursStarsFromGame() {
 		try  {
-			RandomAccessFile raf = new RandomAccessFile(SystemProperties.PATH, "rw");
+			RandomAccessFile save = new RandomAccessFile(SystemProperties.PATH, "rw");
+			RandomAccessFile cpd = new RandomAccessFile(SystemProperties.CHARPARAMDATA_PATH, "rw");
 
-			buildsInGame.clear();
+			joueursStarsInGame.clear();
 
-			Build build;
+			JoueurStar joueur;
 			int index;
 			for(int i=0;i<DataProperties.JOUEURSBASEEDITABLES + DataProperties.JOUEURSETOILENOMBRE;i++) {
 				index = i;
 				if(i >= DataProperties.JOUEURSBASEEDITABLES) {
 					index = i + DataProperties.JOUEURSETOILEOFFSET - DataProperties.JOUEURSBASEEDITABLES;
 				}
-				Long addr = DataProperties.JOUEURSBASE.getAdresse(i);
+				Long saveAddr = DataProperties.JOUEURSBASE.getAdresse(i);
+				Long cpdAddr = GamedataProperties.JOUEURSBASE.getAdresse(i);
 
-				build = new Build(DataProperties.JOUEURSBASE.getVals().get(index).getDisplayValue(),false);
-				build.setTir(getIntFromGame(raf, addr, DataProperties.TIRS,0));
-				build.setTirAlt(getIntFromGame(raf, addr, DataProperties.TIRS,1));
-				build.setTirAerien(getIntFromGame(raf, addr, DataProperties.TIRSAERIENS,0));
-				build.setSuperTir(getIntFromGame(raf, addr, DataProperties.SUPERTIRS,0));
-				build.setSuperTirAlt(getIntFromGame(raf, addr, DataProperties.SUPERTIRS,1));
-				build.setDribble1(getIntFromGame(raf, addr, DataProperties.DRIBBLES,0));
-				build.setDribble2(getIntFromGame(raf, addr, DataProperties.DRIBBLES,1));
-				build.setPasse(getIntFromGame(raf, addr, DataProperties.PASSES,0));
-				build.setTirCombo1(getIntFromGame(raf, addr, DataProperties.TIRSCOMBO1,0));
-				build.setTirCombo2(getIntFromGame(raf, addr, DataProperties.TIRSCOMBO2,0));
-				build.setPassesCombo(getIntFromGame(raf, addr, DataProperties.PASSESCOMBO,0));
-				build.setTacle1(getIntFromGame(raf, addr, DataProperties.TACLES,0));
-				build.setTacle2(getIntFromGame(raf, addr, DataProperties.TACLES,1));
-				build.setBlocage(getIntFromGame(raf, addr, DataProperties.BLOCAGES,0));
-				build.setCompetenceCapitaine(getIntFromGame(raf, addr, DataProperties.COMPETECESCAPITAINE,0));
-				build.setCompetence1(getIntFromGame(raf, addr, DataProperties.COMPETENCES,0));
-				build.setCompetence2(getIntFromGame(raf, addr, DataProperties.COMPETENCES,1));
-				build.setCompetence3(getIntFromGame(raf, addr, DataProperties.COMPETENCES,2));
-				build.setCompetence4(getIntFromGame(raf, addr, DataProperties.COMPETENCES,3));
-				build.setCompetence5(getIntFromGame(raf, addr, DataProperties.COMPETENCES,4));
-				build.setCompetence6(getIntFromGame(raf, addr, DataProperties.COMPETENCES,5));
-				buildsInGame.add(build);
+				joueur = new JoueurStar(DataProperties.JOUEURSBASE.getVals().get(index).getDisplayValue(),false);				
+				joueur.setAttaque(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,0));
+				joueur.setDefense(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,1));
+				joueur.setPuissance(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,2));
+				joueur.setVitesse(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,3));
+				joueur.setTechnique(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,4));				
+				joueur.setTir(getIntFromGame(save, saveAddr, DataProperties.TIRS,0));
+				joueur.setTirAlt(getIntFromGame(save, saveAddr, DataProperties.TIRS,1));
+				joueur.setTirAerien(getIntFromGame(save, saveAddr, DataProperties.TIRSAERIENS,0));
+				joueur.setSuperTir(getIntFromGame(save, saveAddr, DataProperties.SUPERTIRS,0));
+				joueur.setSuperTirAlt(getIntFromGame(save, saveAddr, DataProperties.SUPERTIRS,1));
+				joueur.setDribble1(getIntFromGame(save, saveAddr, DataProperties.DRIBBLES,0));
+				joueur.setDribble2(getIntFromGame(save, saveAddr, DataProperties.DRIBBLES,1));
+				joueur.setPasse(getIntFromGame(save, saveAddr, DataProperties.PASSES,0));
+				joueur.setTirCombo1(getIntFromGame(save, saveAddr, DataProperties.TIRSCOMBO1,0));
+				joueur.setTirCombo2(getIntFromGame(save, saveAddr, DataProperties.TIRSCOMBO2,0));
+				joueur.setPassesCombo(getIntFromGame(save, saveAddr, DataProperties.PASSESCOMBO,0));
+				joueur.setTacle1(getIntFromGame(save, saveAddr, DataProperties.TACLES,0));
+				joueur.setTacle2(getIntFromGame(save, saveAddr, DataProperties.TACLES,1));
+				joueur.setBlocage(getIntFromGame(save, saveAddr, DataProperties.BLOCAGES,0));
+				joueur.setArrets(getIntFromGame(save, saveAddr, DataProperties.ARRETS,0));
+				joueur.setSuperArret(getIntFromGame(save, saveAddr, DataProperties.SUPERARRET,0));
+				joueur.setCompetenceCapitaine(getIntFromGame(save, saveAddr, DataProperties.COMPETECESCAPITAINE,0));
+				joueur.setCompetence1(getIntFromGame(save, saveAddr, DataProperties.COMPETENCES,0));
+				joueur.setCompetence2(getIntFromGame(save, saveAddr, DataProperties.COMPETENCES,1));
+				joueur.setCompetence3(getIntFromGame(save, saveAddr, DataProperties.COMPETENCES,2));
+				joueur.setCompetence4(getIntFromGame(save, saveAddr, DataProperties.COMPETENCES,3));
+				joueur.setCompetence5(getIntFromGame(save, saveAddr, DataProperties.COMPETENCES,4));
+				joueur.setCompetence6(getIntFromGame(save, saveAddr, DataProperties.COMPETENCES,5));
+				joueursStarsInGame.add(joueur);
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void saveBuildIntoGame(Build build, int inGameIndex) {
+	public void saveJoueurStarIntoGame(JoueurStar joueur, int inGameIndex) {
 		archiveSavedata();
+		archiveCharParamData();
+		
 		try {
-			Long addr = DataProperties.JOUEURSBASE.getAdresse(inGameIndex);
+			Long saveAddr = DataProperties.JOUEURSBASE.getAdresse(inGameIndex);
+			Long cpdAddr = GamedataProperties.JOUEURSBASE.getAdresse(inGameIndex);
 
-			RandomAccessFile raf = new RandomAccessFile(SystemProperties.PATH, "rw");
-			writeIntInGame(raf, addr, DataProperties.TIRS,0,build.getTir());
-			writeIntInGame(raf, addr, DataProperties.TIRS,1,build.getTirAlt());
-			writeIntInGame(raf, addr, DataProperties.TIRSAERIENS,0,build.getTirAerien());
-			writeIntInGame(raf, addr, DataProperties.SUPERTIRS,0,build.getSuperTir());
-			writeIntInGame(raf, addr, DataProperties.SUPERTIRS,1,build.getSuperTirAlt());
-			writeIntInGame(raf, addr, DataProperties.DRIBBLES,0,build.getDribble1());
-			writeIntInGame(raf, addr, DataProperties.DRIBBLES,1,build.getDribble2());
-			writeIntInGame(raf, addr, DataProperties.PASSES,0,build.getPasse());
-			writeIntInGame(raf, addr, DataProperties.TIRSCOMBO1,0,build.getTirCombo1());
-			writeIntInGame(raf, addr, DataProperties.TIRSCOMBO2,0,build.getTirCombo2());
-			writeIntInGame(raf, addr, DataProperties.PASSESCOMBO,0,build.getPassesCombo());
-			writeIntInGame(raf, addr, DataProperties.TACLES,0,build.getTacle1());
-			writeIntInGame(raf, addr, DataProperties.TACLES,1,build.getTacle2());
-			writeIntInGame(raf, addr, DataProperties.BLOCAGES,0,build.getBlocage());
-			writeIntInGame(raf, addr, DataProperties.COMPETECESCAPITAINE,0,build.getCompetenceCapitaine());
-			writeIntInGame(raf, addr, DataProperties.COMPETENCES,0,build.getCompetence1());
-			writeIntInGame(raf, addr, DataProperties.COMPETENCES,1,build.getCompetence2());
-			writeIntInGame(raf, addr, DataProperties.COMPETENCES,2,build.getCompetence3());
-			writeIntInGame(raf, addr, DataProperties.COMPETENCES,3,build.getCompetence4());
-			writeIntInGame(raf, addr, DataProperties.COMPETENCES,4,build.getCompetence5());
-			writeIntInGame(raf, addr, DataProperties.COMPETENCES,5,build.getCompetence6());
-			raf.close();
+			RandomAccessFile save = new RandomAccessFile(SystemProperties.PATH, "rw");
+			RandomAccessFile cpd = new RandomAccessFile(SystemProperties.CHARPARAMDATA_PATH, "rw");
+			
+			writeIntInGame(save, saveAddr, DataProperties.STAT,0,joueur.getAttaque());
+			writeIntInGame(save, saveAddr, DataProperties.STAT,1,joueur.getDefense());
+			writeIntInGame(save, saveAddr, DataProperties.STAT,2,joueur.getPuissance());
+			writeIntInGame(save, saveAddr, DataProperties.STAT,3,joueur.getVitesse());
+			writeIntInGame(save, saveAddr, DataProperties.STAT,4,joueur.getTechnique());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,0,joueur.getAttaque());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,1,joueur.getDefense());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,2,joueur.getPuissance());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,3,joueur.getVitesse());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,4,joueur.getTechnique());
+			
+			writeIntInGame(save, saveAddr, DataProperties.TIRS,0,joueur.getTir());
+			writeIntInGame(save, saveAddr, DataProperties.TIRS,1,joueur.getTirAlt());
+			writeIntInGame(save, saveAddr, DataProperties.TIRSAERIENS,0,joueur.getTirAerien());
+			writeIntInGame(save, saveAddr, DataProperties.SUPERTIRS,0,joueur.getSuperTir());
+			writeIntInGame(save, saveAddr, DataProperties.SUPERTIRS,1,joueur.getSuperTirAlt());
+			writeIntInGame(save, saveAddr, DataProperties.DRIBBLES,0,joueur.getDribble1());
+			writeIntInGame(save, saveAddr, DataProperties.DRIBBLES,1,joueur.getDribble2());
+			writeIntInGame(save, saveAddr, DataProperties.PASSES,0,joueur.getPasse());
+			writeIntInGame(save, saveAddr, DataProperties.TIRSCOMBO1,0,joueur.getTirCombo1());
+			writeIntInGame(save, saveAddr, DataProperties.TIRSCOMBO2,0,joueur.getTirCombo2());
+			writeIntInGame(save, saveAddr, DataProperties.PASSESCOMBO,0,joueur.getPassesCombo());
+			writeIntInGame(save, saveAddr, DataProperties.TACLES,0,joueur.getTacle1());
+			writeIntInGame(save, saveAddr, DataProperties.TACLES,1,joueur.getTacle2());
+			writeIntInGame(save, saveAddr, DataProperties.BLOCAGES,0,joueur.getBlocage());
+			writeIntInGame(save, saveAddr, DataProperties.ARRETS,0,joueur.getArrets());
+			writeIntInGame(save, saveAddr, DataProperties.SUPERARRET,0,joueur.getSuperArret());
+			writeIntInGame(save, saveAddr, DataProperties.COMPETECESCAPITAINE,0,joueur.getCompetenceCapitaine());
+			writeIntInGame(save, saveAddr, DataProperties.COMPETENCES,0,joueur.getCompetence1());
+			writeIntInGame(save, saveAddr, DataProperties.COMPETENCES,1,joueur.getCompetence2());
+			writeIntInGame(save, saveAddr, DataProperties.COMPETENCES,2,joueur.getCompetence3());
+			writeIntInGame(save, saveAddr, DataProperties.COMPETENCES,3,joueur.getCompetence4());
+			writeIntInGame(save, saveAddr, DataProperties.COMPETENCES,4,joueur.getCompetence5());
+			writeIntInGame(save, saveAddr, DataProperties.COMPETENCES,5,joueur.getCompetence6());
+			save.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -886,6 +918,16 @@ public class Data implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	private void archiveCharParamData() {
+		try {
+			Path copied = Paths.get("backup/binary/CharactorParam/savedata_" + new Date().toString().replace(":", "-"));
+			Path originalPath = Paths.get(SystemProperties.CHARPARAMDATA_PATH);
+			Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public ArrayList<Joueur> getJoueurs() {
 		return joueurs;
@@ -903,12 +945,12 @@ public class Data implements Serializable {
 		return equipesInGame;
 	}
 	
-	public ArrayList<Build> getBuilds() {
+	public ArrayList<JoueurStar> getJoueursStars() {
 		return builds;
 	}
 
-	public ArrayList<Build> getBuildsInGame() {
-		return buildsInGame;
+	public ArrayList<JoueurStar> getJoueursStarsInGame() {
+		return joueursStarsInGame;
 	}
 
 	public ArrayList<Composition> getCompositions() {

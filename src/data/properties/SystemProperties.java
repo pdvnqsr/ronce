@@ -12,12 +12,15 @@ public class SystemProperties {
 
 	private static String PROPS_PATH = "config/system.properties";
 	private static String PATH_KEY = "savedata.path";
+	private static String GAMEPATH_KEY = "gamefiles.path";
 	private static String LOCALE_KEY = "locale";
 	private static Properties PROPS;
 	
 	public static boolean LOG_IN_FILE;
 	public static String LOCALE;
 	public static String PATH;
+	public static String GAMEPATH;
+	public static String CHARPARAMDATA_PATH;
 	
 	
 	static {
@@ -26,8 +29,11 @@ public class SystemProperties {
 			PROPS.load(input);
 
             PATH = PROPS.getProperty(PATH_KEY);
+            GAMEPATH = PROPS.getProperty(GAMEPATH_KEY);
             LOG_IN_FILE = "true".equals(PROPS.getProperty("log.file"));
             LOCALE = PROPS.getProperty(LOCALE_KEY);
+            
+            CHARPARAMDATA_PATH = GAMEPATH + "\\binary\\CharactorParam\\CharParamData.bin";
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -38,6 +44,17 @@ public class SystemProperties {
 			PATH = path;
 			PROPS.setProperty(PATH_KEY, path);
 		    PROPS.store(outputStream, null);
+		} catch (IOException e) {
+		    e.printStackTrace();
+		} 
+	}
+	
+	public static void setGamepath(String path) {
+		try(OutputStream outputStream = new FileOutputStream(PROPS_PATH)){  
+			GAMEPATH = path;
+			PROPS.setProperty(GAMEPATH_KEY, path);
+			PROPS.store(outputStream, null);
+			CHARPARAMDATA_PATH = GAMEPATH + "\\binary\\CharactorParam\\CharParamData.bin";
 		} catch (IOException e) {
 		    e.printStackTrace();
 		} 

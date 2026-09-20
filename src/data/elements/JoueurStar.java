@@ -6,13 +6,19 @@ import java.util.UUID;
 
 import data.properties.DataProperties;
 
-public class Build implements Serializable {
+public class JoueurStar implements Serializable {
 
 	private static final long serialVersionUID = 3481539554063763182L;
 
 	private String id;
 	private String description;
 	private String nom;
+	
+	private int attaque = DataProperties.STAT.getDefaut();
+	private int defense = DataProperties.STAT.getDefaut();
+	private int puissance = DataProperties.STAT.getDefaut();
+	private int vitesse = DataProperties.STAT.getDefaut();
+	private int technique = DataProperties.STAT.getDefaut();
 	
 	private int tir = DataProperties.TIRS.getDefaut();
 	private int tirAlt = DataProperties.TIRS.getDefaut();
@@ -28,6 +34,8 @@ public class Build implements Serializable {
 	private int tacle1 = DataProperties.TACLES.getDefaut();
 	private int tacle2 = DataProperties.TACLES.getDefaut();
 	private int blocage = DataProperties.BLOCAGES.getDefaut();
+	private int arrets = DataProperties.ARRETS.getDefaut();
+	private int superArret = DataProperties.SUPERARRET.getDefaut();
 	
 	private int competenceCapitaine = DataProperties.COMPETECESCAPITAINE.getDefaut();
 	private int competence1 = DataProperties.COMPETENCES.getDefaut();
@@ -38,7 +46,7 @@ public class Build implements Serializable {
 	private int competence6 = DataProperties.COMPETENCES.getDefaut();
 	
 	
-	public Build(String nom, boolean withId) {
+	public JoueurStar(String nom, boolean withId) {
 		this.nom = nom;
 		if(withId) {
 			id = regenerateId();
@@ -71,6 +79,46 @@ public class Build implements Serializable {
 	
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+	
+	public int getAttaque() {
+		return attaque;
+	}
+
+	public void setAttaque(int attaque) {
+		this.attaque = attaque;
+	}
+
+	public int getDefense() {
+		return defense;
+	}
+
+	public void setDefense(int defense) {
+		this.defense = defense;
+	}
+
+	public int getPuissance() {
+		return puissance;
+	}
+
+	public void setPuissance(int puissance) {
+		this.puissance = puissance;
+	}
+
+	public int getVitesse() {
+		return vitesse;
+	}
+
+	public void setVitesse(int vitesse) {
+		this.vitesse = vitesse;
+	}
+
+	public int getTechnique() {
+		return technique;
+	}
+
+	public void setTechnique(int technique) {
+		this.technique = technique;
 	}
 
 	public int getTir() {
@@ -184,6 +232,22 @@ public class Build implements Serializable {
 	public void setBlocage(int blocage) {
 		this.blocage = blocage;
 	}
+	
+	public int getArrets() {
+		return arrets;
+	}
+
+	public void setArrets(int arrets) {
+		this.arrets = arrets;
+	}
+
+	public int getSuperArret() {
+		return superArret;
+	}
+
+	public void setSuperArret(int superArret) {
+		this.superArret = superArret;
+	}
 
 	public int getCompetenceCapitaine() {
 		return competenceCapitaine;
@@ -246,10 +310,15 @@ public class Build implements Serializable {
 		return nom;
 	}
 
-	public void update(Build j) {
+	public void update(JoueurStar j) {
 		this.id = j.getId();
 		this.description = j.getDescription();
 		this.nom = j.getNom();
+		this.attaque = j.getAttaque();
+		this.defense = j.getDefense();
+		this.puissance = j.getPuissance();
+		this.vitesse = j.getVitesse();
+		this.technique = j.getTechnique();
 		this.tir = j.getTir();
 		this.tirAlt = j.getTirAlt();
 		this.tirAerien = j.getTirAerien();
@@ -264,6 +333,8 @@ public class Build implements Serializable {
 		this.tacle1 = j.getTacle1();
 		this.tacle2 = j.getTacle2();
 		this.blocage = j.getBlocage();
+		this.arrets = j.getArrets();
+		this.superArret = j.getSuperArret();
 		this.competenceCapitaine = j.getCompetenceCapitaine();
 		this.competence1 = j.getCompetence1();
 		this.competence2 = j.getCompetence2();
@@ -273,11 +344,14 @@ public class Build implements Serializable {
 		this.competence6 = j.getCompetence6();
 	}
 
+	
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(blocage, competence1, competence2, competence3, competence4, competence5, competence6,
-				competenceCapitaine, dribble1, dribble2, passe, passesCombo, superTir, superTirAlt, tacle1, tacle2, tir,
-				tirAerien, tirAlt, tirCombo1, tirCombo2);
+		return Objects.hash(arrets, attaque, blocage, competence1, competence2, competence3, competence4, competence5,
+				competence6, competenceCapitaine, defense, description, dribble1, dribble2, id, nom, passe, passesCombo,
+				puissance, superArret, superTir, superTirAlt, tacle1, tacle2, technique, tir, tirAerien, tirAlt,
+				tirCombo1, tirCombo2, vitesse);
 	}
 
 	@Override
@@ -288,14 +362,18 @@ public class Build implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Build other = (Build) obj;
-		return blocage == other.blocage && competence1 == other.competence1 && competence2 == other.competence2
+		JoueurStar other = (JoueurStar) obj;
+		return arrets == other.arrets && attaque == other.attaque && blocage == other.blocage
+				&& competence1 == other.competence1 && competence2 == other.competence2
 				&& competence3 == other.competence3 && competence4 == other.competence4
 				&& competence5 == other.competence5 && competence6 == other.competence6
-				&& competenceCapitaine == other.competenceCapitaine && dribble1 == other.dribble1
-				&& dribble2 == other.dribble2 && passe == other.passe && passesCombo == other.passesCombo
-				&& superTir == other.superTir && superTirAlt == other.superTirAlt && tacle1 == other.tacle1
-				&& tacle2 == other.tacle2 && tir == other.tir && tirAerien == other.tirAerien && tirAlt == other.tirAlt
-				&& tirCombo1 == other.tirCombo1 && tirCombo2 == other.tirCombo2;
+				&& competenceCapitaine == other.competenceCapitaine && defense == other.defense
+				&& Objects.equals(description, other.description) && dribble1 == other.dribble1
+				&& dribble2 == other.dribble2 && Objects.equals(id, other.id) && Objects.equals(nom, other.nom)
+				&& passe == other.passe && passesCombo == other.passesCombo && puissance == other.puissance
+				&& superArret == other.superArret && superTir == other.superTir && superTirAlt == other.superTirAlt
+				&& tacle1 == other.tacle1 && tacle2 == other.tacle2 && technique == other.technique && tir == other.tir
+				&& tirAerien == other.tirAerien && tirAlt == other.tirAlt && tirCombo1 == other.tirCombo1
+				&& tirCombo2 == other.tirCombo2 && vitesse == other.vitesse;
 	}
 }
