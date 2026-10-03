@@ -556,7 +556,8 @@ public class Data implements Serializable {
 				joueur.setDefense(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,1));
 				joueur.setPuissance(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,2));
 				joueur.setVitesse(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,3));
-				joueur.setTechnique(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,4));				
+				joueur.setTechnique(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,4));
+				joueur.setPosition(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_POSITION,0));
 				joueur.setTir(getIntFromGame(save, saveAddr, DataProperties.TIRS,0));
 				joueur.setTirAlt(getIntFromGame(save, saveAddr, DataProperties.TIRS,1));
 				joueur.setTirAerien(getIntFromGame(save, saveAddr, DataProperties.TIRSAERIENS,0));
@@ -608,6 +609,7 @@ public class Data implements Serializable {
 			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,2,joueur.getPuissance());
 			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,3,joueur.getVitesse());
 			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,4,joueur.getTechnique());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_POSITION,0,joueur.getPosition());
 			
 			writeIntInGame(save, saveAddr, DataProperties.TIRS,0,joueur.getTir());
 			writeIntInGame(save, saveAddr, DataProperties.TIRS,1,joueur.getTirAlt());

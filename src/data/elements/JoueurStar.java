@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import data.properties.DataProperties;
+import data.properties.GamedataProperties;
 
 public class JoueurStar implements Serializable {
 
@@ -19,6 +20,8 @@ public class JoueurStar implements Serializable {
 	private int puissance = DataProperties.STAT.getDefaut();
 	private int vitesse = DataProperties.STAT.getDefaut();
 	private int technique = DataProperties.STAT.getDefaut();
+	
+	private int position = GamedataProperties.CPD_POSITION.getDefaut();
 	
 	private int tir = DataProperties.TIRS.getDefaut();
 	private int tirAlt = DataProperties.TIRS.getDefaut();
@@ -119,6 +122,14 @@ public class JoueurStar implements Serializable {
 
 	public void setTechnique(int technique) {
 		this.technique = technique;
+	}
+	
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
 	}
 
 	public int getTir() {
@@ -319,6 +330,7 @@ public class JoueurStar implements Serializable {
 		this.puissance = j.getPuissance();
 		this.vitesse = j.getVitesse();
 		this.technique = j.getTechnique();
+		this.position = j.getPosition();
 		this.tir = j.getTir();
 		this.tirAlt = j.getTirAlt();
 		this.tirAerien = j.getTirAerien();
@@ -350,8 +362,8 @@ public class JoueurStar implements Serializable {
 	public int hashCode() {
 		return Objects.hash(arrets, attaque, blocage, competence1, competence2, competence3, competence4, competence5,
 				competence6, competenceCapitaine, defense, description, dribble1, dribble2, id, nom, passe, passesCombo,
-				puissance, superArret, superTir, superTirAlt, tacle1, tacle2, technique, tir, tirAerien, tirAlt,
-				tirCombo1, tirCombo2, vitesse);
+				position, puissance, superArret, superTir, superTirAlt, tacle1, tacle2, technique, tir, tirAerien,
+				tirAlt, tirCombo1, tirCombo2, vitesse);
 	}
 
 	@Override
@@ -370,10 +382,11 @@ public class JoueurStar implements Serializable {
 				&& competenceCapitaine == other.competenceCapitaine && defense == other.defense
 				&& Objects.equals(description, other.description) && dribble1 == other.dribble1
 				&& dribble2 == other.dribble2 && Objects.equals(id, other.id) && Objects.equals(nom, other.nom)
-				&& passe == other.passe && passesCombo == other.passesCombo && puissance == other.puissance
-				&& superArret == other.superArret && superTir == other.superTir && superTirAlt == other.superTirAlt
-				&& tacle1 == other.tacle1 && tacle2 == other.tacle2 && technique == other.technique && tir == other.tir
-				&& tirAerien == other.tirAerien && tirAlt == other.tirAlt && tirCombo1 == other.tirCombo1
-				&& tirCombo2 == other.tirCombo2 && vitesse == other.vitesse;
+				&& passe == other.passe && passesCombo == other.passesCombo && position == other.position
+				&& puissance == other.puissance && superArret == other.superArret && superTir == other.superTir
+				&& superTirAlt == other.superTirAlt && tacle1 == other.tacle1 && tacle2 == other.tacle2
+				&& technique == other.technique && tir == other.tir && tirAerien == other.tirAerien
+				&& tirAlt == other.tirAlt && tirCombo1 == other.tirCombo1 && tirCombo2 == other.tirCombo2
+				&& vitesse == other.vitesse;
 	}
 }

@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 
 import data.elements.JoueurStar;
 import data.properties.DataProperties;
+import data.properties.GamedataProperties;
 import data.properties.TextsProperties;
 
 public class JoueurStarPanel extends ElementPanel {
@@ -26,6 +27,7 @@ public class JoueurStarPanel extends ElementPanel {
 	private JSpinner puissanceField;
 	private JSpinner vitesseField;
 	private JSpinner techniqueField;
+	private JComboBox<String> positionField;
 	private JComboBox<String> tirField;
 	private JComboBox<String> tirAltField;
 	private JComboBox<String> tirAerienField;
@@ -65,11 +67,12 @@ public class JoueurStarPanel extends ElementPanel {
 		idField.setEditable(false);
 		descriptionField = new JTextField(20);
 		nomField = new JTextField(15);
-		attaqueField = makeSpinnerComponent(DataProperties.STAT);
-		defenseField = makeSpinnerComponent(DataProperties.STAT);
-		puissanceField = makeSpinnerComponent(DataProperties.STAT);
-		vitesseField = makeSpinnerComponent(DataProperties.STAT);
-		techniqueField = makeSpinnerComponent(DataProperties.STAT);
+		attaqueField = makeSpinnerComponent(GamedataProperties.CPD_STAT);
+		defenseField = makeSpinnerComponent(GamedataProperties.CPD_STAT);
+		puissanceField = makeSpinnerComponent(GamedataProperties.CPD_STAT);
+		vitesseField = makeSpinnerComponent(GamedataProperties.CPD_STAT);
+		techniqueField = makeSpinnerComponent(GamedataProperties.CPD_STAT);
+		positionField = makeComboboxComponent(GamedataProperties.CPD_POSITION);
 		tirField = makeComboboxComponent(DataProperties.TIRS);
 		tirAltField = makeComboboxComponent(DataProperties.TIRS);
 		tirAerienField = makeComboboxComponent(DataProperties.TIRSAERIENS);
@@ -102,6 +105,7 @@ public class JoueurStarPanel extends ElementPanel {
 		infos.add(makeFieldPanel(TextsProperties.LABEL_PUISSANCE, puissanceField));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_VITESSE, vitesseField));
 		infos.add(makeFieldPanel(TextsProperties.LABEL_TECHNIQUE, techniqueField));
+		infos.add(makeFieldPanel(TextsProperties.LABEL_POSTE, positionField));
 		
 		techniques.add(makeFieldPanel(TextsProperties.LABEL_TIR, tirField));
 		techniques.add(makeFieldPanel(TextsProperties.LABEL_TIR + " *", tirAltField));
@@ -143,6 +147,7 @@ public class JoueurStarPanel extends ElementPanel {
 			puissanceField.setValue(joueur.getPuissance());
 			vitesseField.setValue(joueur.getVitesse());
 			techniqueField.setValue(joueur.getTechnique());
+			positionField.setSelectedIndex(joueur.getPosition());
 			tirField.setSelectedIndex(joueur.getTir());
 			tirAltField.setSelectedIndex(joueur.getTirAlt());
 			tirAerienField.setSelectedIndex(joueur.getTirAerien());
@@ -178,6 +183,7 @@ public class JoueurStarPanel extends ElementPanel {
 			joueurSelectionne.setPuissance((int)puissanceField.getValue());
 			joueurSelectionne.setVitesse((int)vitesseField.getValue());
 			joueurSelectionne.setTechnique((int)techniqueField.getValue());
+			joueurSelectionne.setPosition(positionField.getSelectedIndex());
 			joueurSelectionne.setTir(tirField.getSelectedIndex());
 			joueurSelectionne.setTirAlt(tirAltField.getSelectedIndex());
 			joueurSelectionne.setTirAerien(tirAerienField.getSelectedIndex());

@@ -7,12 +7,14 @@ import java.util.Properties;
 
 import data.properties.types.IncrementalData;
 import data.properties.types.NumericData;
+import data.properties.types.SelectData;
 
 
 public class GamedataProperties {
 	
 	public static IncrementalData JOUEURSBASE;
 	public static NumericData CPD_STAT;
+	public static SelectData CPD_POSITION;
 
 	static {
 		init();
@@ -25,6 +27,7 @@ public class GamedataProperties {
             		
             JOUEURSBASE = new IncrementalData(prop, "charParamData.joueursBase");
             CPD_STAT = new NumericData(prop, "charParamData.stat");
+            CPD_POSITION = new SelectData(prop, "charParamData.position");
         	
         } catch (IOException ex) {
             ex.printStackTrace();
