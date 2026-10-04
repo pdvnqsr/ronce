@@ -16,6 +16,7 @@ import data.elements.JoueurStar;
 import data.elements.Composition;
 import data.elements.Equipe;
 import data.elements.Joueur;
+import data.elements.JoueurAutre;
 import data.properties.DataProperties;
 import data.properties.GamedataProperties;
 import data.properties.SystemProperties;
@@ -39,6 +40,9 @@ public class Data implements Serializable {
 	private ArrayList<JoueurStar> builds;
 	private transient ArrayList<JoueurStar> joueursStarsInGame;
 	
+	private ArrayList<JoueurAutre> randoms;
+	private transient ArrayList<JoueurAutre> joueursAutresInGame;
+	
 	private ArrayList<Composition> compositions;
 	private transient ArrayList<Composition> compositionsInGame;
 
@@ -51,6 +55,9 @@ public class Data implements Serializable {
 		
 		builds = new ArrayList<JoueurStar>();
 		joueursStarsInGame = new ArrayList<JoueurStar>();
+		
+		randoms = new ArrayList<JoueurAutre>();
+		joueursAutresInGame = new ArrayList<JoueurAutre>();
 		
 		compositions = new ArrayList<Composition>();
 		compositionsInGame = new ArrayList<Composition>();
@@ -86,6 +93,16 @@ public class Data implements Serializable {
 		return joueur;
 	}
 
+	public void supprimerJoueurAutre(JoueurAutre r) {
+		randoms.remove(r);
+	}
+
+	public JoueurAutre nouveauJoueurAutre() {
+		JoueurAutre joueur = new JoueurAutre(DataProperties.JOUEUR_NOM.getDefaut(),true);
+		randoms.add(joueur);
+		return joueur;
+	}
+	
 	public void supprimerComposition(Composition c) {
 		compositions.remove(c);
 	}
@@ -156,6 +173,18 @@ public class Data implements Serializable {
 			idAjoutes.add(joueur.getId());
 		}
 		Launch.getInstance().getGui().getJoueursStarsGUI().remplirListes(false);
+		Launch.getInstance().saveData();
+		return idAjoutes;
+	}
+	
+	public ArrayList<String> ajouterJoueurAutreAuStock(ArrayList<JoueurAutre> joueurs) {
+		ArrayList<String> idAjoutes = new ArrayList<String>();
+		for(JoueurAutre joueur : joueurs) {
+			joueur.setId(joueur.regenerateId());
+			getJoueursAutres().add(joueur);
+			idAjoutes.add(joueur.getId());
+		}
+		Launch.getInstance().getGui().getJoueursAutresGUI().remplirListes(false);
 		Launch.getInstance().saveData();
 		return idAjoutes;
 	}
@@ -549,7 +578,7 @@ public class Data implements Serializable {
 					index = i + DataProperties.JOUEURSETOILEOFFSET - DataProperties.JOUEURSBASEEDITABLES;
 				}
 				Long saveAddr = DataProperties.JOUEURSBASE.getAdresse(i);
-				Long cpdAddr = GamedataProperties.JOUEURSBASE.getAdresse(i);
+				Long cpdAddr = GamedataProperties.CPD_JOUEURSBASE.getAdresse(i);
 
 				joueur = new JoueurStar(DataProperties.JOUEURSBASE.getVals().get(index).getDisplayValue(),false);				
 				joueur.setAttaque(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,0));
@@ -594,7 +623,7 @@ public class Data implements Serializable {
 		
 		try {
 			Long saveAddr = DataProperties.JOUEURSBASE.getAdresse(inGameIndex);
-			Long cpdAddr = GamedataProperties.JOUEURSBASE.getAdresse(inGameIndex);
+			Long cpdAddr = GamedataProperties.CPD_JOUEURSBASE.getAdresse(inGameIndex);
 
 			RandomAccessFile save = new RandomAccessFile(SystemProperties.PATH, "rw");
 			RandomAccessFile cpd = new RandomAccessFile(SystemProperties.CHARPARAMDATA_PATH, "rw");
@@ -639,6 +668,71 @@ public class Data implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	public void loadJoueursAutresFromGame() {
+		try  {
+			RandomAccessFile cp = new RandomAccessFile(SystemProperties.CUSTOMPRESET_PATH, "rw");
+
+			joueursAutresInGame.clear();
+
+					
+			JoueurAutre joueur;
+			//Démarrer à 1 à cause du préset des NH
+			for(int i=1;i<GamedataProperties.CP_JOUEURSBASE.getNombre();i++) {
+				Long addr = GamedataProperties.CP_JOUEURSBASE.getAdresse(i);
+
+				joueur = new JoueurAutre(GamedataProperties.CP_JOUEURSBASE.getVals().get(i).getDisplayValue(),false);
+				joueur.setTypeCorps(getIntFromGame(cp, addr, GamedataProperties.CP_TYPECORPS,0));
+				//joueur.setTaille(getIntFromGame(cp, addr, GamedataProperties.CP_TAILLE,0));
+				//joueur.setTailleTete(getIntFromGame(cp, addr, GamedataProperties.CP_TAILLETETE,0));
+				joueur.setCouleurPeau(getIntFromGame(cp, addr, GamedataProperties.CP_COULEURPEAU,0));
+				joueur.setVisage(getIntFromGame(cp, addr, GamedataProperties.CP_VISAGE,0));
+				joueur.setCheveux(getIntFromGame(cp, addr, GamedataProperties.CP_CHEVEUX,0));
+				joueur.setCouleurCheveux(getIntFromGame(cp, addr, GamedataProperties.CP_COULEURCHEVEUX,0));
+				joueur.setYeux(getIntFromGame(cp, addr, GamedataProperties.CP_YEUX,0));
+				joueur.setCouleurYeux(getIntFromGame(cp, addr, GamedataProperties.CP_COULEURYEUX,0));
+				joueur.setSourcils(getIntFromGame(cp, addr, GamedataProperties.CP_SOURCILS,0));
+				joueur.setCouleurSourcils(getIntFromGame(cp, addr, GamedataProperties.CP_COULEURSOURCILS,0));
+				joueur.setNez(getIntFromGame(cp, addr, GamedataProperties.CP_NEZ,0));
+				joueur.setCrampons(getIntFromGame(cp, addr, GamedataProperties.CP_CRAMPONS,0));
+				joueur.setLunettes(getIntFromGame(cp, addr, GamedataProperties.CP_LUNETTES,0));
+				joueur.setCouleurLunettes(getIntFromGame(cp, addr, GamedataProperties.CP_COULEURLUNETTES,0));
+				joueursAutresInGame.add(joueur);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveJoueurAutreIntoGame(JoueurAutre joueur, int inGameIndex) {
+		archiveCustomPreset();
+		
+		try {
+			//+1 à cause du preset de NH 
+			Long addr = GamedataProperties.CP_JOUEURSBASE.getAdresse(inGameIndex+1);
+			RandomAccessFile cp = new RandomAccessFile(SystemProperties.CUSTOMPRESET_PATH, "rw");
+
+			writeIntInGame(cp, addr, GamedataProperties.CP_TYPECORPS,0,joueur.getTypeCorps());
+			//writeIntInGame(cp, addr, GamedataProperties.CP_TAILLE,0,joueur.getTaille());
+			//writeIntInGame(cp, addr, GamedataProperties.CP_TAILLETETE,0,joueur.getTailleTete());
+			writeIntInGame(cp, addr, GamedataProperties.CP_COULEURPEAU,0,joueur.getCouleurPeau());
+			writeIntInGame(cp, addr, GamedataProperties.CP_VISAGE,0,joueur.getVisage());
+			writeIntInGame(cp, addr, GamedataProperties.CP_CHEVEUX,0,joueur.getCheveux());
+			writeIntInGame(cp, addr, GamedataProperties.CP_COULEURCHEVEUX,0,joueur.getCouleurCheveux());
+			writeIntInGame(cp, addr, GamedataProperties.CP_YEUX,0,joueur.getYeux());
+			writeIntInGame(cp, addr, GamedataProperties.CP_COULEURYEUX,0,joueur.getCouleurYeux());
+			writeIntInGame(cp, addr, GamedataProperties.CP_SOURCILS,0,joueur.getSourcils());
+			writeIntInGame(cp, addr, GamedataProperties.CP_COULEURSOURCILS,0,joueur.getCouleurSourcils());
+			writeIntInGame(cp, addr, GamedataProperties.CP_NEZ,0,joueur.getNez());
+			writeIntInGame(cp, addr, GamedataProperties.CP_CRAMPONS,0,joueur.getCrampons());
+			writeIntInGame(cp, addr, GamedataProperties.CP_LUNETTES,0,joueur.getLunettes());
+			writeIntInGame(cp, addr, GamedataProperties.CP_COULEURLUNETTES,0,joueur.getCouleurLunettes());
+			cp.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public void loadCompositionsFromGame() {
 		try  {
@@ -923,8 +1017,18 @@ public class Data implements Serializable {
 	
 	private void archiveCharParamData() {
 		try {
-			Path copied = Paths.get("backup/binary/CharactorParam/savedata_" + new Date().toString().replace(":", "-"));
+			Path copied = Paths.get("backup/binary/CharactorParam/CharParamData_" + new Date().toString().replace(":", "-"));
 			Path originalPath = Paths.get(SystemProperties.CHARPARAMDATA_PATH);
+			Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void archiveCustomPreset() {
+		try {
+			Path copied = Paths.get("backup/binary/CharaEdit/CustomPreset_" + new Date().toString().replace(":", "-"));
+			Path originalPath = Paths.get(SystemProperties.CUSTOMPRESET_PATH);
 			Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -953,6 +1057,14 @@ public class Data implements Serializable {
 
 	public ArrayList<JoueurStar> getJoueursStarsInGame() {
 		return joueursStarsInGame;
+	}
+	
+	public ArrayList<JoueurAutre> getJoueursAutres() {
+		return randoms;
+	}
+
+	public ArrayList<JoueurAutre> getJoueursAutresInGame() {
+		return joueursAutresInGame;
 	}
 
 	public ArrayList<Composition> getCompositions() {

@@ -21,6 +21,7 @@ public class SystemProperties {
 	public static String PATH;
 	public static String GAMEPATH;
 	public static String CHARPARAMDATA_PATH;
+	public static String CUSTOMPRESET_PATH;
 	
 	
 	static {
@@ -34,6 +35,7 @@ public class SystemProperties {
             LOCALE = PROPS.getProperty(LOCALE_KEY);
             
             CHARPARAMDATA_PATH = GAMEPATH + "\\binary\\CharactorParam\\CharParamData.bin";
+            CUSTOMPRESET_PATH = GAMEPATH + "\\binary\\CharaEdit\\CustomPreset.bin";
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -55,6 +57,7 @@ public class SystemProperties {
 			PROPS.setProperty(GAMEPATH_KEY, path);
 			PROPS.store(outputStream, null);
 			CHARPARAMDATA_PATH = GAMEPATH + "\\binary\\CharactorParam\\CharParamData.bin";
+			CUSTOMPRESET_PATH = GAMEPATH + "\\binary\\CharaEdit\\CustomPreset.bin";
 		} catch (IOException e) {
 		    e.printStackTrace();
 		} 

@@ -20,6 +20,7 @@ import GUI.tabs.JoueursStarsGUI;
 import GUI.tabs.CompositionsGUI;
 import GUI.tabs.ConfigGui;
 import GUI.tabs.EquipesGUI;
+import GUI.tabs.JoueursAutresGUI;
 import GUI.tabs.JoueursGUI;
 import data.properties.TextsProperties;
 
@@ -39,6 +40,7 @@ public class MainGUI extends JFrame {
 	private JoueursGUI joueursGUI;
 	private EquipesGUI equipesGUI;
 	private JoueursStarsGUI joueursStarsGUI;
+	private JoueursAutresGUI joueursAutresGUI;
 	private ConfigGui configGUI;
 	private CompositionsGUI compositionsGUI;
 
@@ -100,6 +102,9 @@ public class MainGUI extends JFrame {
 		joueursStarsGUI = new JoueursStarsGUI();
 		mainPanel.addTab(TextsProperties.LABEL_JOUEURSSTAR, joueursStarsGUI);
 		
+		joueursAutresGUI = new JoueursAutresGUI();
+		mainPanel.addTab(TextsProperties.LABEL_JOUEURSAUTRES, joueursAutresGUI);
+		
 		compositionsGUI = new CompositionsGUI();
 		mainPanel.addTab(TextsProperties.LABEL_EQUIPESBASE, compositionsGUI);
 		
@@ -158,6 +163,14 @@ public class MainGUI extends JFrame {
 
 	public void setJoueursStarsGUI(JoueursStarsGUI joueursStarsGUI) {
 		this.joueursStarsGUI = joueursStarsGUI;
+	}
+	
+	public JoueursAutresGUI getJoueursAutresGUI() {
+		return joueursAutresGUI;
+	}
+
+	public void setJoueursAutresGUI(JoueursAutresGUI joueursAutresGUI) {
+		this.joueursAutresGUI = joueursAutresGUI;
 	}
 
 	public CompositionsGUI getCompositionsGUI() {

@@ -21,6 +21,7 @@ public class TextsProperties {
 	public static String LABEL_JOUEURS;
 	public static String LABEL_EQUIPES;
 	public static String LABEL_JOUEURSSTAR;
+	public static String LABEL_JOUEURSAUTRES;
 	public static String LABEL_EQUIPESBASE;
 	public static String LABEL_LISTINGAME;
 	public static String LABEL_LISTINSTOCK;
@@ -146,6 +147,7 @@ public class TextsProperties {
 		LABEL_JOUEURS = TEXTS.getString("label.joueurs");
 		LABEL_EQUIPES = TEXTS.getString("label.equipes");
 		LABEL_JOUEURSSTAR = TEXTS.getString("label.joueursStar");
+		LABEL_JOUEURSAUTRES = TEXTS.getString("label.joueursAutres");
 		LABEL_EQUIPESBASE = TEXTS.getString("label.equipesBase");
 		LABEL_LISTINGAME = TEXTS.getString("label.listInGame");
 		LABEL_LISTINSTOCK = TEXTS.getString("label.listInStock");

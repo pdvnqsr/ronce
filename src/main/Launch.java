@@ -91,6 +91,7 @@ public class Launch {
 		data.loadJoueursFromGame();
 		data.loadEquipesFromGame();
 		data.loadJoueursStarsFromGame();
+		data.loadJoueursAutresFromGame();
 		data.loadCompositionsFromGame();
 	}
 
