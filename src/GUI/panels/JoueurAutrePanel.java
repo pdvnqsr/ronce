@@ -81,7 +81,7 @@ public class JoueurAutrePanel extends ElementPanel {
 		idField.setEditable(false);
 		descriptionField = new JTextField(20);
 		nomField = new JTextField(15);
-		posteField = makeComboboxComponent(DataProperties.POSITION);
+		posteField = makeComboboxComponent(GamedataProperties.CPD_POSITION);
 		typeCorpsField = makeComboboxComponent(GamedataProperties.CP_TYPECORPS);
 		tailleField = makeSliderComponent(GamedataProperties.CP_TAILLE);
 		tailleTeteField = makeSliderComponent(GamedataProperties.CP_TAILLETETE);
@@ -106,11 +106,11 @@ public class JoueurAutrePanel extends ElementPanel {
 		cramponsField = makeComboboxComponent(GamedataProperties.CP_CRAMPONS);
 		lunettesField = makeComboboxComponent(GamedataProperties.CP_LUNETTES);
 		couleurLunettesField = makeComboboxComponent(GamedataProperties.CP_COULEURLUNETTES);
-		attaqueField = makeSpinnerComponent(DataProperties.STAT);
-		defenseField = makeSpinnerComponent(DataProperties.STAT);
-		puissanceField = makeSpinnerComponent(DataProperties.STAT);
-		vitesseField = makeSpinnerComponent(DataProperties.STAT);
-		techniqueField = makeSpinnerComponent(DataProperties.STAT);
+		attaqueField = makeSpinnerComponent(GamedataProperties.CPD_STAT);
+		defenseField = makeSpinnerComponent(GamedataProperties.CPD_STAT);
+		puissanceField = makeSpinnerComponent(GamedataProperties.CPD_STAT);
+		vitesseField = makeSpinnerComponent(GamedataProperties.CPD_STAT);
+		techniqueField = makeSpinnerComponent(GamedataProperties.CPD_STAT);
 		tirField = makeComboboxComponent(DataProperties.TIRS);
 		tirAltField = makeComboboxComponent(DataProperties.TIRS);
 		tirAerienField = makeComboboxComponent(DataProperties.TIRSAERIENS);
@@ -127,7 +127,7 @@ public class JoueurAutrePanel extends ElementPanel {
 		blocageField = makeComboboxComponent(DataProperties.BLOCAGES);
 		arretsField = makeComboboxComponent(DataProperties.ARRETS);
 		superArretField = makeComboboxComponent(DataProperties.SUPERARRET);
-		competenceCapitaineField = makeComboboxComponent(DataProperties.COMPETECESCAPITAINE);
+		competenceCapitaineField = makeComboboxComponent(DataProperties.COMPETENCECAPITAINE);
 		competence1Field = makeComboboxComponent(DataProperties.COMPETENCES);
 		competence2Field = makeComboboxComponent(DataProperties.COMPETENCES);
 		competence3Field = makeComboboxComponent(DataProperties.COMPETENCES);
@@ -180,9 +180,7 @@ public class JoueurAutrePanel extends ElementPanel {
 		JPanel tacle1Panel = makeFieldPanel(TextsProperties.LABEL_TACLE + " 1", tacle1Field);
 		JPanel tacle2Panel = makeFieldPanel(TextsProperties.LABEL_TACLE + " 2", tacle2Field);
 		JPanel blocagePanel = makeFieldPanel(TextsProperties.LABEL_BLOCAGE, blocageField);
-		@SuppressWarnings("unused")
 		JPanel arretsPanel = makeFieldPanel(TextsProperties.LABEL_ARRETS, arretsField);
-		@SuppressWarnings("unused")
 		JPanel superArretPanel = makeFieldPanel(TextsProperties.LABEL_SUPERARRET, superArretField);
 		JPanel competenceCapitainePanel = makeFieldPanel(TextsProperties.LABEL_COMPETECECAPITAINE, competenceCapitaineField);
 		JPanel competence1Panel = makeFieldPanel(TextsProperties.LABEL_COMPETENCE + " 1", competence1Field);
@@ -233,9 +231,8 @@ public class JoueurAutrePanel extends ElementPanel {
 					.addComponent(tacle1Panel)
 					.addComponent(tacle2Panel)
 					.addComponent(blocagePanel)
-					// UNUSABLE
-					//.addComponent(arretsPanel)
-					//.addComponent(superArretPanel)
+					.addComponent(arretsPanel)
+					.addComponent(superArretPanel)
 					.addComponent(competenceCapitainePanel)
 					.addComponent(competence1Panel)
 					.addComponent(competence2Panel)
@@ -311,9 +308,8 @@ public class JoueurAutrePanel extends ElementPanel {
 					.addComponent(tacle1Panel)
 					.addComponent(tacle2Panel)
 					.addComponent(blocagePanel)
-					// UNUSABLE
-					//.addComponent(arretsPanel)
-					//.addComponent(superArretPanel)
+					.addComponent(arretsPanel)
+					.addComponent(superArretPanel)
 					.addComponent(competenceCapitainePanel)
 					.addComponent(competence1Panel)
 					.addComponent(competence2Panel)

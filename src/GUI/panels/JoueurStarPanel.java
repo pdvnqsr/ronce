@@ -89,7 +89,7 @@ public class JoueurStarPanel extends ElementPanel {
 		blocageField = makeComboboxComponent(DataProperties.BLOCAGES);
 		arretsField = makeComboboxComponent(DataProperties.ARRETS);
 		superArretField = makeComboboxComponent(DataProperties.SUPERARRET);
-		competenceCapitaineField = makeComboboxComponent(DataProperties.COMPETECESCAPITAINE);
+		competenceCapitaineField = makeComboboxComponent(DataProperties.COMPETENCECAPITAINE);
 		competence1Field = makeComboboxComponent(DataProperties.COMPETENCES);
 		competence2Field = makeComboboxComponent(DataProperties.COMPETENCES);
 		competence3Field = makeComboboxComponent(DataProperties.COMPETENCES);

@@ -62,7 +62,7 @@ public class DataProperties {
 	public static SelectData ARRETS;
 	public static SelectData SUPERARRET;
 	
-	public static SelectData COMPETECESCAPITAINE;
+	public static SelectData COMPETENCECAPITAINE;
 	public static SelectData COMPETENCES;
 	
 	
@@ -199,7 +199,7 @@ public class DataProperties {
             ARRETS = new SelectData(prop, "arrets");
             SUPERARRET = new SelectData(prop, "superarret");
             
-            COMPETECESCAPITAINE = new SelectData(prop, "competenceCapitaine");
+            COMPETENCECAPITAINE = new SelectData(prop, "competenceCapitaine");
             COMPETENCES = new SelectData(prop, "competence");
             
             

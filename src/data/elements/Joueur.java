@@ -80,7 +80,7 @@ public class Joueur implements Serializable {
 	private int arrets = DataProperties.ARRETS.getDefaut();
 	private int superArret = DataProperties.SUPERARRET.getDefaut();
 	
-	private int competenceCapitaine = DataProperties.COMPETECESCAPITAINE.getDefaut();
+	private int competenceCapitaine = DataProperties.COMPETENCECAPITAINE.getDefaut();
 	private int competence1 = DataProperties.COMPETENCES.getDefaut();
 	private int competence2 = DataProperties.COMPETENCES.getDefaut();
 	private int competence3 = DataProperties.COMPETENCES.getDefaut();

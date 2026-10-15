@@ -33,6 +33,7 @@ import data.elements.Joueur;
 import data.properties.DataProperties;
 import data.properties.mappings.JoueurMapping;
 import data.properties.types.IncrementalData;
+import data.properties.types.LongSelectData;
 import data.properties.types.MultiSelectData;
 import data.properties.types.NumericData;
 import data.properties.types.SelectData;
@@ -43,6 +44,80 @@ public class ElementPanel extends JPanel {
 	private static final long serialVersionUID = 5425440262836656704L;
 
 	public JComboBox<String> makeComboboxComponent(SelectData props) {
+		Dimension dimension = new Dimension();
+		JComboBox<String> component = new JComboBox<String>();
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		for(int i=0 ; i<props.getVals().size() ; i++) {
+			model.addElement(props.getVals().get(i).getDisplayValue());
+		}
+		component.setModel(model);
+
+		String sample = props.getVals().get(0).getDisplayValue();
+		
+		if(sample.toString().startsWith("#")) {
+			component.setRenderer(new DefaultListCellRenderer() {
+				private static final long serialVersionUID = 1L;
+				@Override
+				public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+					DefaultListCellRenderer cell = (DefaultListCellRenderer) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+					cell.setIcon(getImageFromColor(value.toString()));
+					cell.setText("");
+
+					list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+					list.setVisibleRowCount(Math.round((float)list.getModel().getSize()/(float)12));
+					
+					if(isSelected) {
+						cell.setBackground(MainGUI.jaune);
+						cell.setBorder(new LineBorder(MainGUI.jaune,3));
+					}
+					
+					cell.setBackground(MainGUI.darkBase);
+					
+					return cell;
+				}
+			});
+			BoundsPopupMenuListener menuListener = new BoundsPopupMenuListener();
+			menuListener.setPopupWider(true);
+			menuListener.setScrollBarRequired(false);
+			component.addPopupMenuListener(menuListener);
+			component.setPreferredSize(new Dimension(50,30));
+			
+		} else if(sample.toString().startsWith("img/")) {
+			component.setRenderer(new DefaultListCellRenderer() {
+				private static final long serialVersionUID = 1L;
+				@Override
+				public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+					DefaultListCellRenderer cell = (DefaultListCellRenderer) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+					cell.setIcon(getImageFromPath(value.toString()));
+					cell.setText("");
+
+					list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+					list.setVisibleRowCount(Math.round((float)list.getModel().getSize()/(float)3.5));
+					dimension.setSize(cell.getIcon().getIconWidth() + 14, cell.getIcon().getIconHeight() + 4);
+					
+					if(isSelected) {
+						cell.setBackground(MainGUI.jaune);
+						cell.setBorder(new LineBorder(MainGUI.jaune,3));
+					}
+					
+					cell.setBackground(MainGUI.darkBase);
+					
+					return cell;
+				}
+			});
+			BoundsPopupMenuListener menuListener = new BoundsPopupMenuListener();
+			menuListener.setPopupWider(true);
+			menuListener.setScrollBarRequired(true);
+			component.addPopupMenuListener(menuListener);
+			component.setPreferredSize(dimension);
+		} else {
+			AutoCompleteDecorator.decorate(component);
+		}
+		
+		return component;
+	}
+	
+	public JComboBox<String> makeComboboxComponent(LongSelectData props) {
 		Dimension dimension = new Dimension();
 		JComboBox<String> component = new JComboBox<String>();
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();

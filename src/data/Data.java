@@ -20,6 +20,8 @@ import data.elements.JoueurAutre;
 import data.properties.DataProperties;
 import data.properties.GamedataProperties;
 import data.properties.SystemProperties;
+import data.properties.types.CatData;
+import data.properties.types.LongSelectData;
 import data.properties.types.MultiSelectData;
 import data.properties.types.NumericData;
 import data.properties.types.SelectData;
@@ -252,7 +254,7 @@ public class Data implements Serializable {
 				joueur.setBlocage(getIntFromGame(raf, addr, DataProperties.BLOCAGES,0));
 				joueur.setArrets(getIntFromGame(raf, addr, DataProperties.ARRETS,0));
 				joueur.setSuperArret(getIntFromGame(raf, addr, DataProperties.SUPERARRET,0));
-				joueur.setCompetenceCapitaine(getIntFromGame(raf, addr, DataProperties.COMPETECESCAPITAINE,0));
+				joueur.setCompetenceCapitaine(getIntFromGame(raf, addr, DataProperties.COMPETENCECAPITAINE,0));
 				joueur.setCompetence1(getIntFromGame(raf, addr, DataProperties.COMPETENCES,0));
 				joueur.setCompetence2(getIntFromGame(raf, addr, DataProperties.COMPETENCES,1));
 				joueur.setCompetence3(getIntFromGame(raf, addr, DataProperties.COMPETENCES,2));
@@ -261,6 +263,8 @@ public class Data implements Serializable {
 				joueur.setCompetence6(getIntFromGame(raf, addr, DataProperties.COMPETENCES,5));
 				joueursInGame.add(joueur);
 			}
+			
+			raf.close();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -325,13 +329,14 @@ public class Data implements Serializable {
 			writeIntInGame(raf, addr, DataProperties.BLOCAGES,0,joueur.getBlocage());
 			writeIntInGame(raf, addr, DataProperties.ARRETS,0,joueur.getArrets());
 			writeIntInGame(raf, addr, DataProperties.SUPERARRET,0,joueur.getSuperArret());
-			writeIntInGame(raf, addr, DataProperties.COMPETECESCAPITAINE,0,joueur.getCompetenceCapitaine());
+			writeIntInGame(raf, addr, DataProperties.COMPETENCECAPITAINE,0,joueur.getCompetenceCapitaine());
 			writeIntInGame(raf, addr, DataProperties.COMPETENCES,0,joueur.getCompetence1());
 			writeIntInGame(raf, addr, DataProperties.COMPETENCES,1,joueur.getCompetence2());
 			writeIntInGame(raf, addr, DataProperties.COMPETENCES,2,joueur.getCompetence3());
 			writeIntInGame(raf, addr, DataProperties.COMPETENCES,3,joueur.getCompetence4());
 			writeIntInGame(raf, addr, DataProperties.COMPETENCES,4,joueur.getCompetence5());
 			writeIntInGame(raf, addr, DataProperties.COMPETENCES,5,joueur.getCompetence6());
+			
 			raf.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -447,6 +452,8 @@ public class Data implements Serializable {
 
 				equipesInGame.add(equipe);
 			}
+			
+			raf.close();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -603,7 +610,7 @@ public class Data implements Serializable {
 				joueur.setBlocage(getIntFromGame(save, saveAddr, DataProperties.BLOCAGES,0));
 				joueur.setArrets(getIntFromGame(save, saveAddr, DataProperties.ARRETS,0));
 				joueur.setSuperArret(getIntFromGame(save, saveAddr, DataProperties.SUPERARRET,0));
-				joueur.setCompetenceCapitaine(getIntFromGame(save, saveAddr, DataProperties.COMPETECESCAPITAINE,0));
+				joueur.setCompetenceCapitaine(getIntFromGame(save, saveAddr, DataProperties.COMPETENCECAPITAINE,0));
 				joueur.setCompetence1(getIntFromGame(save, saveAddr, DataProperties.COMPETENCES,0));
 				joueur.setCompetence2(getIntFromGame(save, saveAddr, DataProperties.COMPETENCES,1));
 				joueur.setCompetence3(getIntFromGame(save, saveAddr, DataProperties.COMPETENCES,2));
@@ -612,6 +619,9 @@ public class Data implements Serializable {
 				joueur.setCompetence6(getIntFromGame(save, saveAddr, DataProperties.COMPETENCES,5));
 				joueursStarsInGame.add(joueur);
 			}
+			
+			save.close();
+			cpd.close();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -656,14 +666,16 @@ public class Data implements Serializable {
 			writeIntInGame(save, saveAddr, DataProperties.BLOCAGES,0,joueur.getBlocage());
 			writeIntInGame(save, saveAddr, DataProperties.ARRETS,0,joueur.getArrets());
 			writeIntInGame(save, saveAddr, DataProperties.SUPERARRET,0,joueur.getSuperArret());
-			writeIntInGame(save, saveAddr, DataProperties.COMPETECESCAPITAINE,0,joueur.getCompetenceCapitaine());
+			writeIntInGame(save, saveAddr, DataProperties.COMPETENCECAPITAINE,0,joueur.getCompetenceCapitaine());
 			writeIntInGame(save, saveAddr, DataProperties.COMPETENCES,0,joueur.getCompetence1());
 			writeIntInGame(save, saveAddr, DataProperties.COMPETENCES,1,joueur.getCompetence2());
 			writeIntInGame(save, saveAddr, DataProperties.COMPETENCES,2,joueur.getCompetence3());
 			writeIntInGame(save, saveAddr, DataProperties.COMPETENCES,3,joueur.getCompetence4());
 			writeIntInGame(save, saveAddr, DataProperties.COMPETENCES,4,joueur.getCompetence5());
 			writeIntInGame(save, saveAddr, DataProperties.COMPETENCES,5,joueur.getCompetence6());
+			
 			save.close();
+			cpd.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -672,6 +684,9 @@ public class Data implements Serializable {
 	public void loadJoueursAutresFromGame() {
 		try  {
 			RandomAccessFile cp = new RandomAccessFile(SystemProperties.CUSTOMPRESET_PATH, "rw");
+			RandomAccessFile cpd = new RandomAccessFile(SystemProperties.CHARPARAMDATA_PATH, "rw");
+			RandomAccessFile cd = new RandomAccessFile(SystemProperties.CHARACTORDATA_PATH, "rw");
+			int index;
 
 			joueursAutresInGame.clear();
 
@@ -679,26 +694,78 @@ public class Data implements Serializable {
 			JoueurAutre joueur;
 			//Démarrer à 1 à cause du préset des NH
 			for(int i=1;i<GamedataProperties.CP_JOUEURSBASE.getNombre();i++) {
-				Long addr = GamedataProperties.CP_JOUEURSBASE.getAdresse(i);
+				index = DataProperties.JOUEURSBASEEDITABLES + DataProperties.JOUEURSETOILENOMBRE + i - 1;
+				Long cpAddr = GamedataProperties.CP_JOUEURSBASE.getAdresse(i);
+				Long cpdAddr = GamedataProperties.CPD_JOUEURSBASE.getAdresse(index);
 
 				joueur = new JoueurAutre(GamedataProperties.CP_JOUEURSBASE.getVals().get(i).getDisplayValue(),false);
-				joueur.setTypeCorps(getIntFromGame(cp, addr, GamedataProperties.CP_TYPECORPS,0));
-				//joueur.setTaille(getIntFromGame(cp, addr, GamedataProperties.CP_TAILLE,0));
-				//joueur.setTailleTete(getIntFromGame(cp, addr, GamedataProperties.CP_TAILLETETE,0));
-				joueur.setCouleurPeau(getIntFromGame(cp, addr, GamedataProperties.CP_COULEURPEAU,0));
-				joueur.setVisage(getIntFromGame(cp, addr, GamedataProperties.CP_VISAGE,0));
-				joueur.setCheveux(getIntFromGame(cp, addr, GamedataProperties.CP_CHEVEUX,0));
-				joueur.setCouleurCheveux(getIntFromGame(cp, addr, GamedataProperties.CP_COULEURCHEVEUX,0));
-				joueur.setYeux(getIntFromGame(cp, addr, GamedataProperties.CP_YEUX,0));
-				joueur.setCouleurYeux(getIntFromGame(cp, addr, GamedataProperties.CP_COULEURYEUX,0));
-				joueur.setSourcils(getIntFromGame(cp, addr, GamedataProperties.CP_SOURCILS,0));
-				joueur.setCouleurSourcils(getIntFromGame(cp, addr, GamedataProperties.CP_COULEURSOURCILS,0));
-				joueur.setNez(getIntFromGame(cp, addr, GamedataProperties.CP_NEZ,0));
-				joueur.setCrampons(getIntFromGame(cp, addr, GamedataProperties.CP_CRAMPONS,0));
-				joueur.setLunettes(getIntFromGame(cp, addr, GamedataProperties.CP_LUNETTES,0));
-				joueur.setCouleurLunettes(getIntFromGame(cp, addr, GamedataProperties.CP_COULEURLUNETTES,0));
+				joueur.setTypeCorps(getLongFromGame(cp, cpAddr, GamedataProperties.CP_TYPECORPS,0));
+				//joueur.setTaille(getLongFromGame(cp, addr, GamedataProperties.CP_TAILLE,0));
+				//joueur.setTailleTete(getLongFromGame(cp, addr, GamedataProperties.CP_TAILLETETE,0));
+				joueur.setCouleurPeau(getLongFromGame(cp, cpAddr, GamedataProperties.CP_COULEURPEAU,0));
+				joueur.setVisage(getLongFromGame(cp, cpAddr, GamedataProperties.CP_VISAGE,0));
+				joueur.setCheveux(getLongFromGame(cp, cpAddr, GamedataProperties.CP_CHEVEUX,0));
+				joueur.setCouleurCheveux(getLongFromGame(cp, cpAddr, GamedataProperties.CP_COULEURCHEVEUX,0));
+				joueur.setYeux(getLongFromGame(cp, cpAddr, GamedataProperties.CP_YEUX,0));
+				joueur.setCouleurYeux(getLongFromGame(cp, cpAddr, GamedataProperties.CP_COULEURYEUX,0));
+				joueur.setSourcils(getLongFromGame(cp, cpAddr, GamedataProperties.CP_SOURCILS,0));
+				joueur.setCouleurSourcils(getLongFromGame(cp, cpAddr, GamedataProperties.CP_COULEURSOURCILS,0));
+				joueur.setNez(getLongFromGame(cp, cpAddr, GamedataProperties.CP_NEZ,0));
+				joueur.setLunettes(getLongFromGame(cp, cpAddr, GamedataProperties.CP_LUNETTES,0));
+				joueur.setCouleurLunettes(getLongFromGame(cp, cpAddr, GamedataProperties.CP_COULEURLUNETTES,0));
+				joueur.setCrampons(getLongFromGame(cp, cpAddr, GamedataProperties.CP_CRAMPONS,0));
+				
+				joueur.setPosition(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_POSITION,0));
+				joueur.setAttaque(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,0));
+				joueur.setDefense(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,1));
+				joueur.setPuissance(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,2));
+				joueur.setVitesse(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,3));
+				joueur.setTechnique(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,4));
+				
+				joueur.setTir(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_TIRS,0));
+				joueur.setTirAlt(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_TIRS,1));
+				joueur.setTirAerien(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_TIRSAERIENS,0));
+				joueur.setSuperTir(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_SUPERTIRS,0));
+				joueur.setSuperTirAlt(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_SUPERTIRS,1));
+				joueur.setDribble1(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_DRIBBLES,0));
+				joueur.setDribble2(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_DRIBBLES,1));
+				joueur.setPasse(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_PASSES,0));
+				joueur.setTirCombo1(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_TIRSCOMBO1,0));
+				joueur.setTirCombo2(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_TIRSCOMBO2,0));
+				joueur.setPassesCombo(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_PASSESCOMBO,0));
+				joueur.setTacle1(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_TACLES,0));
+				joueur.setTacle2(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_TACLES,1));
+				joueur.setBlocage(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_BLOCAGES,0));
+				joueur.setArrets(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_ARRETS,0));
+				joueur.setSuperArret(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_SUPERARRET,0));
+				
+				if(GamedataProperties.CD_CAT.getTailles().get(index) >= 12 ) {
+					joueur.setCompetence1(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,0));
+				}
+				if(GamedataProperties.CD_CAT.getTailles().get(index) >= 16 ) {
+					joueur.setCompetence2(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,1));
+				}
+				if(GamedataProperties.CD_CAT.getTailles().get(index) >= 20 ) {
+					joueur.setCompetence3(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,2));
+				}
+				if(GamedataProperties.CD_CAT.getTailles().get(index) >= 24 ) {
+					joueur.setCompetence4(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,3));
+				}
+				if(GamedataProperties.CD_CAT.getTailles().get(index) >= 32 ) {
+					joueur.setCompetence5(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,4));
+				}
+				if(GamedataProperties.CD_CAT.getTailles().get(index) >= 36 ) {
+					joueur.setCompetence6(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,5));
+				}
+				if(GamedataProperties.CD_CAT.getTailles().get(index) >= 40 ) {
+					joueur.setCompetenceCapitaine(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0));
+				}
+				
 				joueursAutresInGame.add(joueur);
 			}
+
+			cp.close();
+			cpd.close();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -706,27 +773,67 @@ public class Data implements Serializable {
 	
 	public void saveJoueurAutreIntoGame(JoueurAutre joueur, int inGameIndex) {
 		archiveCustomPreset();
+		archiveCharParamData();
+		archiveCharactorData();
 		
 		try {
 			//+1 à cause du preset de NH 
-			Long addr = GamedataProperties.CP_JOUEURSBASE.getAdresse(inGameIndex+1);
+			int index = DataProperties.JOUEURSBASEEDITABLES + DataProperties.JOUEURSETOILENOMBRE + inGameIndex;
+			Long cpAddr = GamedataProperties.CP_JOUEURSBASE.getAdresse(inGameIndex+1);
+			Long cpdAddr = GamedataProperties.CPD_JOUEURSBASE.getAdresse(index);
 			RandomAccessFile cp = new RandomAccessFile(SystemProperties.CUSTOMPRESET_PATH, "rw");
+			RandomAccessFile cpd = new RandomAccessFile(SystemProperties.CHARPARAMDATA_PATH, "rw");
+			RandomAccessFile cd = new RandomAccessFile(SystemProperties.CHARACTORDATA_PATH, "rw");
 
-			writeIntInGame(cp, addr, GamedataProperties.CP_TYPECORPS,0,joueur.getTypeCorps());
-			//writeIntInGame(cp, addr, GamedataProperties.CP_TAILLE,0,joueur.getTaille());
-			//writeIntInGame(cp, addr, GamedataProperties.CP_TAILLETETE,0,joueur.getTailleTete());
-			writeIntInGame(cp, addr, GamedataProperties.CP_COULEURPEAU,0,joueur.getCouleurPeau());
-			writeIntInGame(cp, addr, GamedataProperties.CP_VISAGE,0,joueur.getVisage());
-			writeIntInGame(cp, addr, GamedataProperties.CP_CHEVEUX,0,joueur.getCheveux());
-			writeIntInGame(cp, addr, GamedataProperties.CP_COULEURCHEVEUX,0,joueur.getCouleurCheveux());
-			writeIntInGame(cp, addr, GamedataProperties.CP_YEUX,0,joueur.getYeux());
-			writeIntInGame(cp, addr, GamedataProperties.CP_COULEURYEUX,0,joueur.getCouleurYeux());
-			writeIntInGame(cp, addr, GamedataProperties.CP_SOURCILS,0,joueur.getSourcils());
-			writeIntInGame(cp, addr, GamedataProperties.CP_COULEURSOURCILS,0,joueur.getCouleurSourcils());
-			writeIntInGame(cp, addr, GamedataProperties.CP_NEZ,0,joueur.getNez());
-			writeIntInGame(cp, addr, GamedataProperties.CP_CRAMPONS,0,joueur.getCrampons());
-			writeIntInGame(cp, addr, GamedataProperties.CP_LUNETTES,0,joueur.getLunettes());
-			writeIntInGame(cp, addr, GamedataProperties.CP_COULEURLUNETTES,0,joueur.getCouleurLunettes());
+			writeLongInGame(cp, cpAddr, GamedataProperties.CP_TYPECORPS,0,joueur.getTypeCorps());
+			//writeLongInGame(cp, addr, GamedataProperties.CP_TAILLE,0,joueur.getTaille());
+			//writeLongInGame(cp, addr, GamedataProperties.CP_TAILLETETE,0,joueur.getTailleTete());
+			writeLongInGame(cp, cpAddr, GamedataProperties.CP_COULEURPEAU,0,joueur.getCouleurPeau());
+			writeLongInGame(cp, cpAddr, GamedataProperties.CP_VISAGE,0,joueur.getVisage());
+			writeLongInGame(cp, cpAddr, GamedataProperties.CP_CHEVEUX,0,joueur.getCheveux());
+			writeLongInGame(cp, cpAddr, GamedataProperties.CP_COULEURCHEVEUX,0,joueur.getCouleurCheveux());
+			writeLongInGame(cp, cpAddr, GamedataProperties.CP_YEUX,0,joueur.getYeux());
+			writeLongInGame(cp, cpAddr, GamedataProperties.CP_COULEURYEUX,0,joueur.getCouleurYeux());
+			writeLongInGame(cp, cpAddr, GamedataProperties.CP_SOURCILS,0,joueur.getSourcils());
+			writeLongInGame(cp, cpAddr, GamedataProperties.CP_COULEURSOURCILS,0,joueur.getCouleurSourcils());
+			writeLongInGame(cp, cpAddr, GamedataProperties.CP_NEZ,0,joueur.getNez());
+			writeLongInGame(cp, cpAddr, GamedataProperties.CP_LUNETTES,0,joueur.getLunettes());
+			writeLongInGame(cp, cpAddr, GamedataProperties.CP_COULEURLUNETTES,0,joueur.getCouleurLunettes());
+			writeLongInGame(cp, cpAddr, GamedataProperties.CP_CRAMPONS,0,joueur.getCrampons());
+			
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,0,joueur.getAttaque());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,1,joueur.getDefense());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,2,joueur.getPuissance());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,3,joueur.getVitesse());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_STAT,4,joueur.getTechnique());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_POSITION,0,joueur.getPosition());
+			
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_TIRS,0,joueur.getTir());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_TIRS,1,joueur.getTirAlt());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_TIRSAERIENS,0,joueur.getTirAerien());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_SUPERTIRS,0,joueur.getSuperTir());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_SUPERTIRS,1,joueur.getSuperTirAlt());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_DRIBBLES,0,joueur.getDribble1());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_DRIBBLES,1,joueur.getDribble2());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_PASSES,0,joueur.getPasse());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_TIRSCOMBO1,0,joueur.getTirCombo1());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_TIRSCOMBO2,0,joueur.getTirCombo2());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_PASSESCOMBO,0,joueur.getPassesCombo());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_TACLES,0,joueur.getTacle1());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_TACLES,1,joueur.getTacle2());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_BLOCAGES,0,joueur.getBlocage());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_ARRETS,0,joueur.getArrets());
+			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_SUPERARRET,0,joueur.getSuperArret());
+			
+			
+			writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,0,joueur.getCompetence1());
+			writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,1,joueur.getCompetence2());
+			writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,2,joueur.getCompetence3());
+			writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,3,joueur.getCompetence4());
+			writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,4,joueur.getCompetence5());
+			writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,5,joueur.getCompetence6());
+			writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0,joueur.getCompetenceCapitaine());
+			
 			cp.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -780,6 +887,8 @@ public class Data implements Serializable {
 
 				compositionsInGame.add(composition);
 			}
+			
+			raf.close();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -844,18 +953,18 @@ public class Data implements Serializable {
 		return text;
 	}
 
-	private int getIntFromGame(RandomAccessFile raf, long addr, SelectData props, int offsetIdex) throws Exception {
-		int i = getIntFromGame(raf, addr, props.getOffsets()[offsetIdex]);
+	private int getIntFromGame(RandomAccessFile raf, long addr, SelectData props, int offsetIndex) throws Exception {
+		int i = getIntFromGame(raf, addr, props.getOffsets()[offsetIndex]);
 		return props.getIndexFromInGameValue(i, props.getDefaut());
 	}
 
-	private int getIntFromGame(RandomAccessFile raf, long addr, NumericData props, int offsetIdex) throws Exception {
-		int i = getIntFromGame(raf, addr, props.getOffsets()[offsetIdex]);
+	private int getIntFromGame(RandomAccessFile raf, long addr, NumericData props, int offsetIndex) throws Exception {
+		int i = getIntFromGame(raf, addr, props.getOffsets()[offsetIndex]);
 		return i;
 	}
 
-	private String getJoueurIdFromGame(RandomAccessFile raf, long addr, int offsetIdex) throws Exception {
-		int i = getIntFromGame(raf, addr, DataProperties.EQUIPE_JOUEURS.getOffsets()[offsetIdex]);
+	private String getJoueurIdFromGame(RandomAccessFile raf, long addr, int offsetIndex) throws Exception {
+		int i = getIntFromGame(raf, addr, DataProperties.EQUIPE_JOUEURS.getOffsets()[offsetIndex]);
 		return getJoueurId(i);
 	}
 
@@ -878,6 +987,20 @@ public class Data implements Serializable {
 		return res;
 	}
 	
+	private int getLongFromGame(RandomAccessFile raf, long addr, LongSelectData props, int offsetIndex) throws Exception {
+		long i = getLongFromGame(raf, addr, props.getOffsets()[offsetIndex]);
+		return props.getIndexFromInGameValue(i, props.getDefaut());
+	}
+	
+	private int getLongFromGame(RandomAccessFile raf, CatData cat, int catIndex, LongSelectData props, int offsetIndex) throws Exception {
+		long i = getLongFromGame(raf, cat.getAdresses().get(catIndex), cat.getOffset() + props.getOffsets()[offsetIndex]);
+		int result = props.getDefaut();
+		if(props.getOffsets()[offsetIndex] < cat.getTailles().get(catIndex) - 4) {
+			result = props.getIndexFromInGameValue(i, props.getDefaut());
+		}
+		return result;
+	}
+	
 	private int getIntFromGame(RandomAccessFile raf, Long address, int offset) throws Exception {
 		raf.seek(address + offset);
 		byte[] bytesVal = new byte[2];
@@ -885,6 +1008,21 @@ public class Data implements Serializable {
 		bytesVal[0]=raf.readByte();
 		ByteBuffer wrapped = ByteBuffer.wrap(bytesVal);
 		return Short.toUnsignedInt(wrapped.getShort());
+	}
+	
+	private long getLongFromGame(RandomAccessFile raf, Long address, int offset) throws Exception {
+		raf.seek(address + offset);
+		byte[] bytesVal = new byte[8];
+		bytesVal[7]=raf.readByte();
+		bytesVal[6]=raf.readByte();
+		bytesVal[5]=raf.readByte();
+		bytesVal[4]=raf.readByte();
+		bytesVal[3]=0;
+		bytesVal[2]=0;
+		bytesVal[1]=0;
+		bytesVal[0]=0;
+		ByteBuffer wrapped = ByteBuffer.wrap(bytesVal);
+		return wrapped.getLong();
 	}
 
 	private int[] getMultiIntFromGame(RandomAccessFile raf, Long address, MultiSelectData props) throws Exception {
@@ -918,8 +1056,8 @@ public class Data implements Serializable {
 		return vals;
 	}
 
-	private int getByteFromGame(RandomAccessFile raf, long addr, SelectData props, int offsetIdex) throws Exception {
-		raf.seek(addr + props.getOffsets()[offsetIdex]);
+	private int getByteFromGame(RandomAccessFile raf, long addr, SelectData props, int offsetIndex) throws Exception {
+		raf.seek(addr + props.getOffsets()[offsetIndex]);
 		byte[] bytesVal = new byte[2];
 		bytesVal[1]=raf.readByte();
 		bytesVal[0]=0;
@@ -927,8 +1065,8 @@ public class Data implements Serializable {
 		return props.getIndexFromInGameValue(Short.toUnsignedInt(wrapped.getShort()), props.getDefaut());
 	}
 	
-	private int getLongFromGame(RandomAccessFile raf, long addr, NumericData props, int offsetIdex) throws Exception {
-		raf.seek(addr + props.getOffsets()[offsetIdex]);
+	private int getLongFromGame(RandomAccessFile raf, long addr, NumericData props, int offsetIndex) throws Exception {
+		raf.seek(addr + props.getOffsets()[offsetIndex]);
 		byte[] bytesVal = new byte[4];
 		bytesVal[3]=raf.readByte();
 		bytesVal[2]=raf.readByte();
@@ -949,15 +1087,15 @@ public class Data implements Serializable {
 		}
 	}
 
-	private void writeIntInGame(RandomAccessFile raf, long addr, SelectData props, int offsetIdex, int value) throws Exception {
-		writeIntInGame(raf, addr, props.getOffsets()[offsetIdex], props.getVals().get(value).getInGameValue());
+	private void writeIntInGame(RandomAccessFile raf, long addr, SelectData props, int offsetIndex, int value) throws Exception {
+		writeIntInGame(raf, addr, props.getOffsets()[offsetIndex], props.getVals().get(value).getInGameValue());
 	}
 
-	private void writeIntInGame(RandomAccessFile raf, long addr, NumericData props, int offsetIdex, int value) throws Exception {
-		writeIntInGame(raf, addr, props.getOffsets()[offsetIdex], value);
+	private void writeIntInGame(RandomAccessFile raf, long addr, NumericData props, int offsetIndex, int value) throws Exception {
+		writeIntInGame(raf, addr, props.getOffsets()[offsetIndex], value);
 	}
 
-	private void writeJoueurIdInGame(RandomAccessFile raf, long addr, int offsetIdex, String value) throws Exception {
+	private void writeJoueurIdInGame(RandomAccessFile raf, long addr, int offsetIndex, String value) throws Exception {
 		int index;
 		int intValue;
 		if(value.startsWith("NH-")) {
@@ -967,7 +1105,7 @@ public class Data implements Serializable {
 			index = Integer.parseInt(value);
 			intValue = Integer.parseInt(DataProperties.JOUEURSBASE.getVals().get(index).getInGameValue());
 		}
-		writeIntInGame(raf, addr, DataProperties.EQUIPE_JOUEURS.getOffsets()[offsetIdex], intValue);
+		writeIntInGame(raf, addr, DataProperties.EQUIPE_JOUEURS.getOffsets()[offsetIndex], intValue);
 	}
 	
 	private void writeIntInGame(RandomAccessFile raf, Long address, int offset, int value) throws Exception {
@@ -989,15 +1127,19 @@ public class Data implements Serializable {
 		}
 	}
 
-	private void writeByteInGame(RandomAccessFile raf, long addr, SelectData props, int offsetIdex, int value) throws Exception {
-		raf.seek(addr + props.getOffsets()[offsetIdex]);
+	private void writeByteInGame(RandomAccessFile raf, long addr, SelectData props, int offsetIndex, int value) throws Exception {
+		raf.seek(addr + props.getOffsets()[offsetIndex]);
 		ByteBuffer bb = ByteBuffer.allocate(4);
 		bb.putInt(props.getVals().get(value).getInGameValue());
 		raf.write(bb.array()[3]);
 	}
 	
-	private void writeLongInGame(RandomAccessFile raf, long addr, NumericData props, int offsetIdex, int value) throws Exception {
-		raf.seek(addr + props.getOffsets()[offsetIdex]);
+	private void writeLongInGame(RandomAccessFile raf, long addr, LongSelectData props, int offsetIndex, int value) throws Exception {
+		writeLongInGame(raf, addr, props.getOffsets()[offsetIndex], props.getVals().get(value).getInGameValue());
+	}
+	
+	private void writeLongInGame(RandomAccessFile raf, long addr, NumericData props, int offsetIndex, int value) throws Exception {
+		raf.seek(addr + props.getOffsets()[offsetIndex]);
 		ByteBuffer bb = ByteBuffer.allocate(4);
 		bb.putInt(value);
 		byte[] bytesValue = {bb.array()[3], bb.array()[2], bb.array()[1], bb.array()[0]};
@@ -1005,6 +1147,24 @@ public class Data implements Serializable {
 		
 	}
 
+	private void writeLongInGame(RandomAccessFile raf, CatData cat, int catIndex, LongSelectData props, int offsetIndex, int value) throws Exception {
+		raf.seek(cat.getAdresses().get(catIndex) + cat.getOffset() + props.getOffsets()[offsetIndex]);
+		ByteBuffer bb = ByteBuffer.allocate(8);
+		bb.putLong(props.getVals().get(value).getInGameValue());
+		byte[] bytesValue = {bb.array()[7], bb.array()[6], bb.array()[5], bb.array()[4]};
+		if(props.getOffsets()[offsetIndex] <= cat.getTailles().get(catIndex) - 8) {
+			raf.write(bytesValue);
+		}	
+	}
+	
+	private void writeLongInGame(RandomAccessFile raf, Long address, int offset, long value) throws Exception {
+		raf.seek(address + offset);
+		ByteBuffer bb = ByteBuffer.allocate(8);
+		bb.putLong(value);
+		byte[] bytesValue = {bb.array()[7], bb.array()[6], bb.array()[5], bb.array()[4]};
+		raf.write(bytesValue);
+	}
+	
 	private void archiveSavedata() {
 		try {
 			Path copied = Paths.get("backup/savedata_" + new Date().toString().replace(":", "-"));
@@ -1019,6 +1179,16 @@ public class Data implements Serializable {
 		try {
 			Path copied = Paths.get("backup/binary/CharactorParam/CharParamData_" + new Date().toString().replace(":", "-"));
 			Path originalPath = Paths.get(SystemProperties.CHARPARAMDATA_PATH);
+			Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void archiveCharactorData() {
+		try {
+			Path copied = Paths.get("backup/binary/CharactorParam/CharactorData_" + new Date().toString().replace(":", "-"));
+			Path originalPath = Paths.get(SystemProperties.CHARACTORDATA_PATH);
 			Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
 			e.printStackTrace();
