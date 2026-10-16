@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import data.properties.types.IncrementalData;
+import data.properties.types.LongSelectData;
 import data.properties.types.MultiSelectData;
 import data.properties.types.NumericData;
 import data.properties.types.SelectData;
@@ -18,34 +19,34 @@ public class DataProperties {
 	
 	public static SelectData POSITION;
 	
-	public static SelectData TYPECORPS;
+	public static LongSelectData TYPECORPS;
 	public static NumericData TAILLE;
 	public static NumericData TAILLETETE;
-	public static SelectData COULEURPEAU;
-	public static SelectData STYLEMANCHE;
-	public static SelectData VISAGE;
+	public static LongSelectData COULEURPEAU;
+	public static LongSelectData STYLEMANCHE;
+	public static LongSelectData VISAGE;
 	public static NumericData TAILLEBOUCHE;
 	public static NumericData COMMISSURES;
 	public static NumericData POSITIONBOUCHE;
-	public static SelectData CHEVEUX;
-	public static SelectData COULEURCHEVEUX;
-	public static SelectData YEUX;
+	public static LongSelectData CHEVEUX;
+	public static LongSelectData COULEURCHEVEUX;
+	public static LongSelectData YEUX;
 	public static NumericData TAILLEYEUX;
 	public static NumericData POSITIONYEUX;
 	public static NumericData ESPACEMENTYEUX;
 	public static NumericData TAILLEPUPILLES;
-	public static SelectData COULEURYEUX;
-	public static SelectData SOURCILS;
-	public static SelectData COULEURSOURCILS;
-	public static SelectData NEZ;
+	public static LongSelectData COULEURYEUX;
+	public static LongSelectData SOURCILS;
+	public static LongSelectData COULEURSOURCILS;
+	public static LongSelectData NEZ;
 	public static NumericData POSITIONNEZ;
 	public static NumericData TAILLENEZ;
-	public static SelectData CRAMPONS;
-	public static SelectData VOIX;
-	public static SelectData LUNETTES;
-	public static SelectData COULEURLUNETTES;
+	public static LongSelectData CRAMPONS;
+	public static LongSelectData VOIX;
+	public static LongSelectData LUNETTES;
+	public static LongSelectData COULEURLUNETTES;
 	
-	public static SelectData CELEBRATION;
+	public static LongSelectData CELEBRATION;
 	
 	public static NumericData STAT;
 	
@@ -155,34 +156,34 @@ public class DataProperties {
             
             POSITION = new SelectData(prop, "position");
  
-            TYPECORPS = new SelectData(prop, "typeCorps");
+            TYPECORPS = new LongSelectData(prop, "typeCorps");
             TAILLE = new NumericData(prop, "taille");
             TAILLETETE = new NumericData(prop, "tailleTete");
-            COULEURPEAU = new SelectData(prop, "couleurPeau");
-            STYLEMANCHE = new SelectData(prop, "styleManche");
-            VISAGE = new SelectData(prop, "visage");
+            COULEURPEAU = new LongSelectData(prop, "couleurPeau");
+            STYLEMANCHE = new LongSelectData(prop, "styleManche");
+            VISAGE = new LongSelectData(prop, "visage");
             TAILLEBOUCHE = new NumericData(prop, "tailleBouche");
             COMMISSURES = new NumericData(prop, "commissures");
             POSITIONBOUCHE = new NumericData(prop, "positionBouche");
-            CHEVEUX = new SelectData(prop, "cheveux");
-            COULEURCHEVEUX = new SelectData(prop, "couleurCheveux");
-            YEUX = new SelectData(prop, "yeux");
+            CHEVEUX = new LongSelectData(prop, "cheveux");
+            COULEURCHEVEUX = new LongSelectData(prop, "couleurCheveux");
+            YEUX = new LongSelectData(prop, "yeux");
             TAILLEYEUX = new NumericData(prop, "tailleYeux");
             POSITIONYEUX = new NumericData(prop, "positionYeux");
             ESPACEMENTYEUX = new NumericData(prop, "espacementYeux");
             TAILLEPUPILLES = new NumericData(prop, "taillePupilles");
-            COULEURYEUX = new SelectData(prop, "couleurYeux");
-            SOURCILS = new SelectData(prop, "sourcils");
-            COULEURSOURCILS = new SelectData(prop, "couleurSourcils");
-            NEZ = new SelectData(prop, "nez");
+            COULEURYEUX = new LongSelectData(prop, "couleurYeux");
+            SOURCILS = new LongSelectData(prop, "sourcils");
+            COULEURSOURCILS = new LongSelectData(prop, "couleurSourcils");
+            NEZ = new LongSelectData(prop, "nez");
             POSITIONNEZ = new NumericData(prop, "positionNez");
             TAILLENEZ = new NumericData(prop, "tailleNez");
-            CRAMPONS = new SelectData(prop, "crampons");
-            VOIX = new SelectData(prop, "voix");
-            LUNETTES = new SelectData(prop, "lunettes");
-            COULEURLUNETTES = new SelectData(prop, "couleurLunettes");
+            CRAMPONS = new LongSelectData(prop, "crampons");
+            VOIX = new LongSelectData(prop, "voix");
+            LUNETTES = new LongSelectData(prop, "lunettes");
+            COULEURLUNETTES = new LongSelectData(prop, "couleurLunettes");
             
-            CELEBRATION = new SelectData(prop, "celebration");
+            CELEBRATION = new LongSelectData(prop, "celebration");
             
             STAT = new NumericData(prop, "stat");
             

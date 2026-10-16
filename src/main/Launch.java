@@ -85,9 +85,13 @@ public class Launch {
 		try {
 			String json = Files.readString(savePath);
 			data = gson.fromJson(json, Data.class);
+			convertData();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		
+		
 		data.loadJoueursFromGame();
 		data.loadEquipesFromGame();
 		data.loadJoueursStarsFromGame();
@@ -95,6 +99,15 @@ public class Launch {
 		data.loadCompositionsFromGame();
 	}
 
+	private void convertData() {
+		//restauration bonnes valeur de TailleTete
+		for(Joueur joueur : data.getJoueurs()) {
+			if(joueur.getTailleTete() < 50000) {
+				joueur.setTailleTete(joueur.getTailleTete()*256);
+			}
+		}
+	}
+	
 	public void exportJoueurs(List<Joueur> joueurs, Path path) {
 		JoueursExchangeData exchangeData = new JoueursExchangeData();
 		for(Joueur joueur : joueurs) {
