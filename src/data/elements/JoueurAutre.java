@@ -18,37 +18,21 @@ public class JoueurAutre implements Serializable {
 	
 	private int position = DataProperties.POSITION.getDefaut();
 
-	private int titre1=0;
-	private int titre2=0;
-	private int titre3=0;
-	
 	private int typeCorps = GamedataProperties.CP_TYPECORPS.getDefaut();
-	private int taille = GamedataProperties.CP_TAILLE.getDefaut();
-	private int tailleTete = GamedataProperties.CP_TAILLETETE.getDefaut();
 	private int couleurPeau = GamedataProperties.CP_COULEURPEAU.getDefaut();
 	
 	private int visage = GamedataProperties.CP_VISAGE.getDefaut();
-	private int tailleBouche = DataProperties.TAILLEBOUCHE.getDefaut();
-	private int commissures = DataProperties.COMMISSURES.getDefaut();
-	private int positionBouche = DataProperties.POSITIONBOUCHE.getDefaut();
 	
 	private int cheveux = GamedataProperties.CP_CHEVEUX.getDefaut();
 	private int couleurCheveux = GamedataProperties.CP_COULEURCHEVEUX.getDefaut();
 	
 	private int yeux = GamedataProperties.CP_YEUX.getDefaut();
-	private int tailleYeux = DataProperties.TAILLEYEUX.getDefaut();
-	private int positionYeux = DataProperties.POSITIONYEUX.getDefaut();
-	private int espacementYeux = DataProperties.ESPACEMENTYEUX.getDefaut();
-	
-	private int taillePupilles = DataProperties.TAILLEPUPILLES.getDefaut();
 	private int couleurYeux = GamedataProperties.CP_COULEURYEUX.getDefaut();
 	
 	private int sourcils = GamedataProperties.CP_SOURCILS.getDefaut();
 	private int couleurSourcils = GamedataProperties.CP_COULEURSOURCILS.getDefaut();
 	
 	private int nez = GamedataProperties.CP_NEZ.getDefaut();
-	private int positionNez = DataProperties.POSITIONNEZ.getDefaut();
-	private int tailleNez = DataProperties.TAILLENEZ.getDefaut();
 	
 	private int crampons = GamedataProperties.CP_CRAMPONS.getDefaut();
 	
@@ -99,7 +83,7 @@ public class JoueurAutre implements Serializable {
 	}
 	
 	public String regenerateId() {
-		return "J:" + UUID.randomUUID().toString();
+		return "R:" + UUID.randomUUID().toString();
 	}
 	
 	public String getEquipes() {
@@ -148,28 +132,8 @@ public class JoueurAutre implements Serializable {
 		this.nom = nom;
 	}
 
-	public int getTitre1() {
-		return titre1;
-	}
-
-	public void setTitre1(int titre1) {
-		this.titre1 = titre1;
-	}
-
-	public int getTitre2() {
-		return titre2;
-	}
-
-	public void setTitre2(int titre2) {
-		this.titre2 = titre2;
-	}
-
-	public int getTitre3() {
-		return titre3;
-	}
-
-	public void setTitre3(int titre3) {
-		this.titre3 = titre3;
+	public void setVisage(int visage) {
+		this.visage = visage;
 	}
 
 	public int getTypeCorps() {
@@ -178,22 +142,6 @@ public class JoueurAutre implements Serializable {
 
 	public void setTypeCorps(int typeCorps) {
 		this.typeCorps = typeCorps;
-	}
-
-	public int getTaille() {
-		return taille;
-	}
-
-	public void setTaille(int taille) {
-		this.taille = taille;
-	}
-
-	public int getTailleTete() {
-		return tailleTete;
-	}
-
-	public void setTailleTete(int tailleTete) {
-		this.tailleTete = tailleTete;
 	}
 
 	public int getCouleurPeau() {
@@ -206,34 +154,6 @@ public class JoueurAutre implements Serializable {
 
 	public int getVisage() {
 		return visage;
-	}
-
-	public void setVisage(int visage) {
-		this.visage = visage;
-	}
-
-	public int getTailleBouche() {
-		return tailleBouche;
-	}
-
-	public void setTailleBouche(int tailleBouche) {
-		this.tailleBouche = tailleBouche;
-	}
-
-	public int getCommissures() {
-		return commissures;
-	}
-
-	public void setCommissures(int commissures) {
-		this.commissures = commissures;
-	}
-
-	public int getPositionBouche() {
-		return positionBouche;
-	}
-
-	public void setPositionBouche(int positionBouche) {
-		this.positionBouche = positionBouche;
 	}
 
 	public int getCheveux() {
@@ -258,38 +178,6 @@ public class JoueurAutre implements Serializable {
 
 	public void setYeux(int yeux) {
 		this.yeux = yeux;
-	}
-
-	public int getTailleYeux() {
-		return tailleYeux;
-	}
-
-	public void setTailleYeux(int tailleYeux) {
-		this.tailleYeux = tailleYeux;
-	}
-
-	public int getPositionYeux() {
-		return positionYeux;
-	}
-
-	public void setPositionYeux(int positionYeux) {
-		this.positionYeux = positionYeux;
-	}
-
-	public int getEspacementYeux() {
-		return espacementYeux;
-	}
-
-	public void setEspacementYeux(int espacementYeux) {
-		this.espacementYeux = espacementYeux;
-	}
-
-	public int getTaillePupilles() {
-		return taillePupilles;
-	}
-
-	public void setTaillePupilles(int taillePupilles) {
-		this.taillePupilles = taillePupilles;
 	}
 
 	public int getCouleurYeux() {
@@ -322,22 +210,6 @@ public class JoueurAutre implements Serializable {
 
 	public void setNez(int nez) {
 		this.nez = nez;
-	}
-
-	public int getPositionNez() {
-		return positionNez;
-	}
-
-	public void setPositionNez(int positionNez) {
-		this.positionNez = positionNez;
-	}
-
-	public int getTailleNez() {
-		return tailleNez;
-	}
-
-	public void setTailleNez(int tailleNez) {
-		this.tailleNez = tailleNez;
 	}
 
 	public int getCrampons() {
@@ -630,30 +502,16 @@ public class JoueurAutre implements Serializable {
 		this.description = j.getDescription();
 		this.nom = j.getNom();
 		this.position = j.getPosition();
-		this.titre1 = j.getTitre1();
-		this.titre2 = j.getTitre2();
-		this.titre3 = j.getTitre3();
 		this.typeCorps = j.getTypeCorps();
-		this.taille = j.getTaille();
-		this.tailleTete = j.getTailleTete();
 		this.couleurPeau = j.getCouleurPeau();
 		this.visage = j.getVisage();
-		this.tailleBouche = j.getTailleBouche();
-		this.commissures = j.getCommissures();
-		this.positionBouche = j.getPositionBouche();
 		this.cheveux = j.getCheveux();
 		this.couleurCheveux = j.getCouleurCheveux();
 		this.yeux = j.getYeux();
-		this.tailleYeux = j.getTailleYeux();
-		this.positionYeux = j.getPositionYeux();
-		this.espacementYeux =  j.getEspacementYeux();
-		this.taillePupilles = j.getTaillePupilles();
 		this.couleurYeux = j.getCouleurYeux();
 		this.sourcils = j.getSourcils();
 		this.couleurSourcils = j.getCouleurSourcils();
 		this.nez = j.getNez();
-		this.positionNez = j.getPositionNez();
-		this.tailleNez = j.getTailleNez();
 		this.crampons = j.getCrampons();
 		this.lunettes = j.getLunettes();
 		this.couleurLunettes = j.getCouleurLunettes();
@@ -694,13 +552,11 @@ public class JoueurAutre implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(arrets, attaque, blocage, celebration1, celebration2, celebration3, celebration4, cheveux,
-				commissures, competence1, competence2, competence3, competence4, competence5, competence6,
-				competenceCapitaine, couleurCheveux, couleurLunettes, couleurPeau, couleurSourcils, couleurYeux,
-				crampons, defense, description, dribble1, dribble2, espacementYeux, id, lunettes, nez, nom, passe,
-				passesCombo, position, positionBouche, positionNez, positionYeux, puissance, sourcils, superArret,
-				superTir, superTirAlt, tacle1, tacle2, taille, tailleBouche, tailleNez, taillePupilles, tailleTete,
-				tailleYeux, technique, tir, tirAerien, tirAlt, tirCombo1, tirCombo2, titre1, titre2, titre3, typeCorps,
-				visage, vitesse, yeux);
+				competence1, competence2, competence3, competence4, competence5, competence6, competenceCapitaine,
+				couleurCheveux, couleurLunettes, couleurPeau, couleurSourcils, couleurYeux, crampons, defense,
+				description, dribble1, dribble2, id, lunettes, nez, nom, passe, passesCombo, position, puissance,
+				sourcils, superArret, superTir, superTirAlt, tacle1, tacle2, technique, tir, tirAerien, tirAlt,
+				tirCombo1, tirCombo2, typeCorps, visage, vitesse, yeux);
 	}
 
 	@Override
@@ -715,27 +571,22 @@ public class JoueurAutre implements Serializable {
 		return arrets == other.arrets && attaque == other.attaque && blocage == other.blocage
 				&& celebration1 == other.celebration1 && celebration2 == other.celebration2
 				&& celebration3 == other.celebration3 && celebration4 == other.celebration4 && cheveux == other.cheveux
-				&& commissures == other.commissures && competence1 == other.competence1
-				&& competence2 == other.competence2 && competence3 == other.competence3
-				&& competence4 == other.competence4 && competence5 == other.competence5
-				&& competence6 == other.competence6 && competenceCapitaine == other.competenceCapitaine
-				&& couleurCheveux == other.couleurCheveux && couleurLunettes == other.couleurLunettes
-				&& couleurPeau == other.couleurPeau && couleurSourcils == other.couleurSourcils
-				&& couleurYeux == other.couleurYeux && crampons == other.crampons && defense == other.defense
+				&& competence1 == other.competence1 && competence2 == other.competence2
+				&& competence3 == other.competence3 && competence4 == other.competence4
+				&& competence5 == other.competence5 && competence6 == other.competence6
+				&& competenceCapitaine == other.competenceCapitaine && couleurCheveux == other.couleurCheveux
+				&& couleurLunettes == other.couleurLunettes && couleurPeau == other.couleurPeau
+				&& couleurSourcils == other.couleurSourcils && couleurYeux == other.couleurYeux
+				&& crampons == other.crampons && defense == other.defense
 				&& Objects.equals(description, other.description) && dribble1 == other.dribble1
-				&& dribble2 == other.dribble2 && espacementYeux == other.espacementYeux && Objects.equals(id, other.id)
-				&& lunettes == other.lunettes && nez == other.nez && Objects.equals(nom, other.nom)
-				&& passe == other.passe && passesCombo == other.passesCombo && position == other.position
-				&& positionBouche == other.positionBouche && positionNez == other.positionNez
-				&& positionYeux == other.positionYeux && puissance == other.puissance && sourcils == other.sourcils
-				&& superArret == other.superArret && superTir == other.superTir && superTirAlt == other.superTirAlt
-				&& tacle1 == other.tacle1 && tacle2 == other.tacle2 && taille == other.taille
-				&& tailleBouche == other.tailleBouche && tailleNez == other.tailleNez
-				&& taillePupilles == other.taillePupilles && tailleTete == other.tailleTete
-				&& tailleYeux == other.tailleYeux && technique == other.technique && tir == other.tir
-				&& tirAerien == other.tirAerien && tirAlt == other.tirAlt && tirCombo1 == other.tirCombo1
-				&& tirCombo2 == other.tirCombo2 && titre1 == other.titre1 && titre2 == other.titre2
-				&& titre3 == other.titre3 && typeCorps == other.typeCorps && visage == other.visage
-				&& vitesse == other.vitesse && yeux == other.yeux;
+				&& dribble2 == other.dribble2 && Objects.equals(id, other.id) && lunettes == other.lunettes
+				&& nez == other.nez && Objects.equals(nom, other.nom) && passe == other.passe
+				&& passesCombo == other.passesCombo && position == other.position && puissance == other.puissance
+				&& sourcils == other.sourcils && superArret == other.superArret && superTir == other.superTir
+				&& superTirAlt == other.superTirAlt && tacle1 == other.tacle1 && tacle2 == other.tacle2
+				&& technique == other.technique && tir == other.tir && tirAerien == other.tirAerien
+				&& tirAlt == other.tirAlt && tirCombo1 == other.tirCombo1 && tirCombo2 == other.tirCombo2
+				&& typeCorps == other.typeCorps && visage == other.visage && vitesse == other.vitesse
+				&& yeux == other.yeux;
 	}
 }

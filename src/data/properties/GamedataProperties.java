@@ -20,8 +20,6 @@ public class GamedataProperties {
 	
 	public static IncrementalData CP_JOUEURSBASE;
 	public static LongSelectData CP_TYPECORPS;
-	public static NumericData CP_TAILLE;
-	public static NumericData CP_TAILLETETE;
 	public static LongSelectData CP_COULEURPEAU;
 	public static LongSelectData CP_VISAGE;
 	public static LongSelectData CP_CHEVEUX;
@@ -68,8 +66,6 @@ public class GamedataProperties {
             
             CP_JOUEURSBASE = new IncrementalData(prop, "customPreset.joueursBase");
             CP_TYPECORPS = new LongSelectData(prop, "customPreset.typeCorps");
-            CP_TAILLE = new NumericData(prop, "customPreset.taille");
-            CP_TAILLETETE = new NumericData(prop, "customPreset.tailleTete");
             CP_COULEURPEAU = new LongSelectData(prop, "customPreset.couleurPeau");
             CP_VISAGE = new LongSelectData(prop, "customPreset.visage");
             CP_CHEVEUX = new LongSelectData(prop, "customPreset.cheveux");

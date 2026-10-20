@@ -3,7 +3,6 @@ package GUI.panels;
 import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
@@ -23,26 +22,15 @@ public class JoueurAutrePanel extends ElementPanel {
 	private JTextField nomField;
 	private JComboBox<String> posteField;
 	private JComboBox<String> typeCorpsField;
-	private JSlider tailleField;
-	private JSlider tailleTeteField;
 	private JComboBox<String> couleurPeauField;
 	private JComboBox<String> visageField;
-	private JSlider tailleBoucheField;
-	private JSlider commissuresField;
-	private JSlider positionBoucheField;
 	private JComboBox<String> cheveuxField;
 	private JComboBox<String> couleurCheveuxField;
 	private JComboBox<String> yeuxField;
-	private JSlider tailleYeuxField;
-	private JSlider positionYeuxField;
-	private JSlider espacementYeuxField;
-	private JSlider taillePupillesField;
 	private JComboBox<String> couleurYeuxField;
 	private JComboBox<String> sourcilsField;
 	private JComboBox<String> couleurSourcilsField;
 	private JComboBox<String> nezField;
-	private JSlider positionNezField;
-	private JSlider tailleNezField;
 	private JComboBox<String> cramponsField;
 	private JComboBox<String> lunettesField;
 	private JComboBox<String> couleurLunettesField;
@@ -75,7 +63,6 @@ public class JoueurAutrePanel extends ElementPanel {
 	private JComboBox<String> competence5Field;
 	private JComboBox<String> competence6Field;
 
-	@SuppressWarnings("unused")
 	public JoueurAutrePanel() {		
 		idField = new JTextField(28);
 		idField.setEditable(false);
@@ -83,26 +70,15 @@ public class JoueurAutrePanel extends ElementPanel {
 		nomField = new JTextField(15);
 		posteField = makeComboboxComponent(GamedataProperties.CPD_POSITION);
 		typeCorpsField = makeComboboxComponent(GamedataProperties.CP_TYPECORPS);
-		tailleField = makeSliderComponent(GamedataProperties.CP_TAILLE);
-		tailleTeteField = makeSliderComponent(GamedataProperties.CP_TAILLETETE);
 		couleurPeauField = makeComboboxComponent(GamedataProperties.CP_COULEURPEAU);
 		visageField = makeComboboxComponent(GamedataProperties.CP_VISAGE);
-		tailleBoucheField = makeSliderComponent(DataProperties.TAILLEBOUCHE);
-		commissuresField = makeSliderComponent(DataProperties.COMMISSURES);
-		positionBoucheField = makeSliderComponent(DataProperties.POSITIONBOUCHE);
 		cheveuxField = makeComboboxComponent(GamedataProperties.CP_CHEVEUX);
 		couleurCheveuxField = makeComboboxComponent(GamedataProperties.CP_COULEURCHEVEUX);
 		yeuxField = makeComboboxComponent(GamedataProperties.CP_YEUX);
-		tailleYeuxField = makeSliderComponent(DataProperties.TAILLEYEUX);
-		positionYeuxField = makeSliderComponent(DataProperties.POSITIONYEUX);
-		espacementYeuxField = makeSliderComponent(DataProperties.ESPACEMENTYEUX);
-		taillePupillesField = makeSliderComponent(DataProperties.TAILLEPUPILLES);
 		couleurYeuxField = makeComboboxComponent(GamedataProperties.CP_COULEURYEUX);
 		sourcilsField = makeComboboxComponent(GamedataProperties.CP_SOURCILS);
 		couleurSourcilsField = makeComboboxComponent(GamedataProperties.CP_COULEURSOURCILS);
 		nezField = makeComboboxComponent(GamedataProperties.CP_NEZ);
-		positionNezField = makeSliderComponent(DataProperties.POSITIONNEZ);
-		tailleNezField = makeSliderComponent(DataProperties.TAILLENEZ);
 		cramponsField = makeComboboxComponent(GamedataProperties.CP_CRAMPONS);
 		lunettesField = makeComboboxComponent(GamedataProperties.CP_LUNETTES);
 		couleurLunettesField = makeComboboxComponent(GamedataProperties.CP_COULEURLUNETTES);
@@ -138,26 +114,15 @@ public class JoueurAutrePanel extends ElementPanel {
 		JPanel nomPanel = makeFieldPanel(TextsProperties.LABEL_NOM, nomField);
 		JPanel postePanel = makeFieldPanel(TextsProperties.LABEL_POSTE, posteField);
 		JPanel typeCorpsPanel = makeFieldPanel(TextsProperties.LABEL_TYPECORPS, typeCorpsField);
-		JPanel taillePanel = makeFieldPanel(TextsProperties.LABEL_TAILLE, tailleField);
-		JPanel tailleTetePanel = makeFieldPanel(TextsProperties.LABEL_TAILLETETE, tailleTeteField);
 		JPanel couleurPeauPanel = makeFieldPanel(TextsProperties.LABEL_COULEURPEAU, couleurPeauField);
 		JPanel visagePanel = makeFieldPanel(TextsProperties.LABEL_VISAGE, visageField);
-		JPanel tailleBouchePanel = makeFieldPanel(TextsProperties.LABEL_TAILLEBOUCHE, tailleBoucheField);
-		JPanel commissurePanel = makeFieldPanel(TextsProperties.LABEL_COMMISSURE, commissuresField);
-		JPanel positionBouchePanel = makeFieldPanel(TextsProperties.LABEL_POSITIONBOUCHE, positionBoucheField);
 		JPanel cheveuxPanel = makeFieldPanel(TextsProperties.LABEL_CHEVEUX, cheveuxField);
 		JPanel couleurCheveuxPanel = makeFieldPanel(TextsProperties.LABEL_COULEURCHEVEUX, couleurCheveuxField);
 		JPanel yeuxPanel = makeFieldPanel(TextsProperties.LABEL_YEUX, yeuxField);
-		JPanel tailleYeuxPanel = makeFieldPanel(TextsProperties.LABEL_TAILLEYEUX, tailleYeuxField);
-		JPanel positionYeuxPanel = makeFieldPanel(TextsProperties.LABEL_POSITIONYEUX, positionYeuxField);
-		JPanel espacementYeuxPanel = makeFieldPanel(TextsProperties.LABEL_ESPACEMENTYEUX, espacementYeuxField);
-		JPanel taillePupillesPanel = makeFieldPanel(TextsProperties.LABEL_TAILLEPUPILLES, taillePupillesField);
 		JPanel couleurYeuxPanel = makeFieldPanel(TextsProperties.LABEL_COULEURYEUX, couleurYeuxField);
 		JPanel sourcilsPanel = makeFieldPanel(TextsProperties.LABEL_SOURCILS, sourcilsField);
 		JPanel couleurSourcilsPanel = makeFieldPanel(TextsProperties.LABEL_COULEURSOURCILS, couleurSourcilsField);
 		JPanel nezPanel = makeFieldPanel(TextsProperties.LABEL_NEZ, nezField);
-		JPanel positionNezPanel = makeFieldPanel(TextsProperties.LABEL_POSITIONNEZ, positionNezField);
-		JPanel tailleNezPanel = makeFieldPanel(TextsProperties.LABEL_TAILLENEZ, tailleNezField);
 		JPanel cramponsPanel = makeFieldPanel(TextsProperties.LABEL_CRAMPONS, cramponsField);
 		JPanel lunettesPanel = makeFieldPanel(TextsProperties.LABEL_LUNETTES, lunettesField);
 		JPanel couleurLunettesPanel = makeFieldPanel(TextsProperties.LABEL_COULEURLUNETTES, couleurLunettesField);
@@ -202,21 +167,24 @@ public class JoueurAutrePanel extends ElementPanel {
 		layout.setHorizontalGroup(
 			layout.createSequentialGroup()
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					.addGroup(layout.createSequentialGroup()
-							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-									.addComponent(nomPanel)
-									.addComponent(idPanel)
-									.addComponent(descriptionPanel)
-									.addComponent(postePanel)
-							)
-							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-									.addComponent(attaquePanel)
-									.addComponent(defensePanel)
-									.addComponent(puissancePanel)
-									.addComponent(vitessePanel)
-									.addComponent(techniquePanel)
-							)
-					)
+					.addComponent(nomPanel)
+					.addComponent(idPanel)
+					.addComponent(descriptionPanel)
+					.addComponent(postePanel)
+					.addComponent(attaquePanel)
+					.addComponent(defensePanel)
+					.addComponent(puissancePanel)
+					.addComponent(vitessePanel)
+					.addComponent(techniquePanel)
+					.addComponent(competenceCapitainePanel)
+					.addComponent(competence1Panel)
+					.addComponent(competence2Panel)
+					.addComponent(competence3Panel)
+					.addComponent(competence4Panel)
+					.addComponent(competence5Panel)
+					.addComponent(competence6Panel)
+			)
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 					.addComponent(tirPanel)
 					.addComponent(tirAltPanel)
 					.addComponent(tirAerienPanel)
@@ -233,152 +201,79 @@ public class JoueurAutrePanel extends ElementPanel {
 					.addComponent(blocagePanel)
 					.addComponent(arretsPanel)
 					.addComponent(superArretPanel)
-					.addComponent(competenceCapitainePanel)
-					.addComponent(competence1Panel)
-					.addComponent(competence2Panel)
-					.addComponent(competence3Panel)
-					.addComponent(competence4Panel)
-					.addComponent(competence5Panel)
-					.addComponent(competence6Panel)
 			)
-			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
 					.addComponent(typeCorpsPanel, 250, 250, 250)
 					.addComponent(visagePanel, 250, 250, 250)
 					.addComponent(couleurPeauPanel, 250, 250, 250)
 					.addComponent(yeuxPanel, 250, 250, 250)
 					.addComponent(couleurYeuxPanel, 250, 250, 250)
 					.addComponent(nezPanel, 250, 250, 250)
-					.addComponent(cheveuxPanel, 250, 250, 250)
-					.addComponent(couleurCheveuxPanel, 250, 250, 250)
-			)
-			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					.addComponent(taillePanel, 370, 370, 370)
-					.addComponent(tailleTetePanel, 370, 370, 370)
-					.addComponent(tailleBouchePanel, 370, 370, 370)
-					.addComponent(commissurePanel, 370, 370, 370)
-					.addComponent(positionBouchePanel, 370, 370, 370)
-					.addComponent(tailleYeuxPanel, 370, 370, 370)
-					.addComponent(positionYeuxPanel, 370, 370, 370)
-					.addComponent(espacementYeuxPanel, 370, 370, 370)
-					.addComponent(taillePupillesPanel, 370, 370, 370)
-					.addComponent(tailleNezPanel, 370, 370, 370)
-					.addComponent(positionNezPanel, 370, 370, 370)
-					.addComponent(sourcilsPanel, 370, 370, 370)
-					.addComponent(couleurSourcilsPanel, 370, 370, 370)
 			)
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-					.addGroup(layout.createSequentialGroup()
-							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-									.addComponent(lunettesPanel, 250, 250, 250)
-									.addComponent(couleurLunettesPanel, 250, 250, 250)
-									.addComponent(cramponsPanel, 250, 250, 250)
-							)
-					)
+					.addComponent(cheveuxPanel, 250, 250, 250)
+					.addComponent(couleurCheveuxPanel, 250, 250, 250)
+					.addComponent(sourcilsPanel, 370, 370, 370)
+					.addComponent(couleurSourcilsPanel, 370, 370, 370)
+					.addComponent(lunettesPanel, 250, 250, 250)
+					.addComponent(couleurLunettesPanel, 250, 250, 250)
+					.addComponent(cramponsPanel, 250, 250, 250)
 			)
 		);
 		layout.setVerticalGroup(
 			layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 			.addGroup(layout.createSequentialGroup()
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-							.addGroup(layout.createSequentialGroup()
-									.addComponent(nomPanel)
-									.addComponent(idPanel)
-									.addComponent(descriptionPanel)
-									.addComponent(postePanel)
-							)
-							.addGroup(layout.createSequentialGroup()
-									.addComponent(attaquePanel)
-									.addComponent(defensePanel)
-									.addComponent(puissancePanel)
-									.addComponent(vitessePanel)
-									.addComponent(techniquePanel)
-							)
-					)
-					.addComponent(tirPanel)
-					.addComponent(tirAltPanel)
-					.addComponent(tirAerienPanel)
-					.addComponent(superTirPanel)
-					.addComponent(superTirAltPanel)
-					.addComponent(dribble1Panel)
-					.addComponent(dribble2Panel)
-					.addComponent(passePanel)
-					.addComponent(tirCombo1Panel)
-					.addComponent(tirCombo2Panel)
-					.addComponent(passesComboPanel)
-					.addComponent(tacle1Panel)
-					.addComponent(tacle2Panel)
-					.addComponent(blocagePanel)
-					.addComponent(arretsPanel)
-					.addComponent(superArretPanel)
-					.addComponent(competenceCapitainePanel)
-					.addComponent(competence1Panel)
-					.addComponent(competence2Panel)
-					.addComponent(competence3Panel)
-					.addComponent(competence4Panel)
-					.addComponent(competence5Panel)
-					.addComponent(competence6Panel)
+					.addComponent(nomPanel,25,25,25)
+					.addComponent(idPanel,25,25,25)
+					.addComponent(descriptionPanel,25,25,25)
+					.addComponent(postePanel,25,25,25)
+					.addComponent(attaquePanel,25,25,25)
+					.addComponent(defensePanel,25,25,25)
+					.addComponent(puissancePanel,25,25,25)
+					.addComponent(vitessePanel,25,25,25)
+					.addComponent(techniquePanel,25,25,25)
+					.addComponent(competenceCapitainePanel,25,25,25)
+					.addComponent(competence1Panel,25,25,25)
+					.addComponent(competence2Panel,25,25,25)
+					.addComponent(competence3Panel,25,25,25)
+					.addComponent(competence4Panel,25,25,25)
+					.addComponent(competence5Panel,25,25,25)
+					.addComponent(competence6Panel,25,25,25)
 			)
 			.addGroup(layout.createSequentialGroup()
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-							.addGroup(layout.createSequentialGroup()
-									.addComponent(typeCorpsPanel)
-							)
-							.addGroup(layout.createSequentialGroup()
-									.addComponent(taillePanel)
-									.addComponent(tailleTetePanel)
-							)
-					)
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-							.addGroup(layout.createSequentialGroup()
-									.addComponent(visagePanel)
-									.addComponent(couleurPeauPanel)
-							)
-							.addGroup(layout.createSequentialGroup()
-									.addComponent(tailleBouchePanel)
-									.addComponent(commissurePanel)
-									.addComponent(positionBouchePanel)
-							)
-					)
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-							.addGroup(layout.createSequentialGroup()
-									.addComponent(yeuxPanel)
-									.addComponent(couleurYeuxPanel)
-							)
-							.addGroup(layout.createSequentialGroup()
-									.addComponent(tailleYeuxPanel)
-									.addComponent(positionYeuxPanel)
-									.addComponent(espacementYeuxPanel)
-									.addComponent(taillePupillesPanel)
-							)
-					)
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-							.addGroup(layout.createSequentialGroup()
-									.addComponent(nezPanel)
-							)
-							.addGroup(layout.createSequentialGroup()
-									.addComponent(tailleNezPanel)
-									.addComponent(positionNezPanel)
-							)
-					)
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-							.addGroup(layout.createSequentialGroup()
-									.addComponent(cheveuxPanel)
-									.addComponent(couleurCheveuxPanel)
-							)
-							.addGroup(layout.createSequentialGroup()
-									.addComponent(sourcilsPanel)
-									.addComponent(couleurSourcilsPanel)
-							)
-					)
+					.addComponent(tirPanel,25,25,25)
+					.addComponent(tirAltPanel,25,25,25)
+					.addComponent(tirAerienPanel,25,25,25)
+					.addComponent(superTirPanel,25,25,25)
+					.addComponent(superTirAltPanel,25,25,25)
+					.addComponent(dribble1Panel,25,25,25)
+					.addComponent(dribble2Panel,25,25,25)
+					.addComponent(passePanel,25,25,25)
+					.addComponent(tirCombo1Panel,25,25,25)
+					.addComponent(tirCombo2Panel,25,25,25)
+					.addComponent(passesComboPanel,25,25,25)
+					.addComponent(tacle1Panel,25,25,25)
+					.addComponent(tacle2Panel,25,25,25)
+					.addComponent(blocagePanel,25,25,25)
+					.addComponent(arretsPanel,25,25,25)
+					.addComponent(superArretPanel,25,25,25)
 			)
 			.addGroup(layout.createSequentialGroup()
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-							.addGroup(layout.createSequentialGroup()
-									.addComponent(lunettesPanel)
-									.addComponent(couleurLunettesPanel)
-									.addComponent(cramponsPanel)
-							)
-					)
+					.addComponent(typeCorpsPanel)
+					.addComponent(visagePanel)
+					.addComponent(couleurPeauPanel)
+					.addComponent(yeuxPanel)
+					.addComponent(couleurYeuxPanel)
+					.addComponent(nezPanel)
+			)
+			.addGroup(layout.createSequentialGroup()
+					.addComponent(cheveuxPanel)
+					.addComponent(couleurCheveuxPanel)
+					.addComponent(sourcilsPanel)
+					.addComponent(couleurSourcilsPanel)
+					.addComponent(lunettesPanel)
+					.addComponent(couleurLunettesPanel)
+					.addComponent(cramponsPanel)
 			)
 		);
 		
@@ -394,26 +289,15 @@ public class JoueurAutrePanel extends ElementPanel {
 			nomField.setText(joueur.getNom());
 			posteField.setSelectedIndex(joueur.getPosition());
 			typeCorpsField.setSelectedIndex(joueur.getTypeCorps());
-			tailleField.setValue(joueur.getTaille());
-			tailleTeteField.setValue(joueur.getTailleTete());
 			couleurPeauField.setSelectedIndex(joueur.getCouleurPeau());
 			visageField.setSelectedIndex(joueur.getVisage());
-			tailleBoucheField.setValue(joueur.getTailleBouche());
-			commissuresField.setValue(joueur.getCommissures());
-			positionBoucheField.setValue(joueur.getPositionBouche());
 			cheveuxField.setSelectedIndex(joueur.getCheveux());
 			couleurCheveuxField.setSelectedIndex(joueur.getCouleurCheveux());
 			yeuxField.setSelectedIndex(joueur.getYeux());
-			tailleYeuxField.setValue(joueur.getTailleYeux());
-			positionYeuxField.setValue(joueur.getPositionYeux());
-			espacementYeuxField.setValue(joueur.getEspacementYeux());
-			taillePupillesField.setValue(joueur.getTaillePupilles());
 			couleurYeuxField.setSelectedIndex(joueur.getCouleurYeux());
 			sourcilsField.setSelectedIndex(joueur.getSourcils());
 			couleurSourcilsField.setSelectedIndex(joueur.getCouleurSourcils());
 			nezField.setSelectedIndex(joueur.getNez());
-			positionNezField.setValue(joueur.getPositionNez());
-			tailleNezField.setValue(joueur.getTailleNez());
 			cramponsField.setSelectedIndex(joueur.getCrampons());
 			lunettesField.setSelectedIndex(joueur.getLunettes());
 			couleurLunettesField.setSelectedIndex(joueur.getCouleurLunettes());
@@ -454,26 +338,14 @@ public class JoueurAutrePanel extends ElementPanel {
 			joueurSelectionne.setNom(nomField.getText());
 			joueurSelectionne.setPosition(posteField.getSelectedIndex());
 			joueurSelectionne.setTypeCorps(typeCorpsField.getSelectedIndex());
-			joueurSelectionne.setTaille(tailleField.getValue());
-			joueurSelectionne.setTailleTete(tailleTeteField.getValue());
 			joueurSelectionne.setCouleurPeau(couleurPeauField.getSelectedIndex());
-			joueurSelectionne.setVisage(visageField.getSelectedIndex());
-			joueurSelectionne.setTailleBouche(tailleBoucheField.getValue());
-			joueurSelectionne.setCommissures(commissuresField.getValue());
-			joueurSelectionne.setPositionBouche(positionBoucheField.getValue());
 			joueurSelectionne.setCheveux(cheveuxField.getSelectedIndex());
 			joueurSelectionne.setCouleurCheveux(couleurCheveuxField.getSelectedIndex());
 			joueurSelectionne.setYeux(yeuxField.getSelectedIndex());
-			joueurSelectionne.setTailleYeux(tailleYeuxField.getValue());
-			joueurSelectionne.setPositionYeux(positionYeuxField.getValue());
-			joueurSelectionne.setEspacementYeux(espacementYeuxField.getValue());
-			joueurSelectionne.setTaillePupilles(taillePupillesField.getValue());
 			joueurSelectionne.setCouleurYeux(couleurYeuxField.getSelectedIndex());
 			joueurSelectionne.setSourcils(sourcilsField.getSelectedIndex());
 			joueurSelectionne.setCouleurSourcils(couleurSourcilsField.getSelectedIndex());
 			joueurSelectionne.setNez(nezField.getSelectedIndex());
-			joueurSelectionne.setPositionNez(positionNezField.getValue());
-			joueurSelectionne.setTailleNez(tailleNezField.getValue());
 			joueurSelectionne.setCrampons(cramponsField.getSelectedIndex());
 			joueurSelectionne.setLunettes(lunettesField.getSelectedIndex());
 			joueurSelectionne.setCouleurLunettes(couleurLunettesField.getSelectedIndex());

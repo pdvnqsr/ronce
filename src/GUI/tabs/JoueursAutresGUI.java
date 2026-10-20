@@ -168,9 +168,8 @@ public class JoueursAutresGUI extends JPanel {
 		exporterBouton.setEnabled(!inStock.isSelectionEmpty());
 	}
 
-	//TODO
 	public void exportJoueurs() {
-		/*String message = TextsProperties.MESSAGE_EXPORT1 + "\n";
+		String message = TextsProperties.MESSAGE_EXPORT1 + "\n";
 		for(JoueurAutre joueur : inStock.getSelectedValuesList()) {
 			message += joueur.getNom() + "\n";
 		}
@@ -178,22 +177,22 @@ public class JoueursAutresGUI extends JPanel {
 
 		String nom = JOptionPane.showInputDialog(this, message);
 		if (nom != null && ! "".equals(nom)) {
-			File file = new File("exchange/players/"+nom+".json");
+			File file = new File("exchange/randoms/"+nom+".json");
 			if(file.exists()) {
 				int res = JOptionPane.showConfirmDialog(this, TextsProperties.MESSAGE_FICHIEREXISTANT, TextsProperties.BUTTON_EXPORT, JOptionPane.YES_NO_OPTION);
 				if(res == JOptionPane.YES_OPTION) {
-					Launch.getInstance().exportJoueurs(inStock.getSelectedValuesList(), file.toPath());
+					Launch.getInstance().exportRandoms(inStock.getSelectedValuesList(), file.toPath());
 				} else {
 					exportJoueurs();
 				}
 			} else {
-				Launch.getInstance().exportJoueurs(inStock.getSelectedValuesList(), file.toPath());
+				Launch.getInstance().exportRandoms(inStock.getSelectedValuesList(), file.toPath());
 			}
-		}*/
+		}
 	}
 
 	public void importJoueurs() {
-		/*File dir = new File("exchange/players");
+		File dir = new File("exchange/randoms");
 		File[] fichiers = dir.listFiles(new FilenameFilter() {
 			@Override
 			public boolean accept(File dir, String name) {
@@ -205,7 +204,7 @@ public class JoueursAutresGUI extends JPanel {
 			JOptionPane.showMessageDialog(this, TextsProperties.MESSAGE_IMPORTERROR);
 		} else {
 			String message = TextsProperties.MESSAGE_IMPORT;
-			String[] nomsFichiers = new String[fichiers.length-1];
+			String[] nomsFichiers = new String[fichiers.length];
 			for(int i=0;i<nomsFichiers.length;i++) {
 				nomsFichiers[i] = fichiers[i].getName();
 			}
@@ -213,10 +212,10 @@ public class JoueursAutresGUI extends JPanel {
 			String nom = JOptionPane.showInputDialog(
 					this, message, TextsProperties.BUTTON_IMPORT, JOptionPane.PLAIN_MESSAGE, null, nomsFichiers, nomsFichiers[0]).toString();
 			if (nom != null && ! "".equals(nom)) {
-				Launch.getInstance().importJoueurs(new File("exchange/players/"+nom).toPath());
+				Launch.getInstance().importRandoms(new File("exchange/randoms/"+nom).toPath());
 				remplirListes(false);
 			}
-		}*/
+		}
 	}
 
 	public void supprimerJoueurs() {

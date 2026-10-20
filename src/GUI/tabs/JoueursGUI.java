@@ -204,7 +204,7 @@ public class JoueursGUI extends JPanel {
 			JOptionPane.showMessageDialog(this, TextsProperties.MESSAGE_IMPORTERROR);
 		} else {
 			String message = TextsProperties.MESSAGE_IMPORT;
-			String[] nomsFichiers = new String[fichiers.length-1];
+			String[] nomsFichiers = new String[fichiers.length];
 			for(int i=0;i<nomsFichiers.length;i++) {
 				nomsFichiers[i] = fichiers[i].getName();
 			}

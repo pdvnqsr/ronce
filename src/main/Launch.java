@@ -26,10 +26,12 @@ import data.elements.JoueurStar;
 import data.elements.Composition;
 import data.elements.Equipe;
 import data.elements.Joueur;
+import data.elements.JoueurAutre;
 import data.exchange.BuildsExchangeData;
 import data.exchange.CompositionsExchangeData;
 import data.exchange.EquipesExchangeData;
 import data.exchange.JoueursExchangeData;
+import data.exchange.RandomsExchangeData;
 import data.properties.DataProperties;
 import data.properties.SystemProperties;
 import data.properties.TextsProperties;
@@ -264,6 +266,53 @@ public class Launch {
 					}
 				} else {
 					data.getJoueursStars().add(build);
+				}
+				existant = null;
+			}
+			saveData();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void exportRandoms(List<JoueurAutre> randoms, Path path) {
+		RandomsExchangeData exchangeData = new RandomsExchangeData();
+		for(JoueurAutre random : randoms) {
+			exchangeData.getRandoms().add(random);
+		}
+
+		String json = gson.toJson(exchangeData);
+		try {
+			Files.writeString(path, json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void importRandoms(Path path) {
+		try {
+			String json = Files.readString(path);
+			RandomsExchangeData exchangeData = gson.fromJson(json, RandomsExchangeData.class);
+			JoueurAutre existant = null;
+			String newId;
+			for(JoueurAutre random : exchangeData.getRandoms()) {
+				if(random.getId() == null || random.getId().equals("")) {
+					random.setId(random.regenerateId());
+				}
+				existant = data.getJoueurAutreParId(random.getId()); 
+				if(existant != null) {
+					if(!random.equals(existant)) {
+						int res = JOptionPane.showConfirmDialog(gui, TextsProperties.MESSAGE_IDEXISTANT1 + " : \n" + existant.getNom() + "\n" + TextsProperties.MESSAGE_IDEXISTANT2);
+						if(res == JOptionPane.YES_NO_OPTION) {
+							existant.update(random);
+						} else if(res == JOptionPane.NO_OPTION) {
+							newId = random.regenerateId();
+							random.setId(newId);
+							data.getJoueursAutres().add(random);
+						}
+					}
+				} else {
+					data.getJoueursAutres().add(random);
 				}
 				existant = null;
 			}

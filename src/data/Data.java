@@ -145,6 +145,16 @@ public class Data implements Serializable {
 		return joueur;
 	}
 	
+	public JoueurAutre getJoueurAutreParId(String id) {
+		JoueurAutre joueur = null;
+		for(JoueurAutre j : randoms) {
+			if(id.equals(j.getId())) {
+				joueur = j;
+			}
+		}
+		return joueur;
+	}
+	
 	public Composition getCompositionParId(String id) {
 		Composition composition = null;
 		for(Composition c : compositions) {
@@ -700,8 +710,6 @@ public class Data implements Serializable {
 
 				joueur = new JoueurAutre(GamedataProperties.CP_JOUEURSBASE.getVals().get(i).getDisplayValue(),false);
 				joueur.setTypeCorps(getLongFromGame(cp, cpAddr, GamedataProperties.CP_TYPECORPS,0));
-				//joueur.setTaille(getLongFromGame(cp, addr, GamedataProperties.CP_TAILLE,0));
-				//joueur.setTailleTete(getLongFromGame(cp, addr, GamedataProperties.CP_TAILLETETE,0));
 				joueur.setCouleurPeau(getLongFromGame(cp, cpAddr, GamedataProperties.CP_COULEURPEAU,0));
 				joueur.setVisage(getLongFromGame(cp, cpAddr, GamedataProperties.CP_VISAGE,0));
 				joueur.setCheveux(getLongFromGame(cp, cpAddr, GamedataProperties.CP_CHEVEUX,0));
@@ -739,26 +747,52 @@ public class Data implements Serializable {
 				joueur.setArrets(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_ARRETS,0));
 				joueur.setSuperArret(getIntFromGame(cpd, cpdAddr, GamedataProperties.CPD_SUPERARRET,0));
 				
-				if(GamedataProperties.CD_CAT.getTailles().get(index) >= 12 ) {
-					joueur.setCompetence1(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,0));
-				}
-				if(GamedataProperties.CD_CAT.getTailles().get(index) >= 16 ) {
-					joueur.setCompetence2(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,1));
-				}
-				if(GamedataProperties.CD_CAT.getTailles().get(index) >= 20 ) {
-					joueur.setCompetence3(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,2));
-				}
-				if(GamedataProperties.CD_CAT.getTailles().get(index) >= 24 ) {
-					joueur.setCompetence4(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,3));
-				}
-				if(GamedataProperties.CD_CAT.getTailles().get(index) >= 32 ) {
-					joueur.setCompetence5(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,4));
-				}
-				if(GamedataProperties.CD_CAT.getTailles().get(index) >= 36 ) {
-					joueur.setCompetence6(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,5));
-				}
-				if(GamedataProperties.CD_CAT.getTailles().get(index) >= 40 ) {
-					joueur.setCompetenceCapitaine(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0));
+				// Décalage de la compétence capitaine en fonction de la dernière compétence vide
+				joueur.setCompetence1(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,0,0));	
+				if(joueur.getCompetence1() == GamedataProperties.CD_COMPETENCES.getDefaut()) {
+					joueur.setCompetence2(GamedataProperties.CD_COMPETENCES.getDefaut());
+					joueur.setCompetence3(GamedataProperties.CD_COMPETENCES.getDefaut());
+					joueur.setCompetence4(GamedataProperties.CD_COMPETENCES.getDefaut());
+					joueur.setCompetence5(GamedataProperties.CD_COMPETENCES.getDefaut());
+					joueur.setCompetence6(GamedataProperties.CD_COMPETENCES.getDefaut());
+					joueur.setCompetenceCapitaine(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0,0));
+				} else {
+					joueur.setCompetence2(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,1,0));
+					if(joueur.getCompetence2() == GamedataProperties.CD_COMPETENCES.getDefaut()) {
+						joueur.setCompetence3(GamedataProperties.CD_COMPETENCES.getDefaut());
+						joueur.setCompetence4(GamedataProperties.CD_COMPETENCES.getDefaut());
+						joueur.setCompetence5(GamedataProperties.CD_COMPETENCES.getDefaut());
+						joueur.setCompetence6(GamedataProperties.CD_COMPETENCES.getDefaut());
+						joueur.setCompetenceCapitaine(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0,4));
+					} else {
+						joueur.setCompetence3(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,2,0));
+						if(joueur.getCompetence3() == GamedataProperties.CD_COMPETENCES.getDefaut()) {
+							joueur.setCompetence4(GamedataProperties.CD_COMPETENCES.getDefaut());
+							joueur.setCompetence5(GamedataProperties.CD_COMPETENCES.getDefaut());
+							joueur.setCompetence6(GamedataProperties.CD_COMPETENCES.getDefaut());
+							joueur.setCompetenceCapitaine(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0,8));
+						} else {
+							joueur.setCompetence4(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,3,0));
+							if(joueur.getCompetence4() == GamedataProperties.CD_COMPETENCES.getDefaut()) {
+								joueur.setCompetence5(GamedataProperties.CD_COMPETENCES.getDefaut());
+								joueur.setCompetence6(GamedataProperties.CD_COMPETENCES.getDefaut());
+								joueur.setCompetenceCapitaine(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0,12));
+							} else {
+								joueur.setCompetence5(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,4,0));
+								if(joueur.getCompetence5() == GamedataProperties.CD_COMPETENCES.getDefaut()) {
+									joueur.setCompetence6(GamedataProperties.CD_COMPETENCES.getDefaut());
+									joueur.setCompetenceCapitaine(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0,16));
+								} else {
+									joueur.setCompetence6(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,5,0));
+									if(joueur.getCompetence6() == GamedataProperties.CD_COMPETENCES.getDefaut()) {
+										joueur.setCompetenceCapitaine(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0,20));
+									} else {
+										joueur.setCompetenceCapitaine(getLongFromGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0,24));
+									}
+								}
+							}
+						}
+					}
 				}
 				
 				joueursAutresInGame.add(joueur);
@@ -825,14 +859,76 @@ public class Data implements Serializable {
 			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_ARRETS,0,joueur.getArrets());
 			writeIntInGame(cpd, cpdAddr, GamedataProperties.CPD_SUPERARRET,0,joueur.getSuperArret());
 			
+			//Vérification de la compatibilité avec la taille
+			long taille = GamedataProperties.CD_CAT.getTailles().get(index);
+			int[] compsVals = new int[6];
+			if(taille >= 16) {
+				compsVals[0] = joueur.getCompetence1();
+			} else {
+				compsVals[0] = GamedataProperties.CD_COMPETENCES.getDefaut();
+			}
+			if(taille >= 20) {
+				compsVals[1] = joueur.getCompetence2();
+			} else {
+				compsVals[1] = GamedataProperties.CD_COMPETENCES.getDefaut();
+			}
+			if(taille >= 24) {
+				compsVals[2] = joueur.getCompetence3();
+			} else {
+				compsVals[2] = GamedataProperties.CD_COMPETENCES.getDefaut();
+			}
+			if(taille >= 28) {
+				compsVals[3] = joueur.getCompetence4();
+			} else {
+				compsVals[3] = GamedataProperties.CD_COMPETENCES.getDefaut();
+			}
+			if(taille >= 32) {
+				compsVals[4] = joueur.getCompetence5();
+			} else {
+				compsVals[4] = GamedataProperties.CD_COMPETENCES.getDefaut();
+			}
+			if(taille >= 36) {
+				compsVals[5] = joueur.getCompetence6();
+			} else {
+				compsVals[5] = GamedataProperties.CD_COMPETENCES.getDefaut();
+			}
 			
-			writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,0,joueur.getCompetence1());
-			writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,1,joueur.getCompetence2());
-			writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,2,joueur.getCompetence3());
-			writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,3,joueur.getCompetence4());
-			writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,4,joueur.getCompetence5());
-			writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,5,joueur.getCompetence6());
-			writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0,joueur.getCompetenceCapitaine());
+			writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,0,compsVals[0],0);
+			if(compsVals[0] == GamedataProperties.CD_COMPETENCES.getDefaut()) {
+				writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0,joueur.getCompetenceCapitaine(),0);
+			} else {
+				writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,1,compsVals[1],0);
+				if(compsVals[1] == GamedataProperties.CD_COMPETENCES.getDefaut()) {
+					writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0,joueur.getCompetenceCapitaine(),4);
+				} else {
+					writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,2,compsVals[2],0);
+					if(compsVals[2] == GamedataProperties.CD_COMPETENCES.getDefaut()) {
+						writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0,joueur.getCompetenceCapitaine(),8);
+					} else {
+						writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,3,compsVals[3],0);
+						if(compsVals[3] == GamedataProperties.CD_COMPETENCES.getDefaut()) {
+							writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0,joueur.getCompetenceCapitaine(),12);
+						} else {
+							writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,4,compsVals[4],0);
+							if(compsVals[4] == GamedataProperties.CD_COMPETENCES.getDefaut()) {
+								writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0,joueur.getCompetenceCapitaine(),16);
+							} else {
+								writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,5,compsVals[5],0);
+								if(compsVals[5] == GamedataProperties.CD_COMPETENCES.getDefaut()) {
+									writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0,joueur.getCompetenceCapitaine(),20);
+								} else {
+									//écriture valeur par défaut avant la comptéence capitaine.
+									writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCES,5,GamedataProperties.CD_COMPETENCES.getDefaut(),4);
+									writeLongInGame(cd, GamedataProperties.CD_CAT, index, GamedataProperties.CD_COMPETENCECAPITAINE,0,joueur.getCompetenceCapitaine(),24);
+								}
+							}
+						}
+					}
+				}
+				
+				
+				
+			}
 			
 			cp.close();
 		} catch (Exception e) {
@@ -991,9 +1087,9 @@ public class Data implements Serializable {
 		long i = getLongFromGame(raf, addr, props.getOffsets()[offsetIndex]);
 		return props.getIndexFromInGameValue(i, props.getDefaut());
 	}
-	
-	private int getLongFromGame(RandomAccessFile raf, CatData cat, int catIndex, LongSelectData props, int offsetIndex) throws Exception {
-		long i = getLongFromGame(raf, cat.getAdresses().get(catIndex), cat.getOffset() + props.getOffsets()[offsetIndex]);
+		
+	private int getLongFromGame(RandomAccessFile raf, CatData cat, int catIndex, LongSelectData props, int offsetIndex, int correct) throws Exception {
+		long i = getLongFromGame(raf, cat.getAdresses().get(catIndex), cat.getOffset() + props.getOffsets()[offsetIndex] + correct);
 		int result = props.getDefaut();
 		if(props.getOffsets()[offsetIndex] < cat.getTailles().get(catIndex) - 4) {
 			result = props.getIndexFromInGameValue(i, props.getDefaut());
@@ -1147,12 +1243,12 @@ public class Data implements Serializable {
 		
 	}
 
-	private void writeLongInGame(RandomAccessFile raf, CatData cat, int catIndex, LongSelectData props, int offsetIndex, int value) throws Exception {
-		raf.seek(cat.getAdresses().get(catIndex) + cat.getOffset() + props.getOffsets()[offsetIndex]);
+	private void writeLongInGame(RandomAccessFile raf, CatData cat, int catIndex, LongSelectData props, int offsetIndex, int value, int correct) throws Exception {
+		raf.seek(cat.getAdresses().get(catIndex) + cat.getOffset() + props.getOffsets()[offsetIndex] + correct);
 		ByteBuffer bb = ByteBuffer.allocate(8);
 		bb.putLong(props.getVals().get(value).getInGameValue());
 		byte[] bytesValue = {bb.array()[7], bb.array()[6], bb.array()[5], bb.array()[4]};
-		if(props.getOffsets()[offsetIndex] <= cat.getTailles().get(catIndex) - 8) {
+		if(props.getOffsets()[offsetIndex] <= cat.getTailles().get(catIndex) - 4) {
 			raf.write(bytesValue);
 		}	
 	}
