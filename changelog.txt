@@ -1,6 +1,10 @@
 GENERAL WARNING : 
 DON'T FORGET TO KEEP YOUR DATA.JSON FILE AWAY WHEN UPDATING OR IT WLL BE OVERRIDDEN !!!
 
+1.2.0 : 
+Added a new tab for editing generic players. Be careful, some players cannot have up to 6 skills
+Fixed bug on glasses
+
 1.1.1 : 
 Bug fix on Morisaki and Hernandez Super save
 Added Ace players position editing. Switching a field player to goalkeeper don't seem to work very well though.

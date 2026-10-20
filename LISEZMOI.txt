@@ -78,6 +78,15 @@ Onglet Joueurs Star :
 Permet de gérer des builds (Stats, techniques et compétences) pouvant s'appliquer aux joueurs de base du jeu. Malheureusement, seuls les joueurs disposant d'une carte ami sont éditables.
 Les choses à savoir sont les mêmes que pour les joueurs personnalisés
 
+Onglet Joueurs Autres : 
+Permet d'éditer les joueurs génériques. Vous pouvez éditer les éléments suivants : 
+- Statistiques
+- Poste
+- Compétences (notez que certains joueurs n'acceptent pas 6 compétences. Le logiciel ignorera les compétences qui ne peuvent pas être transmises au jeu)
+- Techniques
+- Apparence (Il y'a moins de possibilités que pour les joueurs personnalisés)
+
+
 Onglet Equipes de base : 
 Permet de gérer de compositions d'équipes applicables aux équipes de base. Et oui vous povez y mettre des joueurs personnalisés.
 Les choses à savoir sont les mêmes que pour les équipes personnalsiées.

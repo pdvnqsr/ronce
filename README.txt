@@ -56,7 +56,7 @@ Import : Import a file stored in dedicated sub-directory of the exchange directo
 Players tab  :
 Allow to manage customs players. You can store as many players as you want in RONCE, and replace one of the 20 in game slots.
 Things to know : 
-- You can put a diffrent alternative shot than the regular shot. All shots can be alternative (not only star shots). Same is for super shots.
+- You can put a different alternative shot than the regular shot. All shots can be alternative (not only star shots). Same is for super shots.
 - All tackles can be tackle 1. Some may work oddly, I haven't tried them all.
 - If you select in the software an haircut you didn't buy in game, the game will replace it at launch.
 - You can't delete a player used in a team. So just edit your teams before deleting the player.
@@ -76,6 +76,14 @@ Things to know :
 Ace players tab : 
 Allow to manage builds (stats, techniques and skills) that can be applied to base game players. Unfortunately, only players with a friend card can be edited.
 Things to know are pretty much the same than for custom players.
+
+Other players tab : 
+Allow to manage generic players. You can edit : 
+- Statistics
+- Position
+- Skills (note that some players can have 6 skills. The software wll ignore skills that can't be put into the game)
+- Techniques
+- Appearance (less possibilities that for custom players)
 
 Base teams tab : 
 Allow to manage team rosters that can be applied to base game teams. And yes, you can put customs players to them.
