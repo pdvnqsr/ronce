@@ -339,6 +339,7 @@ public class JoueurAutrePanel extends ElementPanel {
 			joueurSelectionne.setPosition(posteField.getSelectedIndex());
 			joueurSelectionne.setTypeCorps(typeCorpsField.getSelectedIndex());
 			joueurSelectionne.setCouleurPeau(couleurPeauField.getSelectedIndex());
+			joueurSelectionne.setVisage(visageField.getSelectedIndex());
 			joueurSelectionne.setCheveux(cheveuxField.getSelectedIndex());
 			joueurSelectionne.setCouleurCheveux(couleurCheveuxField.getSelectedIndex());
 			joueurSelectionne.setYeux(yeuxField.getSelectedIndex());

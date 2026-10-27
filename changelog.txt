@@ -1,6 +1,10 @@
 GENERAL WARNING : 
 DON'T FORGET TO KEEP YOUR DATA.JSON FILE AWAY WHEN UPDATING OR IT WLL BE OVERRIDDEN !!!
 
+1.2.1 : 
+Fixed bug when saving face
+Improved skills overload control causing game crash
+
 1.2.0 : 
 Added a new tab for editing generic players. Be careful, some players cannot have up to 6 skills
 Fixed bug on glasses

@@ -820,8 +820,6 @@ public class Data implements Serializable {
 			RandomAccessFile cd = new RandomAccessFile(SystemProperties.CHARACTORDATA_PATH, "rw");
 
 			writeLongInGame(cp, cpAddr, GamedataProperties.CP_TYPECORPS,0,joueur.getTypeCorps());
-			//writeLongInGame(cp, addr, GamedataProperties.CP_TAILLE,0,joueur.getTaille());
-			//writeLongInGame(cp, addr, GamedataProperties.CP_TAILLETETE,0,joueur.getTailleTete());
 			writeLongInGame(cp, cpAddr, GamedataProperties.CP_COULEURPEAU,0,joueur.getCouleurPeau());
 			writeLongInGame(cp, cpAddr, GamedataProperties.CP_VISAGE,0,joueur.getVisage());
 			writeLongInGame(cp, cpAddr, GamedataProperties.CP_CHEVEUX,0,joueur.getCheveux());
@@ -882,12 +880,12 @@ public class Data implements Serializable {
 			} else {
 				compsVals[3] = GamedataProperties.CD_COMPETENCES.getDefaut();
 			}
-			if(taille >= 32) {
+			if(taille >= 36) {
 				compsVals[4] = joueur.getCompetence5();
 			} else {
 				compsVals[4] = GamedataProperties.CD_COMPETENCES.getDefaut();
 			}
-			if(taille >= 36) {
+			if(taille >= 40) {
 				compsVals[5] = joueur.getCompetence6();
 			} else {
 				compsVals[5] = GamedataProperties.CD_COMPETENCES.getDefaut();
